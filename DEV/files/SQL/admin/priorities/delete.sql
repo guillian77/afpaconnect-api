@@ -1,0 +1,1 @@
+DELETE FROM priorities WHERE id_priorities = @id_priorities;

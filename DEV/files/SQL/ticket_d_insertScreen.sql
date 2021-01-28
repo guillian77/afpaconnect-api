@@ -1,0 +1,1 @@
+INSERT INTO screens (name_screens, id_tickets) values ("@name_screens", @id_tickets)

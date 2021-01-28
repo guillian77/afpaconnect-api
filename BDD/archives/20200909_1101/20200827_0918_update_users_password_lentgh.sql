@@ -1,0 +1,2 @@
+-- Change password length from 60 to 95 for password hashing. PASSWORD_ARGON2I take 95 characters length.
+ALTER TABLE `users` CHANGE `password_users` `password_users` VARCHAR(95) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;

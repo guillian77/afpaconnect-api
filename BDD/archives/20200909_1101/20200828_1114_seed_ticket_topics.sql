@@ -1,0 +1,13 @@
+-- Insert topics
+INSERT INTO `topics` (`id_topics`, `designation_topics`, `active_topics`) VALUES (NULL, 'PHP', '1'), (NULL, 'Javascript', '1');
+INSERT INTO `topics` (`id_topics`, `designation_topics`, `active_topics`) VALUES (NULL, 'HTML', '1'), (NULL, 'CSS', '1');
+INSERT INTO `topics` (`id_topics`, `designation_topics`, `active_topics`) VALUES (NULL, 'Bootstrap', '1'), (NULL, 'POO PHP', '1');
+INSERT INTO `topics` (`id_topics`, `designation_topics`, `active_topics`) VALUES (NULL, 'Laravel', '1'), (NULL, 'Symphony', '1');
+INSERT INTO `topics` (`id_topics`, `designation_topics`, `active_topics`) VALUES (NULL, 'VueJs', '0'), (NULL, 'React', '0');
+
+-- Insert priorities
+INSERT INTO `priorities` (`id_priorities`, `designation_priorities`, `interval_priorities`, `active_priorities`) VALUES (NULL, 'mineur', '30', '1'), (NULL, 'majeur', '15', '1'), (NULL, 'bloquant', '10', '1');
+
+-- Insert tickets
+INSERT INTO `tickets` (`id_tickets`, `created_at_tickets`, `updated_at_tickets`, `subject_tickets`, `description_tickets`, `resolved_tickets`, `count_report_tickets`, `reported_tickets`, `active_tickets`, `id_topics`, `id_prioritys`) VALUES (NULL, CURRENT_TIMESTAMP, NULL, 'Undefined index off NULL', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', '0', '0', '0', '1', '2', '1');
+INSERT INTO `tickets` (`id_tickets`, `created_at_tickets`, `updated_at_tickets`, `subject_tickets`, `description_tickets`, `resolved_tickets`, `count_report_tickets`, `reported_tickets`, `active_tickets`, `id_topics`, `id_prioritys`) VALUES (NULL, CURRENT_TIMESTAMP, NULL, 'Undefined index: update_film in Z:\\ ... on line 3', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', '0', '0', '0', '1', '1', '2');

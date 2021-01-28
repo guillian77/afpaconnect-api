@@ -1,0 +1,1 @@
+delete from users__tickets WHERE id_tickets=@id_tickets AND id_users=@id_users

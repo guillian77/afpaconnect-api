@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+
+<base href="<?= $GLOBALS_INI['BASE_HREF'] ?>">
+<html class="no-js" lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- WEBSITE: Title -->
+    <title>AfpaConnect</title>
+
+    <!-- WEBSITE: Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
+
+    <!-- LOAD: CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/app.css">
+
+    <!-- GOOGLE reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- LOAD: jQuery  -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+
+    <!-- LOAD: Axios -->
+   <script src="js/lib/axios.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>AfpaConnect</h1>
+
+        <?php include $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_FILES"] . $monPHP . ".html" ?>
+    </div>
+
+    <!-- Global JS file -->
+    <script src="datatable/datatables.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

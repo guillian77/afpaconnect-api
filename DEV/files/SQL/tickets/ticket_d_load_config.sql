@@ -1,0 +1,2 @@
+select ticket_limit_configs, img_limit_configs, size_screen_configs
+from configs 

@@ -1,0 +1,1 @@
+UPDATE priorities SET designation_priorities = "@designation_priorities", interval_priorities = "@interval_priorities", active_priorities = @active_priorities WHERE id_priorities = @id_priorities;

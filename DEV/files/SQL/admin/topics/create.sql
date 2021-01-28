@@ -1,0 +1,1 @@
+INSERT INTO topics (id_topics, designation_topics, active_topics) VALUES (NULL, "@designation_topics", @active_topics);
