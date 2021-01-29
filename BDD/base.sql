@@ -57,6 +57,7 @@ CREATE TABLE centers(
 
 CREATE TABLE users(
         id_user                Int  Auto_increment  NOT NULL ,
+        id_center              Int NOT NULL ,
         user_identifier        Varchar (20) NOT NULL ,
         user_name              Varchar (255) NOT NULL ,
         user_firstName         Varchar (255) NOT NULL ,
@@ -72,8 +73,7 @@ CREATE TABLE users(
         user_gender            Bool NOT NULL ,
         user_status            Bool NOT NULL ,
         user_created_at        Date NOT NULL ,
-        user_updated_at        Datetime NOT NULL ,
-        id_center              Int NOT NULL
+        user_updated_at        Datetime NOT NULL
 	,CONSTRAINT users_PK PRIMARY KEY (id_user)
 
 	,CONSTRAINT users_centers_FK FOREIGN KEY (id_center) REFERENCES centers(id_center)
@@ -86,12 +86,12 @@ CREATE TABLE users(
 
 CREATE TABLE sessions(
         id_session       Int  Auto_increment  NOT NULL ,
+        id_training      Int NOT NULL ,
         session_code     Varchar (255) NOT NULL ,
         session_start_at Datetime NOT NULL ,
         session_end_at   Datetime NOT NULL ,
         session_entitled Varchar (255) NOT NULL ,
-        session_status   Bool NOT NULL ,
-        id_training      Int NOT NULL
+        session_status   Bool NOT NULL
 	,CONSTRAINT sessions_PK PRIMARY KEY (id_session)
 
 	,CONSTRAINT sessions_trainings_FK FOREIGN KEY (id_training) REFERENCES trainings(id_training)
@@ -117,6 +117,17 @@ CREATE TABLE functions(
         id_function   Int  Auto_increment  NOT NULL ,
         function_name Varchar (255) NOT NULL
 	,CONSTRAINT functions_PK PRIMARY KEY (id_function)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: migrations
+#------------------------------------------------------------
+
+CREATE TABLE migrations(
+        id_migration        Int  Auto_increment  NOT NULL ,
+        migration_timestamp TimeStamp NOT NULL
+	,CONSTRAINT migrations_PK PRIMARY KEY (id_migration)
 )ENGINE=InnoDB;
 
 

@@ -8,14 +8,14 @@ Class Database {
 	/**
 	 * @var PDO $_hDb
 	 */
-	private $_hDb;
+	public $_hDb;
 
 	/**
 	 * Database constructor.
-	 * @param $host
-	 * @param $name
-	 * @param $login
-	 * @param $psw
+	 * @param string $host Database hostname.
+	 * @param string $name Database name.
+	 * @param string $login Database username.
+	 * @param string $psw Database password.
 	 */
 	function __construct($host, $name, $login, $psw)	{
 		// Connection to DB : SERVEUR / LOGIN / PASSWORD / NOM_BDD
@@ -45,11 +45,11 @@ Class Database {
 
 	/**
 	 * SQL SELECT query helper
-	 * @param $spathSQL path to sql file
+	 * @param string $spathSQL path to sql file
 	 * @param array $data
 	 * @return array
 	 */
-	function getSelectDatas($spathSQL, $data=array())	{
+	function getSelectDatas(string $spathSQL, array $data=array())	{
 		// content of SQL file
 		$sql= file_get_contents($spathSQL);
 
