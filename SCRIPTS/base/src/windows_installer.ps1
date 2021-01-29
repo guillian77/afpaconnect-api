@@ -55,8 +55,7 @@ function getValues($formTitle, $textTitle){
 
     [void] $objForm.ShowDialog()
 
-    return "afpaconnect"
-#    return $userInput
+   return $userInput
 }
 
 Function Select-Env-Type
@@ -218,17 +217,18 @@ if ($env -eq "Wamp 64 bit - www") {
 
 # Get project name
 $PROJ_NAME = getValues "Nom du projet" "Entrer le nom du dossier contenant le projet`nExemple: afpaticket/afpaticket/audace"
+$PROJ_NAME = "afpaconnect"
 
 # Get different path
-$PATH_FILES = Get-Folder("Selectionner le repertoire contenant vos fichiers HTML et SQL (files)")
-$PATH_MODULES = Get-Folder("Selectionner le repertoire contenant vos modules PHP (modules)")
+# $PATH_FILES = Get-Folder("Selectionner le repertoire contenant vos fichiers HTML et SQL (files)")
+# $PATH_MODULES = Get-Folder("Selectionner le repertoire contenant vos modules PHP (modules)")
 $PATH_WEB = Get-Folder("Selectionner le repertoire contenant vos fichiers publics JS/CSS/IMAGES (web)")
 #$PATH_CONFIG = SelectAFile("config_projectname_dev.ini")
 
 # Concat paths
-$PATH_FILES_STR = [string]::Concat($PATH_ENVDEV, "\files\", $PROJ_NAME)
-$PATH_MODULES_STR = [string]::Concat($PATH_ENVDEV, "\modules\", $PROJ_NAME)
-$PATH_WEB_STR = [string]::Concat($PATH_WEB, "\", $PROJ_NAME)
+# $PATH_FILES_STR = [string]::Concat($PATH_ENVDEV, "\files\", $PROJ_NAME)
+# $PATH_MODULES_STR = [string]::Concat($PATH_ENVDEV, "\modules\", $PROJ_NAME)
+$PATH_WEB_STR = [string]::Concat($DOC_ROOT, "\", $PROJ_NAME)
 #$PATH_CONFIG_STR = [string]::Concat($PATH_ENVDEV, "\files\config_", $PROJ_NAME, "_dev.ini")
 
 # Create folders if does not exist
@@ -236,7 +236,7 @@ createDirIfNotExist("$PATH_ENVDEV/files")
 createDirIfNotExist("$PATH_ENVDEV/modules")
 
 # Create/Update symlink
-createSymbolicLink -target $PATH_FILES -path $PATH_FILES_STR
-createSymbolicLink -target $PATH_MODULES -path $PATH_MODULES_STR
+# createSymbolicLink -target $PATH_FILES -path $PATH_FILES_STR
+# createSymbolicLink -target $PATH_MODULES -path $PATH_MODULES_STR
 createSymbolicLink -target $PATH_WEB -path $PATH_WEB_STR
 #createSymbolicLink -target $PATH_CONFIG -path $PATH_CONFIG_STR
