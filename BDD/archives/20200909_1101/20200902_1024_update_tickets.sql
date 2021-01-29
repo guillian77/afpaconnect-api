@@ -1,2 +1,0 @@
-ALTER TABLE `tickets` CHANGE `id_prioritys` `id_priorities` INT(11) NOT NULL;
-ALTER TABLE `afpaticket`.`tickets` DROP INDEX `tickets_prioritys0_FK`, ADD INDEX `tickets_priorities0_FK` (`id_priorities`) USING BTREE;

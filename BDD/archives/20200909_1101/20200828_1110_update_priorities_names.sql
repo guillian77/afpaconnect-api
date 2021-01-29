@@ -1,2 +1,0 @@
--- Change priority to priorities for fields
-ALTER TABLE `priorities` CHANGE `id_prioritys` `id_priorities` INT(11) NOT NULL AUTO_INCREMENT, CHANGE `designation_prioritys` `designation_priorities` VARCHAR(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL, CHANGE `interval_prioritys` `interval_priorities` TIME NOT NULL, CHANGE `active_prioritys` `active_priorities` TINYINT(1) NOT NULL DEFAULT '1';
