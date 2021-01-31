@@ -148,6 +148,9 @@ class Artisan
             case 'database':
                 $this->makeDatabase();
                 break;
+            case 'migration':
+                $this->makeMigration();
+                break;
         }
     }
 
@@ -156,6 +159,46 @@ class Artisan
         $sql = file_get_contents(__DIR__ . "/BDD/base.sql");
         $this->dbConnect();
         $this->db->_hDb->query($sql);
+    }
+
+    public function makeMigration()
+    {
+        if (!isset($this->args[3]))
+        {
+            echo "You should specify a name to your migration.\n";
+            echo "/!\ NO SPACES, use underscores";
+            return;
+        }
+
+        $datetime = (new DateTime())->format('Ymdhmi');
+        $migName = $datetime . "_" . $this->args[3];
+
+        $content  = "<?php\n";
+        $content .= "class mig_" . $migName . "\n";
+        $content .= "{\n";
+        $content .= "    public \$dbHandle;\n";
+        $content .= "    \n";
+        $content .= "    public function __construct(\$dbHandle)\n";
+        $content .= "    {\n";
+        $content .= "        \$this->dbHandle = \$dbHandle;\n";
+        $content .= "        \$this->up();\n";
+        $content .= "    }\n";
+        $content .= "    \n";
+        $content .= "    public function up()\n";
+        $content .= "    {\n";
+        $content .= "        \n";
+        $content .= "    }\n";
+        $content .= "    \n";
+        $content .= "    public function down()\n";
+        $content .= "    {\n";
+        $content .= "        \n";
+        $content .= "    }\n";
+        $content .= "}\n";
+        $content .= "";
+
+        file_put_contents(__DIR__ . "/BDD/migrations/$migName.php", $content);
+
+        echo "New migration has been created under " . __DIR__ . "/BDD/migrations/$migName.php";
     }
 }
 
