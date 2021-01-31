@@ -41,7 +41,7 @@ class Artisan
     }
 
     /**
-     * Show available commands to user.
+     * Command: Show available commands to user.
      */
     public function help()
     {
@@ -54,7 +54,7 @@ class Artisan
     }
 
     /**
-     * Execute migrations.
+     * Command: Execute migrations.
      */
     public function migrate()
     {
@@ -63,6 +63,28 @@ class Artisan
         $migrationsFiles = $this->listMigrations();
 
         $this->execMigrations($migrationsFiles);
+    }
+
+    /**
+     * Command: Make
+     */
+    public function make()
+    {
+        if (!isset($this->args[2]))
+        {
+            echo "- make database\n";
+            echo "- make migration\n";
+            return;
+        }
+
+        switch ($this->args[2]) {
+            case 'database':
+                $this->makeDatabase();
+                break;
+            case 'migration':
+                $this->makeMigration();
+                break;
+        }
     }
 
     /**
@@ -89,6 +111,11 @@ class Artisan
         return preg_grep("/[0-9]{14}_([a-zA-Z_.])*/", $filelist);
     }
 
+    /**
+     * Execute migrations from last migration find in database migrations table.
+     *
+     * @param $migrationsFiles
+     */
     public function execMigrations($migrationsFiles)
     {
         /**
@@ -135,25 +162,10 @@ class Artisan
         }
     }
 
-    public function make()
-    {
-        if (!isset($this->args[2]))
-        {
-            echo "- make database\n";
-            echo "- make migration\n";
-            return;
-        }
-
-        switch ($this->args[2]) {
-            case 'database':
-                $this->makeDatabase();
-                break;
-            case 'migration':
-                $this->makeMigration();
-                break;
-        }
-    }
-
+    /**
+     * Execute database creation script.
+     * /!\ Database should already been created.
+     */
     public function makeDatabase()
     {
         $sql = file_get_contents(__DIR__ . "/BDD/base.sql");
@@ -161,6 +173,9 @@ class Artisan
         $this->db->_hDb->query($sql);
     }
 
+    /**
+     * Create a new migration file.
+     */
     public function makeMigration()
     {
         if (!isset($this->args[3]))
