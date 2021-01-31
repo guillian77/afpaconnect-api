@@ -7,6 +7,7 @@
 # Table: apps
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS apps;
 CREATE TABLE apps(
         id_application Int  Auto_increment  NOT NULL ,
         app_name       Varchar (255) NOT NULL ,
@@ -21,6 +22,7 @@ CREATE TABLE apps(
 # Table: trainings
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS trainings;
 CREATE TABLE trainings(
         id_training     Int  Auto_increment  NOT NULL ,
         training_name   Varchar (255) NOT NULL ,
@@ -35,6 +37,7 @@ CREATE TABLE trainings(
 # Table: centers
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS centers;
 CREATE TABLE centers(
         id_center                 Int  Auto_increment  NOT NULL ,
         center_name               Varchar (255) NOT NULL ,
@@ -55,6 +58,7 @@ CREATE TABLE centers(
 # Table: users
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS users;
 CREATE TABLE users(
         id_user                Int  Auto_increment  NOT NULL ,
         id_center              Int NOT NULL ,
@@ -84,6 +88,7 @@ CREATE TABLE users(
 # Table: sessions
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions(
         id_session       Int  Auto_increment  NOT NULL ,
         id_training      Int NOT NULL ,
@@ -102,6 +107,7 @@ CREATE TABLE sessions(
 # Table: roles
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS roles;
 CREATE TABLE roles(
         id_role   Int  Auto_increment  NOT NULL ,
         role_name Varchar (255) NOT NULL
@@ -113,6 +119,7 @@ CREATE TABLE roles(
 # Table: functions
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS functions;
 CREATE TABLE functions(
         id_function   Int  Auto_increment  NOT NULL ,
         function_name Varchar (255) NOT NULL
@@ -124,17 +131,20 @@ CREATE TABLE functions(
 # Table: migrations
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS migrations;
 CREATE TABLE migrations(
         id_migration        Int  Auto_increment  NOT NULL ,
-        migration_timestamp TimeStamp NOT NULL
+        migration_datetime Varchar (255) NOT NULL
 	,CONSTRAINT migrations_PK PRIMARY KEY (id_migration)
 )ENGINE=InnoDB;
 
+INSERT INTO `afpaconnect`.`migrations` (`migration_datetime`) VALUES ('1');
 
 #------------------------------------------------------------
 # Table: apps__users__roles
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS apps__users__roles;
 CREATE TABLE apps__users__roles(
         id_application Int NOT NULL ,
         id_user        Int NOT NULL ,
@@ -151,6 +161,7 @@ CREATE TABLE apps__users__roles(
 # Table: users__sessions
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS users__sessions;
 CREATE TABLE users__sessions(
         id_user    Int NOT NULL ,
         id_session Int NOT NULL
@@ -165,6 +176,7 @@ CREATE TABLE users__sessions(
 # Table: centers__trainings
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS centers__trainings;
 CREATE TABLE centers__trainings(
         id_training Int NOT NULL ,
         id_center   Int NOT NULL
@@ -179,6 +191,7 @@ CREATE TABLE centers__trainings(
 # Table: users__functions
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS users__functions;
 CREATE TABLE users__functions(
         id_function Int NOT NULL ,
         id_user     Int NOT NULL ,
@@ -189,4 +202,3 @@ CREATE TABLE users__functions(
 	,CONSTRAINT users__functions_functions_FK FOREIGN KEY (id_function) REFERENCES functions(id_function)
 	,CONSTRAINT users__functions_users0_FK FOREIGN KEY (id_user) REFERENCES users(id_user)
 )ENGINE=InnoDB;
-

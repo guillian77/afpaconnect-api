@@ -35,7 +35,7 @@ Class Configuration	{
 //		}
 //	}
 
-	public static function getGlobalsINI()
+	public static function get()
     {
         return [
 

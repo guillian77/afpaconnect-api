@@ -29,7 +29,7 @@ class Artisan
         }
 
         // Get configuration
-        $this->conf = Configuration::path();
+        $this->conf = Configuration::get();
 
         // Auto call method in this class with first argument passed.
         call_user_func([$this, $this->args[1]]);
@@ -73,7 +73,7 @@ class Artisan
         // Check if handle does not already exist.
         if ( !isset($this->db) )
         {
-            require_once $this->conf['path']['HOME'] . $this->conf['path']['CLASS'] . "/database.php";
+            require_once "DEV/modules/database.php";
             $this->db = new Database($this->conf['db']['hostname'], $this->conf['db']['dbname'], $this->conf['db']['username'], $this->conf['db']['password']);
         }
     }
@@ -133,6 +133,29 @@ class Artisan
         } else {
             echo $migCount . " migration(s) has been applied to database.";
         }
+    }
+
+    public function make()
+    {
+        if (!isset($this->args[2]))
+        {
+            echo "- make database\n";
+            echo "- make migration\n";
+            return;
+        }
+
+        switch ($this->args[2]) {
+            case 'database':
+                $this->makeDatabase();
+                break;
+        }
+    }
+
+    public function makeDatabase()
+    {
+        $sql = file_get_contents(__DIR__ . "/BDD/base.sql");
+        $this->dbConnect();
+        $this->db->_hDb->query($sql);
     }
 }
 
