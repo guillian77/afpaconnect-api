@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<base href="<?= $GLOBALS_INI['BASE_HREF'] ?>">
+<base href="<?= $config['BASE_HREF'] ?>">
 <html class="no-js" lang="fr">
 
 <head>
@@ -33,7 +33,11 @@
     <div class="container">
         <h1>AfpaConnect</h1>
 
-        <?php include $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_FILES"] . $monPHP . ".html" ?>
+        <?php if(isset($_SESSION['user']['uid'])): ?>
+            <a href="user_logout">Logout</a>
+        <?php endif; ?>
+
+        <?php include $config["PATH_FILES"] . $monPHP . ".html" ?>
     </div>
 
     <!-- Global JS file -->

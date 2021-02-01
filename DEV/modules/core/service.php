@@ -47,5 +47,5 @@ class Service extends Initialize {
         // Call Parent destructor
         parent::__destruct();
     }
-
 }
+

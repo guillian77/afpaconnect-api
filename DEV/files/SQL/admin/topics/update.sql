@@ -1,1 +1,0 @@
-UPDATE topics SET designation_topics = "@designation_topics", active_topics = @active_topics WHERE id_topics = @id_topics;

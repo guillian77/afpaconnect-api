@@ -44,13 +44,13 @@ Class Initialize	{
 	 */
 	public function __construct()	{
 		// Instance of Config
-		$this->GLOBALS_INI= Configuration::getGlobalsINI();
+		$this->GLOBALS_INI= Configuration::get();
 
 		// Instance of BDD
-		$this->oBdd = new Database($this->GLOBALS_INI["DB_HOST"],
-								   $this->GLOBALS_INI["DB_NAME"],
-								   $this->GLOBALS_INI["DB_LOGIN"],
-								   $this->GLOBALS_INI["DB_PSW"]);
+		$this->oBdd = new Database($this->GLOBALS_INI["db_hostname"],
+								   $this->GLOBALS_INI["db_name"],
+								   $this->GLOBALS_INI["db_username"],
+								   $this->GLOBALS_INI["db_password"]);
 
 		// Instance of Security to have $this->VARS_HTML
 		$this->oSecu= new Security();

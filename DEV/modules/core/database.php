@@ -49,20 +49,19 @@ Class Database {
 	 * @param array $data
 	 * @return array
 	 */
-	function getSelectDatas(string $spathSQL, array $data=array())	{
+	function getSelectDatas(string $query, array $data=array())	{
 		// content of SQL file
-		$sql= file_get_contents($spathSQL);
+//		$sql= file_get_contents($spathSQL);
 
 		// replace variables @variable from sql by values of the same variables'name
 		foreach ($data as $key => $value) {
-			$sql = str_replace('@'.$key, $value, $sql);
-
+            $query = str_replace('@'.$key, $value, $query);
 		}
 
-		error_log("getSelectDatas = " . $sql);
+		error_log("getSelectDatas = " . $query);
 
 		// Execute la requete
-		$resultats_db= $this->_hDb->prepare($sql);
+		$resultats_db= $this->_hDb->prepare($query);
 		$resultats_db->execute();
 
 		if (!$resultats_db){
@@ -74,7 +73,6 @@ Class Database {
 			$new_ligne= [];
 			foreach ($ligne as $key => $value) {
 				if (!(is_numeric($key)))	{
-//					error_log("getSelectDatas DETAILS = " . $key . " => " . $value);
 					$new_ligne[$key]= $value;
 				}
 			}

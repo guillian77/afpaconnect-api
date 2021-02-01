@@ -1,1 +1,0 @@
-DELETE FROM topics WHERE id_topics = @id_topics;

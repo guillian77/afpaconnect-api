@@ -1,6 +1,6 @@
 <?php
 
-require 'DEV/web/configuration.php';
+require 'DEV/modules/core/configuration.php';
 
 class Artisan
 {
@@ -23,7 +23,7 @@ class Artisan
         $this->args = $_SERVER['argv'];
 
         // Stop Artisan if command does not exist.
-        if (!method_exists($this, $this->args[1])) {
+        if (!method_exists($this, $this->args[1]) || !isset($this->args[1])) {
             $this->help();
             return;
         }
@@ -95,8 +95,8 @@ class Artisan
         // Check if handle does not already exist.
         if ( !isset($this->db) )
         {
-            require_once "DEV/modules/database.php";
-            $this->db = new Database($this->conf['db']['hostname'], $this->conf['db']['dbname'], $this->conf['db']['username'], $this->conf['db']['password']);
+            require_once "DEV/modules/core/database.php";
+            $this->db = new Database($this->conf['db_hostname'], $this->conf['db_name'], $this->conf['db_username'], $this->conf['db_password']);
         }
     }
 
@@ -107,7 +107,7 @@ class Artisan
      */
     public function listMigrations()
     {
-        $filelist = scandir(__DIR__ . "/" . $this->conf['path']['MIGRATIONS']);
+        $filelist = scandir(__DIR__ . "/" . $this->conf['PATH_MIGRATIONS']);
         return preg_grep("/[0-9]{14}_([a-zA-Z_.])*/", $filelist);
     }
 
@@ -146,7 +146,7 @@ class Artisan
                 $migCount++;
 
                 // Load an instance of current migration
-                require __DIR__ . "/" . $this->conf['path']['MIGRATIONS'] . "/" . $migrationsFiles[$k];
+                require __DIR__ . "/" . $this->conf['PATH_MIGRATIONS'] . "/" . $migrationsFiles[$k];
                 $className = str_replace(".php", "","mig_".$migrationsFiles[$k]);
                 new $className($this->db->_hDb);
 
