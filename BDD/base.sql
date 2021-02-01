@@ -2,6 +2,9 @@
 #        Script MySQL.
 #------------------------------------------------------------
 
+DROP DATABASE IF EXISTS afpaconnect;
+CREATE DATABASE IF NOT EXISTS afpaconnect;
+USE afpaconnect;
 
 #------------------------------------------------------------
 # Table: apps

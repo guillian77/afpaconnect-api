@@ -66,6 +66,18 @@ class Artisan
     }
 
     /**
+     * Command: Execute fixtures.
+     */
+    public function fixture()
+    {
+        $this->dbConnect();
+
+        $fixtureFiles = $this->listFixtures();
+
+        $this->execFixtures($fixtureFiles);
+    }
+
+    /**
      * Command: Make
      */
     public function make()
@@ -74,6 +86,7 @@ class Artisan
         {
             echo "- make database\n";
             echo "- make migration\n";
+            echo "- make fixture\n";
             return;
         }
 
@@ -83,6 +96,9 @@ class Artisan
                 break;
             case 'migration':
                 $this->makeMigration();
+                break;
+            case 'fixture':
+                $this->makeFixture();
                 break;
         }
     }
@@ -163,6 +179,40 @@ class Artisan
     }
 
     /**
+     * List fixtures files available.
+     *
+     * @return array|false
+     */
+    public function listFixtures()
+    {
+        $filelist = scandir(__DIR__ . "/" . $this->conf['PATH_FIXTURES']);
+        return preg_grep("/[0-9]{14}_([a-zA-Z_.])*/", $filelist);
+    }
+
+    /**
+     * @param $fixturesFiles
+     */
+    public function execFixtures($fixturesFiles)
+    {
+
+        /**
+         * Only search migration are not executed.
+         */
+        $fixCount = 0;
+        foreach ($fixturesFiles as $k => $fixturesFile)
+        {
+            $fixCount++;
+
+            // Load an instance of current migration
+            require __DIR__ . "/" . $this->conf['PATH_FIXTURES'] . "/" . $fixturesFiles[$k];
+            $className = str_replace(".php", "","fix_".$fixturesFiles[$k]);
+            new $className($this->db->_hDb);
+        }
+
+        echo $fixCount . " fixture(s) has been applied to database.";
+    }
+
+    /**
      * Execute database creation script.
      * /!\ Database should already been created.
      */
@@ -170,7 +220,17 @@ class Artisan
     {
         $sql = file_get_contents(__DIR__ . "/BDD/base.sql");
         $this->dbConnect();
-        $this->db->_hDb->query($sql);
+        if($this->db->_hDb->query($sql)){
+            echo "Database schema has been applied.\n";
+            echo "Starting migrate\n";
+            $this->migrate();
+
+            if ( substr("--fix", 0, 5) )
+            {
+                echo "Inserting data fixtures.\n";
+                $this->fixture();
+            }
+        }
     }
 
     /**
@@ -214,6 +274,42 @@ class Artisan
         file_put_contents(__DIR__ . "/BDD/migrations/$migName.php", $content);
 
         echo "New migration has been created under " . __DIR__ . "/BDD/migrations/$migName.php";
+    }
+
+    public function makeFixture()
+    {
+        if (!isset($this->args[3]))
+        {
+            echo "You should specify a name to your fixture.\n";
+            echo "/!\ NO SPACES, use underscores";
+            return;
+        }
+
+        $datetime = (new DateTime())->format('Ymdhmi');
+        $fixtureName = $datetime . "_" . $this->args[3];
+
+        $content  = "<?php\n";
+        $content .= "class fix_" . $fixtureName . "\n";
+        $content .= "{\n";
+        $content .= "    public \$dbHandle;\n";
+        $content .= "    \n";
+        $content .= "    public function __construct(\$dbHandle)\n";
+        $content .= "    {\n";
+        $content .= "        \$this->dbHandle = \$dbHandle;\n";
+        $content .= "        \$this->exec();\n";
+        $content .= "    }\n";
+        $content .= "    \n";
+        $content .= "    public function exec()\n";
+        $content .= "    {\n";
+        $content .= "        \n";
+        $content .= "    }\n";
+        $content .= "    \n";
+        $content .= "}\n";
+        $content .= "";
+
+        file_put_contents(__DIR__ . "/BDD/fixtures/$fixtureName.php", $content);
+
+        echo "New fixture has been created under " . __DIR__ . "/BDD/fixtures/$fixtureName.php";
     }
 }
 

@@ -17,6 +17,7 @@ Class Configuration	{
         $config["PATH_CORE"]        = $config["PATH_CLASS"] . "core/";
         $config["BASE_HREF"]        = "/afpaconnect/";
         $config["PATH_MIGRATIONS"]  = "BDD/migrations/";
+        $config["PATH_FIXTURES"]    = "BDD/fixtures/";
 
         /**
          * DATABASE
