@@ -1,4 +1,5 @@
 <?php
+namespace App\Core;
 
 /**
  * Class Database
@@ -20,8 +21,8 @@ Class Database {
 	function __construct($host, $name, $login, $psw)	{
 		// Connection to DB : SERVEUR / LOGIN / PASSWORD / NOM_BDD
 		try {
-			$this->_hDb= new PDO('mysql:host='.$host.';dbname='.$name.';charset=utf8', $login, $psw);
-		} catch (PDOException $e) {
+			$this->_hDb= new \PDO('mysql:host='.$host.';dbname='.$name.';charset=utf8', $login, $psw);
+		} catch (\PDOException $e) {
 			echo 'Échec lors de la connexion : ' . $e->getMessage();
 		}
 	}

@@ -1,6 +1,7 @@
 <?php
+namespace App\Controller;
 
-require $config['PATH_CLASS'] . "services/user.php";
+use App\Service\User;
 
 class User_login
 {

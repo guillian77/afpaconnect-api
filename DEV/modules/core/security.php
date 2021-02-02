@@ -1,4 +1,5 @@
 <?php
+namespace App\Core;
 
 /**
  * Class Security | file security.php
@@ -43,9 +44,9 @@ class Security {
 			$axios = [];
 		}
 
-		array_walk_recursive($_POST, 'security::filter');
-		array_walk_recursive($_GET, 'security::filter');
-		array_walk_recursive($_SESSION, 'security::filter');
+		array_walk_recursive($_POST, '\App\Core\security::filter');
+		array_walk_recursive($_GET, '\App\Core\security::filter');
+		array_walk_recursive($_SESSION, '\App\Core\security::filter');
 
 		/**
 		 * Merge arrays

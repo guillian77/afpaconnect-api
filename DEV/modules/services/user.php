@@ -1,6 +1,7 @@
 <?php
+namespace App\Service;
 
-require $config['PATH_CORE'] . 'service.php';
+use App\Core\Service;
 
 class User extends Service
 {
