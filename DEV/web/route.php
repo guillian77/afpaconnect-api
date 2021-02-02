@@ -67,6 +67,8 @@ if(!isset($_SESSION['user']['uid']) ||(isset($_SESSION['user']['uid']) && $_SESS
  * bJSON	TRUE	API MODE
  * bJSON	FALSE	STD MODE
  */
+require $config['PATH_CLASS'] . 'vendor/autoload.php';
+
 $myClass = ucfirst($monPHP);
 
 if ((isset($_GET["bJSON"])) && ($_GET["bJSON"] == 1)) {
