@@ -36,6 +36,7 @@ let fillUserManager = function(user) {
     uManagerBox.show(150);
     
     // Fill user basic informations
+    $('.u_managment__form').find('#uid').val(user['id'])
     $('.u_managment__form').find('#beneficiary').val(user['beneficiary'])
     $('.u_managment__form').find('#lastname').val(user['lastname'])
     $('.u_managment__form').find('#firstname').val(user['firstname'])
