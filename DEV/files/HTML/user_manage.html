@@ -3,10 +3,22 @@
     <h2>Liste des utilisateurs</h2>
 
     <!-- BUTTONS: Start -->
-    <div class="action-buttons">
-        <button class="btn btn-primary"><i class="fas fa-file-csv"></i> Téléversement utilisateurs</button>
-        <a href="#" class="btn btn-secondary"><i class="fas fa-key"></i> Régénération token</a>
+    <div class="flex">
+        <div class="action-buttons form__manage">
+            <form method="post" action="user_upload" method="POST" enctype="multipart/form-data">
+                <select class="select" name="center">
+                    <option value="">Choisisser un centre</option>
+                    <option value="a">a</option>
+                </select>
+                <input type="file" id="upload_user" name="upload_user" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-file-csv"></i>Téléverser</button>
+            </form>
+        </div>
+        <div class="form__manage">
+            <a href="#" class="btn btn-secondary"><i class="fas fa-key"></i> Régénération token</a>
+        </div>
     </div>
+
     <!-- BUTTONS: End -->
 
     <!-- TABLE: Start -->

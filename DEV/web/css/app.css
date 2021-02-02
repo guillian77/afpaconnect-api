@@ -77,7 +77,28 @@ h3 { font-size: 1.4rem; margin-bottom: 10px; }
 
 a { text-decoration: none; }
 
-
+/**
+* --------------------------------------------------------------
+* GLOBAL
+* --------------------------------------------------------------
+*/
+.flex{
+    display: flex;
+}
+.select {
+    position: relative;
+    width: 20em;
+    height: 2.5em;
+    line-height: 3;
+    background: #4e73df;
+    overflow: hidden;
+    border-radius: .25em;
+    cursor: pointer;
+    padding: 0 .5em;
+    color: #fff;
+    font-size: .875rem;
+    margin: 5px;
+}
 /**
  * Buttons
  */
@@ -156,4 +177,11 @@ a { text-decoration: none; }
 
 .form__submit {
     display: block;
+}
+
+.form__manage{
+    text-align:center; 
+    padding:10px;
+    width:50%;
+    align-self: center;
 }
