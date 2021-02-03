@@ -45,6 +45,8 @@ class User_login extends Controller
 
         $errors = $this->errors;
         $this->render("user_login", compact(['errors']));
+        $this->redirect("user_manage");
+
     }
 
     /**

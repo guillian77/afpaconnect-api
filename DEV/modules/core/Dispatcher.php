@@ -2,6 +2,8 @@
 namespace App\Core;
 
 
+use App\Utility\Response;
+
 class Dispatcher
 {
     public $request;
@@ -17,7 +19,13 @@ class Dispatcher
         $this->config = $config;
         $this->request = new Request();
 
-        $this->loadController();
+        // Select STD HTML response or API response.
+        if ( !$this->request->isJSON() )
+        {
+            $this->loadController();
+        } else {
+            $this->loadApiClass();
+        }
     }
 
     /**
@@ -32,5 +40,28 @@ class Dispatcher
             $class = "\App\Controller\\" . ucfirst($this->request->controller);
             new $class();
         }
+    }
+
+    /**
+     * Load API class where XHR request is detected.
+     */
+    public function loadApiClass()
+    {
+        if (empty($this->request->controller))
+        {
+            Response::resp("Empty target method.", 404);
+            return;
+        }
+
+        $apiPath = $this->config['PATH_CLASS'] . "api/" . $this->request->controller . ".php";
+
+        if (!file_exists($apiPath))
+        {
+            Response::resp("API " . $this->request->controller . " not found.", 404);
+            return;
+        }
+
+        $class = "\App\Api\\" . ucfirst($this->request->controller);
+        new $class();
     }
 }

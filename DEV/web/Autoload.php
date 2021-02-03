@@ -46,6 +46,9 @@ class Autoload
             case 'App\Api':
                 $dir = $this->_config['PATH_CLASS'] . 'api/';
                 break;
+            case 'App\Utility':
+                $dir = $this->_config['PATH_CLASS'] . 'utilities/';
+                break;
         }
 
         return $dir;

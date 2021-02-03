@@ -38,17 +38,48 @@ class Controller
         // Define path of the view asked.
         $viewPath = $config['PATH_FILES'] . $name . ".html";
 
-        // Start caching output.
+        /**
+         * CATCHING JAVASCRIPT
+         * If there is a javascript file called like the controller name. Load it!
+         */
         ob_start();
-        // Check if view file exist.
+
+        $jsPath = "js/features/" . $this->request->controller . ".js";
+        if ( file_exists($jsPath) )
+        {
+            echo '<script src="' . $jsPath . '"></script>';
+        }
+        $javascript = ob_get_clean();
+
+        /**
+         * CATCHING THE VIEW
+         */
+        ob_start();
+
         if ( file_exists($viewPath) )
         {
             require $viewPath;
         }
 
-        // Put cache inside this variable.
         $content = ob_get_clean();
 
         require_once $config['PATH_FILES'] . "layout.html";
+    }
+
+    /**
+     * Redirect user to a target URL.
+     *
+     * @param string $target Target URL to reach after redirection.
+     */
+    public function redirect(string $target)
+    {
+        $target = $this->request->base . $target;
+
+        if ( headers_sent() )
+        {
+            echo '<meta http-equiv="refresh" content="durée;URL=' . $target . '">';
+        } else{
+            header('Location: ' . $target);
+        }
     }
 }
