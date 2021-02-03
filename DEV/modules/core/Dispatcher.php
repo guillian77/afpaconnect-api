@@ -2,6 +2,7 @@
 namespace App\Core;
 
 
+use App\Middleware\Authenticate;
 use App\Utility\Response;
 
 class Dispatcher
@@ -18,6 +19,8 @@ class Dispatcher
     {
         $this->config = $config;
         $this->request = new Request();
+
+        Authenticate::check($this->request);
 
         // Select STD HTML response or API response.
         if ( !$this->request->isXhrRequest() )

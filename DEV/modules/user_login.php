@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Core\Controller;
+use App\Middleware\Authenticate;
 use App\Service\User;
 use function App\Core\dd;
 
@@ -19,6 +20,9 @@ class User_login extends Controller
 
     public function __construct()
     {
+        // Disallow this page is user is already logged.
+        if (Authenticate::isLogged()) { $this->redirect('user_manage'); }
+
         parent::__construct();
 
         // Load User service
@@ -45,8 +49,6 @@ class User_login extends Controller
 
         $errors = $this->errors;
         $this->render("user_login", compact(['errors']));
-        $this->redirect("user_manage");
-
     }
 
     /**

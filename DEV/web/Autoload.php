@@ -51,6 +51,9 @@ class Autoload
             case 'App\Utility':
                 $dir = $this->_config['PATH_CLASS'] . 'utilities/';
                 break;
+            case 'App\Middleware':
+                $dir = $this->_config['PATH_CLASS'] . 'middleware/';
+                break;
         }
 
         return $dir;
