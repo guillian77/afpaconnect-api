@@ -2,8 +2,12 @@
 namespace Artisan;
 
 use App\Core\Configuration;
+use App\Core\Database;
 
 require 'DEV/modules/core/Configuration.php';
+
+// TODO: Factorise make methods
+// TODO: Use PATH from configuration instead of hard links.
 
 class Artisan
 {
@@ -113,6 +117,9 @@ class Artisan
                 break;
             case 'controller':
                 $this->makeController();
+                break;
+            case 'api':
+                $this->makeApi();
                 break;
         }
     }
@@ -259,7 +266,7 @@ class Artisan
             return;
         }
 
-        $datetime = (new DateTime())->format('Ymdhmi');
+        $datetime = (new \DateTime())->format('Ymdhmi');
         $migName = $datetime . "_" . $this->args[3];
 
         $content  = "<?php\n";
@@ -299,7 +306,7 @@ class Artisan
             return;
         }
 
-        $datetime = (new DateTime())->format('Ymdhmi');
+        $datetime = (new \DateTime())->format('Ymdhmi');
         $fixtureName = $datetime . "_" . $this->args[3];
 
         $content  = "<?php\n";
@@ -388,6 +395,36 @@ class Artisan
         file_put_contents(__DIR__ . "/DEV/modules/$controllerName.php", $content);
 
         echo "New controller has been created under " . __DIR__ . "/BDD/fixtures/$controllerName.php";
+    }
+
+    public function makeApi()
+    {
+        if (!isset($this->args[3]))
+        {
+            echo "You should specify a name to your API.\n";
+            echo "/!\ NO SPACES, use underscores";
+            return;
+        }
+
+        $apiName = $this->args[3];
+
+        $content  = "<?php\n";
+        $content .= "namespace App\Api;\n";
+        $content .= "\n";
+        $content .= "use App\Core\Controller;\n";
+        $content .= "\n";
+        $content .= "class " . $apiName . " extends Controller\n";
+        $content .= "{\n";
+        $content .= "    public function __construct()\n";
+        $content .= "    {\n";
+        $content .= "        parent::__construct();\n";
+        $content .= "    }\n";
+        $content .= "}\n";
+        $content .= "";
+
+        file_put_contents(__DIR__ . "/DEV/modules/api/$apiName.php", $content);
+
+        echo "New controller has been created under " . __DIR__ . "/DEV/modules/api/$apiName.php";
     }
 }
 
