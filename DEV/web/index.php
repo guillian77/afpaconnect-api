@@ -31,6 +31,18 @@ new Dispatcher($config);
 
 die();
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Class dynamic
 if ((isset($_GET["page"])) && ($_GET["page"] != ""))
 {

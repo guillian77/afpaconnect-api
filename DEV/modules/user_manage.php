@@ -1,6 +1,12 @@
 <?php
+namespace App\Controller;
 
-class User_manage
+use App\Core\Controller;
+
+class User_manage extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->render("user_manage");
+    }
 }

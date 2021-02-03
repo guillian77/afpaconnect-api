@@ -8,6 +8,10 @@ class Dispatcher
 
     private $config;
 
+    /**
+     * Dispatcher constructor.
+     * @param $config
+     */
     public function __construct($config)
     {
         $this->config = $config;
@@ -16,6 +20,9 @@ class Dispatcher
         $this->loadController();
     }
 
+    /**
+     * Load controller.
+     */
     public function loadController()
     {
         $controllerPath = $this->config['PATH_CLASS'] . $this->request->controller . ".php";

@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller;
 
+use App\Core\Controller;
 use App\Service\User;
+use function App\Core\dd;
 
-class User_login
+class User_login extends Controller
 {
     /**
      * @var array
@@ -17,6 +19,8 @@ class User_login
 
     public function __construct()
     {
+        parent::__construct();
+
         // Load User service
         $User = new User();
         $this->VARS_HTML = $User->VARS_HTML;
@@ -27,14 +31,20 @@ class User_login
 
             $user = $User->getUser($this->VARS_HTML['username']);
 
-            $checked = password_verify($this->VARS_HTML['password'], $user[0]['user_password']);
+            if (!isset($user[0])) {
+                array_push($this->errors, "Les identifiants semblent incorrects. Veuillez essayer avec d'autres identifiants.");
+            } else {
+                $checked = password_verify($this->VARS_HTML['password'], $user[0]['user_password']);
 
-            if ($checked)
-            {
-                $this->connectUser($user);
+                if ($checked)
+                {
+                    $this->connectUser($user);
+                }
             }
         }
 
+        $errors = $this->errors;
+        $this->render("user_login", compact(['errors']));
     }
 
     /**
