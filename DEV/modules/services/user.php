@@ -31,10 +31,22 @@ class User extends Service
     }
 
     /**
-     * @param int $limit Max users to get
+     * Get all users.
+     *
+     * @return array
      */
-    public function getUsers(int $limit = null)
+    public function getUsers()
     {
+        return $this->oBdd->getSelectDatas("SELECT * FROM users GROUP BY id_user");
+    }
 
+    /**
+     * Get all users.
+     *
+     * @return array
+     */
+    public function getUsersSecured()
+    {
+        return $this->oBdd->getSelectDatas("SELECT id_user, id_center, user_username, user_identifier, user_name, user_firstName, user_mailPro, user_mailPerso, user_phone, user_address, user_complementAddress, user_zipCode, user_city, user_country, user_gender, user_status, user_created_at, user_updated_at FROM users GROUP BY id_user");
     }
 }

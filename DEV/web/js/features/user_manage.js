@@ -3,7 +3,7 @@
 *
 * @package AfpaConnect Project
 * @subpackage javascript
-* @author @Afpa Lab Team - Aufrère Guillian && Campillo Lucas
+* @author @Afpa Lab Team - Aufrère Guillian
 * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
 * @version v1.0
 *
@@ -11,20 +11,11 @@
 * - GENERAL
 */
 
-console.log('test');
-
-let users = [
-    {id: 15, beneficiary: "4616545748", lastname: "Campillo", firstname: "Lucas", email: "test@test.fr", phone: "0615171309"},
-    {id: 16, beneficiary: "4616545748", lastname: "Aufrère", firstname: "Guillian", email: "test@test.fr", phone: "0615171309"},
-    {id: 17, beneficiary: "4616545748", lastname: "Melheb", firstname: "Younes", email: "test@test.fr", phone: "0615171309"},
-    {id: 18, beneficiary: "4616545748", lastname: "Doe", firstname: "John", email: "test@test.fr", phone: "0615171309"},
-    {id: 19, beneficiary: "4616545748", lastname: "Patrick", firstname: "Jean", email: "test@test.fr", phone: "0615171309"},
-    {id: 20, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-    {id: 21, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-    {id: 22, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-    {id: 23, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-];
-
+/**
+ * Fill user manager
+ *
+ * @param user
+ */
 let fillUserManager = function(user) {
     let uManagerBox = $('.u_managment');
     let uManagerBoxForm = $('.u_managment__form');
@@ -41,7 +32,7 @@ let fillUserManager = function(user) {
     $('.u_managment__form').find('#phone').val(user['phone'])
 
 
-    // Listen form submiting
+    // Listen form submitting
     uManagerBoxForm.on('submit', event => {
         event.preventDefault();
         uManagerBox.hide();
@@ -51,12 +42,12 @@ let fillUserManager = function(user) {
 /**
  * Fill HTML table with associative array of data
  * @param {*} table Table element selector
- * @param {*} data  Data
+ * @param users
  */
-let fillTable = function(table, data)
-{
+let fillTable = function(table, users) {
     let tableBody = $(table + ' tbody');
-    data.forEach((user, i) => {
+
+    $.each(users, (i, user) => {
         let tr = document.createElement('tr');
         tr.dataset.id = i;
         tr.id = "user-" + i;
@@ -67,7 +58,21 @@ let fillTable = function(table, data)
             td.innerHTML = value;
             tr.append(td)
         })
-    });
+    })
+}
+
+let getUsers = async function() {
+    let users = await post('user_manage')
+        .then(resp => {
+            // console.log(resp)
+            return resp
+        })
+        .catch(err => {
+            // console.log(err)
+            return err
+        })
+
+    fillTable('#user_list', users)
 }
 
 const configuration = {
@@ -91,23 +96,29 @@ const configuration = {
     },
     "columns": [
         {// UID
+            // "data": "id",
             "orderable": false,
             "visible": false
         },
         {// BENEFICIARY
-            "orderable": true
-        },
-        {// FIRSTNAME
+            // "data": "beneficiary",
             "orderable": true
         },
         {// LASTNAME
+            // "data": "lastname",
             "orderable": false
         },
+        {// FIRSTNAME
+            // "data": "firstname",
+            "orderable": true
+        },
         {// EMAIL
+            // "data": "email",
             "orderable": false,
             "visible": false
         },
         {// PHONE
+            // "data": "phone",
             "orderable": false,
             "visible": false
         }
@@ -115,7 +126,7 @@ const configuration = {
     'retrieve': true
 };
 
-$(document).ready(function() {
-    fillTable('#user_list', users);
+$(document).ready(function () {
+    getUsers();
     $('#user_list').DataTable(configuration);
 })
