@@ -1,9 +1,5 @@
-/DEV/files/config_afpaticket_dev.ini
 .DS_Store
 .idea
 DEV/modules/vendor
-DEV/modules/composer.json
-DEV/modules/composer.lock
-DEV/modules/tests
 DEV/web/configuration_phpunit.php
-DEV/modules/core/configuration.php
+vendor

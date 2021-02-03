@@ -1,4 +1,5 @@
 <?php
+namespace App\Core;
 
 Class Configuration	{
 
@@ -7,6 +8,11 @@ Class Configuration	{
      */
 	public static function get(): array
     {
+        /**
+         * PATH
+         */
+        $config["PORT"] = 8000;
+
         /**
          * PATH
          */
