@@ -1,4 +1,5 @@
 <?php
+namespace App\Core;
 
 Class Configuration	{
 
@@ -7,9 +8,11 @@ Class Configuration	{
      */
 	public static function get(): array
     {
+
         /**
          * PATH
          */
+        $config["PORT"] = 8000;
         $config["PATH_HOME"]        = "C:/xampp/htdocs/";
         $config["PATH_FILES"]       = $config["PATH_HOME"] . "files/afpaconnect/HTML/";
         $config["PATH_SQL"]         = $config["PATH_HOME"] . "files/afpaconnect/SQL/";
