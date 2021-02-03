@@ -42,6 +42,8 @@ class Dispatcher
         {
             $class = "\App\Controller\\" . ucfirst($this->request->controller);
             new $class();
+        } else {
+            $this->notFound();
         }
     }
 
@@ -66,5 +68,12 @@ class Dispatcher
 
         $class = "\App\Api\\" . ucfirst($this->request->controller);
         new $class();
+    }
+
+    public function notFound()
+    {
+        http_response_code(404);
+        header('HTTP/1.0 404 page not found');
+        require $this->config['PATH_FILES'] . "404.php";
     }
 }
