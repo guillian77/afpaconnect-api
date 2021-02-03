@@ -40,7 +40,7 @@
             <?php endif; ?>
         </header>
 
-        <?php include $config["PATH_FILES"] . $monPHP . ".html" ?>
+        <?= $content; ?>
 
         <footer class=" footer boxed">
             <p>&copy; 2021  Developped by Aufrère Guillian & Campillo Lucas for AFPA</p>
@@ -51,6 +51,9 @@
     <script src="datatable/datatables.min.js"></script>
     <script src="fontawesome/js/all.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- JS FOR FEATURE -->
+    <?= $javascript; ?>
 </body>
 
 </html>
