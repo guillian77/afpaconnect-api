@@ -49,4 +49,3 @@ $_SESSION['BASE_HREF'] = $config['BASE_HREF'];
 require $config['PATH_CLASS'] . 'vendor/autoload.php';
 require 'Autoload.php';
 new Autoload($config);
-new Dispatcher($config);

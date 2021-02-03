@@ -22,6 +22,8 @@ class Autoload
 
             $this->load( $this->associate() );
         });
+
+        new Dispatcher($this->_config);
     }
 
     /**
