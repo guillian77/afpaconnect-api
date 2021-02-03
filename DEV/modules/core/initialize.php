@@ -1,22 +1,9 @@
 <?php
+namespace App\Core;
+
 require_once "database.php";
 require_once "security.php";
 
-/**
- * Class Initialize | file initialize.php
- *
- * In this class, we find all about initialize
- *
- * List of classes needed for this class
- * database.php
- * security.php
- *
- * @package AfpaCar Project
- * @subpackage AfpaCar
- * @author @Afpa Lab Team
- * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
- * @version v1.0
- */
 Class Initialize	{
 	/**
 	 * @var object $oBdd
@@ -53,7 +40,7 @@ Class Initialize	{
 								   $this->GLOBALS_INI["db_password"]);
 
 		// Instance of Security to have $this->VARS_HTML
-		$this->oSecu= new Security();
+		$this->oSecu = new Security();
 		$this->VARS_HTML= $this->oSecu->VARS_HTML;
 
 		return $this->oBdd;

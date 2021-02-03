@@ -1,13 +1,5 @@
 <?php
-
-/**
- * Class Response | file response.php
- *
- * @package AfpaTicket Project
- * @author @Afpa Lab Team - Guillian Aufrère
- * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
- * @version v1.0
- */
+namespace App\Utility;
 
 class Response {
 
@@ -17,5 +9,17 @@ class Response {
      */
     public static function json($data) {
         echo json_encode($data);
+    }
+
+    /**
+     *
+     * @param string $message
+     * @param int $code
+     */
+    public static function resp(string $message, int $code = 200)
+    {
+        http_response_code($code);
+        header('HTTP/1.0 ' . $message);
+        self::json($message);
     }
 }

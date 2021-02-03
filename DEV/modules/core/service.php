@@ -1,24 +1,6 @@
 <?php
+namespace App\Core;
 
-require_once "initialize.php";
-
-/**
- * Class service | file service.php
- *
- * In this class, we have methods for :
- *
- * With this interface, we'll be able to ....... please describe
- *
- * List of classes needed for this class
- *
- * require_once "initialize.php";
- *
- * @package AfpaCar Project
- * @subpackage Initialize
- * @author @Afpa Lab Team - Prenom Nom stagiaire
- * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
- * @version v1.0
- */
 class Service extends Initialize {
 
     /**
@@ -48,4 +30,3 @@ class Service extends Initialize {
         parent::__destruct();
     }
 }
-
