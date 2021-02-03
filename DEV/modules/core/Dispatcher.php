@@ -20,7 +20,7 @@ class Dispatcher
         $this->request = new Request();
 
         // Select STD HTML response or API response.
-        if ( !$this->request->isJSON() )
+        if ( !$this->request->isXhrRequest() )
         {
             $this->loadController();
         } else {

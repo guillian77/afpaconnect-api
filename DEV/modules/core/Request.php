@@ -44,7 +44,7 @@ class Request
      *
      * @return bool
      */
-    public function isJSON():bool
+    public function isXhrRequest():bool
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
         {
