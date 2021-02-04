@@ -1,13 +1,12 @@
 <?php
 namespace App\Api;
 
-use App\Core\Controller;
 use App\Utility\Response;
 
-class Exemple extends Controller
+class Exemple
 {
-    public function __construct()
+    public function manage()
     {
-        Response::json("Am called Example");
+        Response::json("ok");
     }
 }
