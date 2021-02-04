@@ -36,8 +36,10 @@ function debug($toDebug)
 /**
  * Load configuration
  */
-require "../modules/core/configuration.php";
+
+require "../modules/core/Configuration.php";
 $config = Configuration::get();
+
 $_SESSION['BASE_HREF'] = $config['BASE_HREF'];
 
 /**

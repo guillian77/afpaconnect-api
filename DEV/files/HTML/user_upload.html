@@ -1,0 +1,30 @@
+<!-- MAIN: Start -->
+<main class="main boxed">
+    <h2>Téléversement des utilisateurs</h2>
+    <form method="post" action="user_upload" method="POST" enctype="multipart/form-data">
+        <select class="select" id="center">
+
+            <option value="">Choisisser un centre</option>
+
+            <option value="1">Centre 1</option>
+
+        </select>
+        <input hidden id="upload_file" type="file" name="upload_user" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+        <button id="btn_submit" name="btn_submit" value="submit" type="submit" class="btn btn-secondary">Téléverser</button>
+    </form>
+    <div class="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">    
+        <label for="upload_file">
+            <div class="upload-zone">
+                <p>Sélectionner ou déposer un fichier</p>
+                <img src="https://img.icons8.com/carbon-copy/100/000000/download.png"/>
+            </div>
+        </label>
+    </div>
+
+
+    <div class="center" id="upload_confirm"></div>
+    <!-- TABLE: End -->
+</main>
+
+</aside>
+<script src="js/user_upload.js"></script>

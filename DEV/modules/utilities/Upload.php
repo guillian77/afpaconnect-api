@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Utility;
+
+use SimpleXLSX;
 
 class Upload
 {
@@ -20,7 +23,6 @@ class Upload
             $name = basename($_FILES["upload_user"]["name"]);
             move_uploaded_file($tmp_name, $config["PATH_UPLOAD"].$name);
         }
-
         if ( $xlsx = SimpleXLSX::parse($tmp_name) ) {
             return $xlsx->rows();
         } else {
