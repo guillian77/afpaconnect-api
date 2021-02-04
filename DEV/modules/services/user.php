@@ -27,7 +27,7 @@ class User extends Service
             'username' => $username
         ];
 
-        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_username = '@username'", $param);
+        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_username = '@username';", $param);
     }
 
     /**
