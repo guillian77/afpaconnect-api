@@ -54,8 +54,8 @@ class User extends Controller
         foreach($users as $user){
             $this->UserService->insert($user);
         }
-
-
+        Response::resp('200');
+    }
     /**
      * Allow user login from external app.
      */

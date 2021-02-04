@@ -49,14 +49,14 @@ class User extends Service
         $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@fisrtname","@name")';
         
         $this->oBdd->treatDatas($query,$param);
-
+        
         $paramFormation = [
             "formation"=> $user->Formation,
             "id_user"=> $this->oBdd->getLastInsertId()
         ];
-        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = @formation;';
-        $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, "@session")';
+        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation";';
+        $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, @session)';
 
-        $this->oBdd->treatDatas($query,$param);
+        $this->oBdd->treatDatas($query,$paramFormation);
     }
 }

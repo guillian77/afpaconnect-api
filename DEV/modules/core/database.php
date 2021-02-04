@@ -100,7 +100,7 @@ Class Database {
 		}
 
 		error_log("treatDatas = " . $query);
-
+		
 		// Execute la requete
 		$resultats_db= $this->_hDb->query($query);
 
