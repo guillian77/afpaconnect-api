@@ -16,49 +16,37 @@
  * REQUEST
  * --------------------------------------------------------------
  */
-
-console.log('APP')
-
 /**
  * XHR POST Request
+ *
  * @param url
  * @param parameters
- * @param callback
  * @param file
+ * @return {*}
  */
-let post = function (url, parameters, callback, file= false) {
-    $.ajax({
+let post = function (url, parameters, file = false) {
+    return $.ajax({
         url: url,
         data: parameters,
         type: 'POST',
         processData: file === false,
         contentType: file === false,
-        success: resp => {
-            callback(resp)
-        },
-        error: err => {
-            callback(err)
-        }
     });
-}
+};
 
 /**
  * XHR GET Request
+ *
  * @param url
  * @param parameters
- * @param callback
- * @param file
+ * @return {*}
  */
-let get = function (url, parameters, callback, file= false) {
-    $.ajax({
+let get = async function (url, parameters, file = false) {
+    return $.ajax({
         url: url,
         data: parameters,
         type: 'GET',
-        success: resp => {
-            callback(resp)
-        },
-        error: err => {
-            callback(err)
-        }
+        processData: file === false,
+        contentType: file === false,
     });
-}
+};
