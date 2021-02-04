@@ -9,11 +9,14 @@ Class Configuration	{
      */
 	public static function get(): array
     {
-
+        /**
+         * GENERAL
+         */
+        $config["PORT"] = 80;
+        
         /**
          * PATH
          */
-        $config["PORT"] = 80;
         $config["PATH_HOME"]        = "C:/xampp/htdocs/";
         $config["PATH_FILES"]       = $config["PATH_HOME"] . "files/afpaconnect/HTML/";
         $config["PATH_SQL"]         = $config["PATH_HOME"] . "files/afpaconnect/SQL/";
