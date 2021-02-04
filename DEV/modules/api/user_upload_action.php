@@ -24,16 +24,14 @@ class User_upload_action
         $User = new User();
         $this->VARS_HTML = $User->VARS_HTML;
         
-            $isXLS = ($_FILES["fileToUpload"]['type'] === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-            $_FILES["upload_user"]['type'] === "application/vnd.ms-excel"  ? true : false);
+        $isXLS = ($_FILES["fileToUpload"]['type'] === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        $_FILES["upload_user"]['type'] === "application/vnd.ms-excel"  ? true : false);
 
-            if(isset($this->VARS_HTML['center']) && $this->VARS_HTML['center'] != null && $isXLS){
-
-                $tmp_name = $_FILES["fileToUpload"]["tmp_name"];
-                $content = Upload::parse($tmp_name);
-                echo json_encode($content,JSON_FORCE_OBJECT|JSON_UNESCAPED_UNICODE);
-
-            }
+        if(isset($this->VARS_HTML['center']) && $this->VARS_HTML['center'] != null && $isXLS){
+            $tmp_name = $_FILES["fileToUpload"]["tmp_name"];
+            $content = Upload::parse($tmp_name);
+            echo json_encode($content,JSON_FORCE_OBJECT|JSON_UNESCAPED_UNICODE);
+        }
         
 
     }

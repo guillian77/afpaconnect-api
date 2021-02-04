@@ -22,6 +22,8 @@ class Autoload
 
             $this->load( $this->associate() );
         });
+
+        new Dispatcher($this->_config);
     }
 
     /**
@@ -48,6 +50,9 @@ class Autoload
                 break;
             case 'App\Utility':
                 $dir = $this->_config['PATH_CLASS'] . 'utilities/';
+                break;
+            case 'App\Middleware':
+                $dir = $this->_config['PATH_CLASS'] . 'middleware/';
                 break;
         }
 

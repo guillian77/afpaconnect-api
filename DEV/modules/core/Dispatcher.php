@@ -2,6 +2,7 @@
 namespace App\Core;
 
 
+use App\Middleware\Authenticate;
 use App\Utility\Response;
 
 class Dispatcher
@@ -18,6 +19,8 @@ class Dispatcher
     {
         $this->config = $config;
         $this->request = new Request();
+
+        Authenticate::check($this->request);
 
         // Select STD HTML response or API response.
         if ( !$this->request->isXhrRequest() )
@@ -39,6 +42,8 @@ class Dispatcher
         {
             $class = "\App\Controller\\" . ucfirst($this->request->controller);
             new $class();
+        } else {
+            $this->notFound();
         }
     }
 
@@ -63,5 +68,12 @@ class Dispatcher
 
         $class = "\App\Api\\" . ucfirst($this->request->controller);
         new $class();
+    }
+
+    public function notFound()
+    {
+        http_response_code(404);
+        header('HTTP/1.0 404 page not found');
+        require $this->config['PATH_FILES'] . "404.php";
     }
 }

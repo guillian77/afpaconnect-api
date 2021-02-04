@@ -1,6 +1,13 @@
 <?php
+namespace Artisan;
 
-require 'DEV/modules/core/configuration.php';
+use App\Core\Configuration;
+use App\Core\Database;
+
+require 'DEV/modules/core/Configuration.php';
+
+// TODO: Factorise make methods
+// TODO: Use PATH from configuration instead of hard links.
 
 class Artisan
 {
@@ -50,7 +57,13 @@ class Artisan
         echo "COMMANDS AVAILABLE\n";
         echo "---------------------------------\n";
         echo "- help       Show help\n";
-        echo "- migrate    Execute migrations\n";
+        echo "- migrate    Execute migrations (SQL updates) to database.\n";
+        echo "- make       Execute migrations\n";
+        echo "  > make database [name]        Create database structure and apply migrations and fixtures.\n";
+        echo "  > make migration [name]       Create a new migration file.\n";
+        echo "  > make fixture [name]         Create a new fixture file.\n";
+        echo "  > make controller [name]      Create a new controller file. \n";
+        echo "  > make api [name]             Create a new API file.\n";
     }
 
     /**
@@ -84,9 +97,11 @@ class Artisan
     {
         if (!isset($this->args[2]))
         {
-            echo "- make database\n";
-            echo "- make migration\n";
-            echo "- make fixture\n";
+            echo "- make database [name]        Create database structure and apply migrations and fixtures.\n";
+            echo "- make migration [name]       Create a new migration file.\n";
+            echo "- make fixture [name]         Create a new fixture file.\n";
+            echo "- make controller [name]      Create a new controller file. \n";
+            echo "- make api [name]             Create a new API file.\n";
             return;
         }
 
@@ -99,6 +114,12 @@ class Artisan
                 break;
             case 'fixture':
                 $this->makeFixture();
+                break;
+            case 'controller':
+                $this->makeController();
+                break;
+            case 'api':
+                $this->makeApi();
                 break;
         }
     }
@@ -245,7 +266,7 @@ class Artisan
             return;
         }
 
-        $datetime = (new DateTime())->format('Ymdhmi');
+        $datetime = (new \DateTime())->format('Ymdhmi');
         $migName = $datetime . "_" . $this->args[3];
 
         $content  = "<?php\n";
@@ -285,7 +306,7 @@ class Artisan
             return;
         }
 
-        $datetime = (new DateTime())->format('Ymdhmi');
+        $datetime = (new \DateTime())->format('Ymdhmi');
         $fixtureName = $datetime . "_" . $this->args[3];
 
         $content  = "<?php\n";
@@ -310,6 +331,100 @@ class Artisan
         file_put_contents(__DIR__ . "/BDD/fixtures/$fixtureName.php", $content);
 
         echo "New fixture has been created under " . __DIR__ . "/BDD/fixtures/$fixtureName.php";
+    }
+
+    public function makeController()
+    {
+        if (!isset($this->args[3]))
+        {
+            echo "You should specify a name to your controller.\n";
+            echo "/!\ NO SPACES, use underscores";
+            return;
+        }
+
+        $controllerName = $this->args[3];
+
+        $content  = "<?php\n";
+        $content .= "namespace App\Controller;\n";
+        $content .= "\n";
+        $content .= "use App\Core\Controller;\n";
+        $content .= "\n";
+        $content .= "class " . $controllerName . " extends Controller\n";
+        $content .= "{\n";
+        $content .= "    public function __construct()\n";
+        $content .= "    {\n";
+        $content .= "        parent::__construct();\n";
+        $content .= "    }\n";
+
+        if (isset($this->args[4]) && $this->args[4] == "--crud")
+        {
+            $content .= "\n";
+            $content .= "    public function index()\n";
+            $content .= "    {\n";
+            $content .= "        \n";
+            $content .= "    }\n";
+
+            $content .= "\n";
+            $content .= "    public function create()\n";
+            $content .= "    {\n";
+            $content .= "        \n";
+            $content .= "    }\n";
+
+            $content .= "\n";
+            $content .= "    public function edit()\n";
+            $content .= "    {\n";
+            $content .= "        \n";
+            $content .= "    }\n";
+
+            $content .= "\n";
+            $content .= "    public function update()\n";
+            $content .= "    {\n";
+            $content .= "        \n";
+            $content .= "    }\n";
+
+            $content .= "\n";
+            $content .= "    public function delete()\n";
+            $content .= "    {\n";
+            $content .= "        \n";
+            $content .= "    }\n";
+        }
+
+        $content .= "}\n";
+        $content .= "";
+
+        file_put_contents(__DIR__ . "/DEV/modules/$controllerName.php", $content);
+
+        echo "New controller has been created under " . __DIR__ . "/BDD/fixtures/$controllerName.php";
+    }
+
+    public function makeApi()
+    {
+        if (!isset($this->args[3]))
+        {
+            echo "You should specify a name to your API.\n";
+            echo "/!\ NO SPACES, use underscores";
+            return;
+        }
+
+        $apiName = $this->args[3];
+
+        $content  = "<?php\n";
+        $content .= "namespace App\Api;\n";
+        $content .= "\n";
+        $content .= "use App\Core\Controller;\n";
+        $content .= "\n";
+        $content .= "class " . $apiName . " extends Controller\n";
+        $content .= "{\n";
+        $content .= "    public function __construct()\n";
+        $content .= "    {\n";
+        $content .= "        parent::__construct();\n";
+        $content .= "    }\n";
+        $content .= "}\n";
+        $content .= "";
+
+        file_put_contents(__DIR__ . "/DEV/modules/api/$apiName.php", $content);
+
+        echo "New controller has been created under " . __DIR__ . "/DEV/modules/api/$apiName.php";
     }
 }
 
