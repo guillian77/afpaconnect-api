@@ -41,13 +41,15 @@ class Request
             }
         }
 
-        foreach ($_GET as $k => $v) {
-            $this->get[$k] = htmlspecialchars($v);
-        }
-
-        foreach ($_POST as $k => $v) {
-            $this->post[$k] = htmlspecialchars($v);
-        }
+//        foreach ($_GET as $k => $v) {
+//            $this->get[$k] = htmlspecialchars($v);
+//        }
+//
+//        foreach ($_POST as $k => $v) {
+//            $this->post[$k] = htmlspecialchars($v);
+//        }
+        $this->get = $_GET;
+        $this->post = $_POST;
     }
 
     /**
