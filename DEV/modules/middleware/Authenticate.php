@@ -4,7 +4,6 @@
 namespace App\Middleware;
 
 
-use function App\Core\dd;
 
 class Authenticate
 {
