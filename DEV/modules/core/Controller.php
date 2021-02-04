@@ -32,6 +32,9 @@ class Controller
             extract($params);
         }
 
+        $request = $this->request;
+        $vue = $this;
+
         // Get configuration for view path.
         $config = Configuration::get();
 
@@ -64,6 +67,17 @@ class Controller
         $content = ob_get_clean();
 
         require_once $config['PATH_FILES'] . "layout.html";
+    }
+
+    /**
+     * Construct an URL from base URL.
+     *
+     * @param $target
+     * @return string
+     */
+    public function path($target = null)
+    {
+        return $this->request->base . $target;
     }
 
     /**
