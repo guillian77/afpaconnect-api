@@ -195,6 +195,10 @@ header {
 header>a {
     /*align-self: center;*/
 }
+
+header .header__title { color: inherit; transition: 0.3s }
+header .header__title:hover { opacity: 0.8 }
+
 /**
 * --------------------------------------------------------------
 * USERS LIST
