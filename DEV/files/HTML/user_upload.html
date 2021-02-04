@@ -4,13 +4,12 @@
     <form method="post" action="user_upload" method="POST" enctype="multipart/form-data">
         <select class="select" id="center">
 
-            <option value="">Choisisser un centre</option>
+            <option value="null">Choisisser un centre</option>
 
             <option value="1">Centre 1</option>
 
         </select>
         <input hidden id="upload_file" type="file" name="upload_user" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-        <button id="btn_submit" name="btn_submit" value="submit" type="submit" class="btn btn-secondary">Téléverser</button>
     </form>
     <div class="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">    
         <label for="upload_file">
