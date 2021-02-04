@@ -29,8 +29,8 @@ let post = function (url, parameters, file = false) {
         url: url,
         data: parameters,
         type: 'POST',
-        processData: file === false,
-        contentType: file === false,
+        processData: file,
+        contentType: file,
     });
 };
 

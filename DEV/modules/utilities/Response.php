@@ -7,7 +7,7 @@ class Response {
      * Encode data to JSON
      * @param Mixed $data Data to encode
      */
-    public static function json($data) {
+    public static function json($data, $options) {
         header('Content-type: application/json');
         echo json_encode($data);
     }

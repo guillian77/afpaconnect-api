@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core;
 
 Class Configuration	{
@@ -12,7 +13,7 @@ Class Configuration	{
         /**
          * PATH
          */
-        $config["PORT"] = 8000;
+        $config["PORT"] = 80;
         $config["PATH_HOME"]        = "C:/xampp/htdocs/";
         $config["PATH_FILES"]       = $config["PATH_HOME"] . "files/afpaconnect/HTML/";
         $config["PATH_SQL"]         = $config["PATH_HOME"] . "files/afpaconnect/SQL/";

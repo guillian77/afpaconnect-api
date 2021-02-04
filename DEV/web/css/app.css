@@ -89,6 +89,10 @@ table, th, td {
     font-size: .875rem;
     margin: 5px;
 }
+
+.d-none{
+    display: none;
+}
 /**
  * Buttons
  */
