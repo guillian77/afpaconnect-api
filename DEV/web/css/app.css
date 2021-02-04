@@ -89,6 +89,10 @@ table, th, td {
     font-size: .875rem;
     margin: 5px;
 }
+
+.d-none{
+    display: none;
+}
 /**
  * Buttons
  */
@@ -259,6 +263,7 @@ header .header__title:hover { opacity: 0.8 }
     top: 40%;
 }
 .drop_file_zone{
+    display: none;
     margin-top: 15px;
     border: dashed blue 1px;
     cursor: pointer;

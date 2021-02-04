@@ -89,20 +89,20 @@ Class Database {
 	 * @param array $data
 	 * @return false|PDOStatement
 	 */
-	function treatDatas($spathSQL, $data=array())	{
+	function treatDatas($query, $data=array())	{
 		// content of SQL file
-		$sql= file_get_contents($spathSQL);
+		// $sql= file_get_contents($spathSQL);
 
 
 		// replace variables @variable from sql by values of the same variables'name
 		foreach ($data as $key => $value) {
-			$sql= str_replace('@'.$key, $value, $sql);
+			$query= str_replace('@'.$key, $value, $query);
 		}
 
-		error_log("treatDatas = " . $sql);
+		error_log("treatDatas = " . $query);
 
 		// Execute la requete
-		$resultats_db= $this->_hDb->query($sql);
+		$resultats_db= $this->_hDb->query($query);
 
 
 		if (!$resultats_db){

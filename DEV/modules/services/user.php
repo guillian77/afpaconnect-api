@@ -37,4 +37,26 @@ class User extends Service
     {
 
     }
+
+    public function insert(object $user)
+    {
+        $param = [
+            "beneficiaire"=> $user->Beneficiaire,
+            "fisrtname"=> $user->Nom_usuel,
+            "name"=> $user->Prenom,
+        ];
+
+        $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@fisrtname","@name")';
+        
+        $this->oBdd->treatDatas($query,$param);
+
+        $paramFormation = [
+            "formation"=> $user->Formation,
+            "id_user"=> $this->oBdd->getLastInsertId()
+        ];
+        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = @formation;';
+        $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, "@session")';
+
+        $this->oBdd->treatDatas($query,$param);
+    }
 }
