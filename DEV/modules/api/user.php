@@ -26,6 +26,7 @@ class User extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         // Load User service
         $this->UserService = new UserService();
         $this->VARS_HTML = $this->UserService->VARS_HTML;
@@ -53,8 +54,11 @@ class User extends Controller
         foreach($users as $user){
             $this->UserService->insert($user);
         }
-    }
-    
+
+
+    /**
+     * Allow user login from external app.
+     */
     public function login()
     {
         if (!isset($this->request->get['user']['username'])) {
