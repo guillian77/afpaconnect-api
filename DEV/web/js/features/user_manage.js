@@ -1,30 +1,69 @@
 /**
-* COMMUN JAVASCRIPT
+* USER MANAGE JAVASCRIPT
 *
 * @package AfpaConnect Project
 * @subpackage javascript
-* @author @Afpa Lab Team - Aufrère Guillian && Campillo Lucas
+* @author @Afpa Lab Team - Aufrère Guillian
 * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
 * @version v1.0
-*
-* INDEX
-* - GENERAL
 */
 
-console.log('test');
-
-let users = [
-    {id: 15, beneficiary: "4616545748", lastname: "Campillo", firstname: "Lucas", email: "test@test.fr", phone: "0615171309"},
-    {id: 16, beneficiary: "4616545748", lastname: "Aufrère", firstname: "Guillian", email: "test@test.fr", phone: "0615171309"},
-    {id: 17, beneficiary: "4616545748", lastname: "Melheb", firstname: "Younes", email: "test@test.fr", phone: "0615171309"},
-    {id: 18, beneficiary: "4616545748", lastname: "Doe", firstname: "John", email: "test@test.fr", phone: "0615171309"},
-    {id: 19, beneficiary: "4616545748", lastname: "Patrick", firstname: "Jean", email: "test@test.fr", phone: "0615171309"},
-    {id: 20, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-    {id: 21, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-    {id: 22, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
-    {id: 23, beneficiary: "4616545748", lastname: "Robert", firstname: "Potiron", email: "test@test.fr", phone: "0615171309"},
+/**
+ * Define table header fields.
+ * @type {({orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean})[]}
+ */
+let tableFields = [
+    { "name": "UID", "orderable": true, "show": true},
+    { "name": "ID Centre", "orderable": false, "show": false},
+    { "name": "Nom d'utillisateur", "orderable": false, "show": false},
+    { "name": "Mot de passe", "orderable": false, "show": false},
+    { "name": "N° Bénéficiaire", "orderable": true, "show": true},
+    { "name": "Nom", "orderable": true, "show": true},
+    { "name": "Prénom", "orderable": true, "show": true},
+    { "name": "Mail pro", "orderable": false, "show": false},
+    { "name": "Mail perso", "orderable": false, "show": false},
+    { "name": "Portable", "orderable": false, "show": false},
+    { "name": "Adresse", "orderable": false, "show": false},
+    { "name": "Complément adresse", "orderable": false, "show": false},
+    { "name": "Code postal", "orderable": false, "show": false},
+    { "name": "Ville", "orderable": false, "show": false},
+    { "name": "Pays", "orderable": false, "show": false},
+    { "name": "Sexe", "orderable": false, "show": false},
+    { "name": "Status", "orderable": true, "show": true},
+    { "name": "Enregistré le", "orderable": false, "show": false},
+    { "name": "Modifié le", "orderable": false, "show": false},
+    { "name": "Action", "orderable": false, "show": true},
 ];
 
+/**
+ * Get users from API and fill table with.
+ */
+get('user/get', {})
+    .then(users => {
+        $(document).ready(() => {
+            let htmlTable = constructTable(tableFields, users, $('#user_manage_actions'));
+
+            let configuration = constructConfig(tableFields, [], "utilisateur")
+
+            $('#user_list')
+                .html(htmlTable)
+                .DataTable(configuration);
+        })
+    })
+    .catch(err => {
+        let alert = document.createElement('div')
+            alert.classList.add('alert');
+            alert.classList.add('alert-danger');
+            alert.innerHTML = JSON.parse(err.responseText)
+        $('.action-buttons').before(alert)
+    })
+
+
+/**
+ * Fill user edition section.
+ *
+ * @param user
+ */
 let fillUserManager = function(user) {
     let uManagerBox = $('.u_managment');
     let uManagerBoxForm = $('.u_managment__form');
@@ -47,75 +86,3 @@ let fillUserManager = function(user) {
         uManagerBox.hide();
     })
 }
-
-/**
- * Fill HTML table with associative array of data
- * @param {*} table Table element selector
- * @param {*} data  Data
- */
-let fillTable = function(table, data)
-{
-    let tableBody = $(table + ' tbody');
-    data.forEach((user, i) => {
-        let tr = document.createElement('tr');
-        tr.dataset.id = i;
-        tr.id = "user-" + i;
-        tr.addEventListener('click', evt => {fillUserManager(users[i])})
-        tableBody.append(tr)
-        $.each(user, (key, value) => {
-            let td = document.createElement('td');
-            td.innerHTML = value;
-            tr.append(td)
-        })
-    });
-}
-
-const configuration = {
-    "stateSave": false,
-    "order": [[2, "asc"]],
-    "pagingType": "simple_numbers",
-    "searching": true,
-    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tous"]],
-    "language": {
-        "info": "Utilisateurs _START_ à _END_ sur _TOTAL_ sélectionnées",
-        "emptyTable": "Aucun utilisateur",
-        "lengthMenu": "_MENU_ Utilisateurs par page",
-        "search": "Rechercher : ",
-        "zeroRecords": "Aucun résultat de recherche",
-        "paginate": {
-            "previous": "Précédent",
-            "next": "Suivant"
-        },
-        "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-        "sInfoEmpty": "Utilisateurs 0 à 0 sur 0 sélectionnée",
-    },
-    "columns": [
-        {// UID
-            "orderable": false,
-            "visible": false
-        },
-        {// BENEFICIARY
-            "orderable": true
-        },
-        {// FIRSTNAME
-            "orderable": true
-        },
-        {// LASTNAME
-            "orderable": false
-        },
-        {// EMAIL
-            "orderable": false,
-            "visible": false
-        },
-        {// PHONE
-            "orderable": false,
-            "visible": false
-        }
-    ],
-    'retrieve': true
-};
-
-$(document).ready(function() {
-    fillTable('#user_list', users);
-    $('#user_list').DataTable(configuration);
-})

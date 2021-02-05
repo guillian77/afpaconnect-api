@@ -17,7 +17,7 @@ Class Configuration	{
         /**
          * PATH
          */
-        $config["PATH_HOME"]        = "C:/xampp/htdocs/";
+        $config["PATH_HOME"]        = "C:/laragon/";
         $config["PATH_FILES"]       = $config["PATH_HOME"] . "files/afpaconnect/HTML/";
         $config["PATH_SQL"]         = $config["PATH_HOME"] . "files/afpaconnect/SQL/";
         $config["PATH_CLASS"]       = $config["PATH_HOME"] . "modules/afpaconnect/";

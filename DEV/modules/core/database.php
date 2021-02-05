@@ -1,6 +1,8 @@
 <?php
 namespace App\Core;
 
+use PDO;
+
 /**
  * Class Database
  */
@@ -51,8 +53,6 @@ Class Database {
 	 * @return array
 	 */
 	function getSelectDatas(string $query, array $data=array())	{
-		// content of SQL file
-//		$sql= file_get_contents($spathSQL);
 
 		// replace variables @variable from sql by values of the same variables'name
 		foreach ($data as $key => $value) {
@@ -69,7 +69,9 @@ Class Database {
 			error_log("error = " . $this->_hDb->error);
 		}
 
-		$resultat= [];
+        return $resultats_db->fetchAll(PDO::FETCH_ASSOC);
+
+        $resultat= [];
 		while ($ligne = $resultats_db->fetch()) {
 			$new_ligne= [];
 			foreach ($ligne as $key => $value) {
@@ -112,4 +114,21 @@ Class Database {
 
 		return $resultats_db;
 	}
+
+    /**
+     * Bind query parameters with the query.
+     *
+     * @param string $query
+     * @param array $parameters
+     * @return string
+     */
+    public function bindParameters(string $query, array $parameters):string
+    {
+        foreach ($parameters as $key => $parameter)
+        {
+            $query = str_replace('@'.$key, $parameter, $query);
+        }
+
+        return $query;
+    }
 }

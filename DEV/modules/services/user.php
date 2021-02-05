@@ -31,11 +31,13 @@ class User extends Service
     }
 
     /**
-     * @param int $limit Max users to get
+     * Get all users.
+     *
+     * @return array
      */
-    public function getUsers(int $limit = null)
+    public function getUsers()
     {
-
+        return $this->oBdd->getSelectDatas('SELECT * FROM users');
     }
 
     public function insert(object $user)

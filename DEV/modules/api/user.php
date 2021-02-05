@@ -6,11 +6,12 @@ use App\Service\User as UserService;
 use App\Utility\Upload;
 use App\Core\Controller;
 use App\Utility\Response;
+use function App\Core\dd;
 
 class User extends Controller
 {
     /**
-     * @var App\Service\User
+     * @var \App\Service\User $UserService
      */
     private $UserService;
 
@@ -33,6 +34,23 @@ class User extends Controller
 
     }
 
+    /**
+     * Get all users.
+     */
+    public function get()
+    {
+        $users = $this->UserService->getUsers();
+
+        if (!$users)
+        {
+            http_response_code(404);
+            Response::json("Impossible de récupérer la liste des utilisateurs.");
+            return;
+        }
+
+        Response::json($users);
+    }
+
     public function upload(){
         if(isset($_FILES["fileToUpload"]['type'])){
 
@@ -48,13 +66,14 @@ class User extends Controller
         }
     }
 
-    public function add(){
+    public function add()
+    {
         $users = json_decode(htmlspecialchars_decode($this->VARS_HTML['uploaded_user']));
-        
-        foreach($users as $user){
+
+        foreach ($users as $user) {
             $this->UserService->insert($user);
         }
-
+    }
 
     /**
      * Allow user login from external app.
