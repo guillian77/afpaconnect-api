@@ -55,6 +55,19 @@ class Controller
         $javascript = ob_get_clean();
 
         /**
+         * CATCHING STYLE
+         * If there is a css file called like the controller name. Load it!
+         */
+        ob_start();
+
+        $cssPath = "css/features/" . $this->request->controller . ".css";
+        if ( file_exists($cssPath) )
+        {
+            echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$cssPath.'">';
+        }
+        $css = ob_get_clean();
+
+        /**
          * CATCHING THE VIEW
          */
         ob_start();
