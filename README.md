@@ -42,7 +42,7 @@ Cette commande à permis de créer la **structure** de la BBD et d'y appliquer t
 
 ### Login
 
-Cette API permet d'authentifier l'utilisateur en fonction de son nom d'utilisateur (**username**), nom numéro de bénéficiaire (**beneficiary**) et de son mot de passe (**password**).
+Cette API permet d'authentifier l'utilisateur en fonction de son matricule (**identifier**) et de son mot de passe (**password**).
 
 __ATTENTION__: Toute fois, il est important que les informations concernant l'application demandant l'authentification soient présentent: **Token** et nom. 
 
@@ -53,13 +53,14 @@ URL: afpaconnect/user/login
 TYPE: XHR
 METHOD: GET
 FORMAT REQUÊTE (JSON):
-"user": {
-"username": "admin",
+"user":
+{
+    "username": "identifier",
     "password": "test",
-    "beneficiary": "123456789"
 },
-"app": {
-"name": "afpanier",
+"app":
+{
+    "name": "afpanier",
     "token": "123456789"
 }
 
@@ -67,9 +68,8 @@ FORMAT RÉPONSE (JSON):
 {
     "id_user": "1",
     "id_center": "1",
-    "user_username": "admin",
+    "user_identifier": "123456789",
     "user_password": "$argon2i$v=19$m=65536,t=4,p=1$dC93Y1JNY0NEc2lwcFljbA$YU7KpgN7B4WW1plN2nXi2rptcrYrp1lw6Uly/+xh7jc",
-    "user_identifier": "12345678",
     "user_name": "admin",
     "user_firstName": "admin",
     "user_mailPro": "admin@admin.fr",

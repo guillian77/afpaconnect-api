@@ -16,26 +16,28 @@ class User extends Service
     }
 
     /**
-     * Get user by username.
+     * Get user by identifier.
      *
-     * @param string $username
+     * @param string $identifier
      * @return array
      */
-    public function getUser(string $username)
+    public function getUser(string $identifier)
     {
         $param = [
-            'username' => $username
+            'identifier' => $identifier
         ];
 
-        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_username = '@username';", $param);
+        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_identifier = '@identifier';", $param);
     }
 
     /**
-     * @param int $limit Max users to get
+     * Get all users.
+     *
+     * @return array
      */
-    public function getUsers(int $limit = null)
+    public function getUsers()
     {
-
+        return $this->oBdd->getSelectDatas('SELECT * FROM users');
     }
 
     public function insert(object $user)
@@ -49,7 +51,7 @@ class User extends Service
         $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@fisrtname","@name")';
         
         $this->oBdd->treatDatas($query,$param);
-        
+
         $paramFormation = [
             "formation"=> $user->Formation,
             "id_user"=> $this->oBdd->getLastInsertId()

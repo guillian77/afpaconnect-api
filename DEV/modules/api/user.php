@@ -6,11 +6,12 @@ use App\Service\User as UserService;
 use App\Utility\Upload;
 use App\Core\Controller;
 use App\Utility\Response;
+use function App\Core\dd;
 
 class User extends Controller
 {
     /**
-     * @var App\Service\User
+     * @var \App\Service\User $UserService
      */
     private $UserService;
 
@@ -33,6 +34,23 @@ class User extends Controller
 
     }
 
+    /**
+     * Get all users.
+     */
+    public function get()
+    {
+        $users = $this->UserService->getUsers();
+
+        if (!$users)
+        {
+            http_response_code(404);
+            Response::json("Impossible de récupérer la liste des utilisateurs.");
+            return;
+        }
+
+        Response::json($users);
+    }
+
     public function upload(){
         if(isset($_FILES["fileToUpload"]['type'])){
 
@@ -48,27 +66,26 @@ class User extends Controller
         }
     }
 
-    public function add(){
+    public function add() {
         $users = json_decode(htmlspecialchars_decode($this->VARS_HTML['uploaded_user']));
         
         foreach($users as $user){
             $this->UserService->insert($user);
         }
+
         Response::resp('200');
     }
+
     /**
      * Allow user login from external app.
      */
     public function login()
     {
-        if (!isset($this->request->get['user']['username'])) {
-            Response::resp("Unknow user username", 403);
+        if (!isset($this->request->get['user']['identifier'])) {
+            Response::resp("Unknow user identifier", 403);
             return;
         } else if (!isset($this->request->get['user']['password'])) {
             Response::resp("Unknow user password", 403);
-            return;
-        } else if (!isset($this->request->get['user']['beneficiary'])) {
-            Response::resp("Unknow user beneficiary", 403);
             return;
         } else if (!isset($this->request->get['app']['name'])) {
             Response::resp("Unknow app name", 403);
@@ -82,7 +99,7 @@ class User extends Controller
         }
 
         $userService = new UserService();
-        $user = $userService->getUser($this->request->get['user']['username']);
+        $user = $userService->getUser($this->request->get['user']['identifier']);
 
         if ( !isset($user[0]) ) {
             Response::resp("No user found", 403);
