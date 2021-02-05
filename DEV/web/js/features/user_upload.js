@@ -27,10 +27,12 @@ let insert_user_bdd = async () => {
 
     await post("user/add",fd,false)
     .then((res) => {
-        console.log(res)
+        res == 200 ? $('#success').html("Les utilisateurs sont enregistrés").show()
+        : $('#error').html("Un problème est survenu lors de l'enregistrement des utilisateurs").show()
+        $('html,body').animate({scrollTop: 0}, 'slow');
     })
     .catch((err) => {
-        $('#error').html("Un problème est survenu lors de l'enregistrement des utilisateures").show()
+        $('#error').html("Un problème est survenu lors de l'enregistrement des utilisateurs").show()
     })
 }
 

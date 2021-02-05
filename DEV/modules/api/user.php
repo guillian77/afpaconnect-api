@@ -66,13 +66,14 @@ class User extends Controller
         }
     }
 
-    public function add()
-    {
+    public function add() {
         $users = json_decode(htmlspecialchars_decode($this->VARS_HTML['uploaded_user']));
-
-        foreach ($users as $user) {
+        
+        foreach($users as $user){
             $this->UserService->insert($user);
         }
+
+        Response::resp('200');
     }
 
     /**

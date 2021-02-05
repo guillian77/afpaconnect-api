@@ -56,9 +56,9 @@ class User extends Service
             "formation"=> $user->Formation,
             "id_user"=> $this->oBdd->getLastInsertId()
         ];
-        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = @formation;';
-        $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, "@session")';
+        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation";';
+        $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, @session)';
 
-        $this->oBdd->treatDatas($query,$param);
+        $this->oBdd->treatDatas($query,$paramFormation);
     }
 }
