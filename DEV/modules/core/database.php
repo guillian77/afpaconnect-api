@@ -92,10 +92,6 @@ Class Database {
 	 * @return false|PDOStatement
 	 */
 	function treatDatas($query, $data=array())	{
-		// content of SQL file
-		// $sql= file_get_contents($spathSQL);
-
-
 		// replace variables @variable from sql by values of the same variables'name
 		foreach ($data as $key => $value) {
 			$query= str_replace('@'.$key, $value, $query);
