@@ -102,10 +102,9 @@ Class Database {
 		// Execute la requete
 		$resultats_db= $this->_hDb->query($query);
 
-
 		if (!$resultats_db){
 			error_log("!!! error on treatDatas !!!");
-			header('HTTP/1.0 400 Bad request.');
+			return false;
 		}
 
 		return $resultats_db;

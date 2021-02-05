@@ -15,9 +15,8 @@
 let tableFields = [
     { "name": "UID", "orderable": true, "show": true},
     { "name": "ID Centre", "orderable": false, "show": false},
-    { "name": "Nom d'utillisateur", "orderable": false, "show": false},
+    { "name": "N° de matricule", "orderable": true, "show": true},
     { "name": "Mot de passe", "orderable": false, "show": false},
-    { "name": "N° Bénéficiaire", "orderable": true, "show": true},
     { "name": "Nom", "orderable": true, "show": true},
     { "name": "Prénom", "orderable": true, "show": true},
     { "name": "Mail pro", "orderable": false, "show": false},
@@ -43,7 +42,7 @@ get('user/get', {})
         $(document).ready(() => {
             let htmlTable = constructTable(tableFields, users, $('#user_manage_actions'));
 
-            let configuration = constructConfig(tableFields, [], "utilisateur")
+            let configuration = constructConfig(tableFields, [0, "asc"], "utilisateur");
 
             $('#user_list')
                 .html(htmlTable)

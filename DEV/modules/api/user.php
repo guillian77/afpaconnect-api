@@ -6,7 +6,6 @@ use App\Service\User as UserService;
 use App\Utility\Upload;
 use App\Core\Controller;
 use App\Utility\Response;
-use function App\Core\dd;
 
 class User extends Controller
 {
@@ -66,14 +65,22 @@ class User extends Controller
         }
     }
 
+    /**
+     * Add users from XLSX file to database.
+     */
     public function add() {
         $users = json_decode(htmlspecialchars_decode($this->VARS_HTML['uploaded_user']));
-        
-        foreach($users as $user){
-            $this->UserService->insert($user);
+        foreach($users as $user) {
+
+            // Check if user insertion work
+            if(!$this->UserService->insert($user))
+            {
+                Response::resp("Erreur: Impossible d'ajouter l'utilisateur " . $user->Prenom . " dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX ou que le matricule n'est pas déjà existant.", 400);
+                return;
+            }
         }
 
-        Response::resp('200');
+        Response::resp("Tous les utilisateurs ont été ajouté avec succès.", 200);
     }
 
     /**
@@ -107,10 +114,5 @@ class User extends Controller
         }
 
         Response::json($user[0]);
-    }
-
-    public function register()
-    {
-        dd($this->request);
     }
 }
