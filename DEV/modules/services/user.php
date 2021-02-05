@@ -16,18 +16,18 @@ class User extends Service
     }
 
     /**
-     * Get user by username.
+     * Get user by identifier.
      *
-     * @param string $username
+     * @param string $identifier
      * @return array
      */
-    public function getUser(string $username)
+    public function getUser(string $identifier)
     {
         $param = [
-            'username' => $username
+            'identifier' => $identifier
         ];
 
-        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_username = '@username';", $param);
+        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_identifier = '@identifier';", $param);
     }
 
     /**
