@@ -26,14 +26,21 @@ let insert_user_bdd = async () => {
     fd.append('uploaded_user', JSON.stringify(data))
 
     await post("user/add",fd,false)
-    .then((res) => {
-        res == 200 ? $('#success').html("Les utilisateurs sont enregistrés").show()
-        : $('#error').html("Un problème est survenu lors de l'enregistrement des utilisateurs").show()
-        $('html,body').animate({scrollTop: 0}, 'slow');
-    })
-    .catch((err) => {
-        $('#error').html("Un problème est survenu lors de l'enregistrement des utilisateurs").show()
-    })
+        .then((response) => {
+            $('#success')
+                .html(response)
+                .show();
+
+            $('html,body').animate({scrollTop: 0}, 'slow');
+        })
+        .catch((error) => {
+            console.log(error)
+            $('#error')
+                .html(error.responseJSON)
+                .show();
+
+            $('html,body').animate({scrollTop: 0}, 'slow');
+        })
 }
 
 let ajax_file_upload = async (fileobj) => {

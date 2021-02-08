@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use App\Core\Service;
+use function App\Core\dd;
 
 class User extends Service
 {
@@ -40,6 +41,12 @@ class User extends Service
         return $this->oBdd->getSelectDatas('SELECT * FROM users');
     }
 
+    /**
+     * Insert a user inside database.
+     *
+     * @param object $user
+     * @return \App\Core\PDOStatement|bool|false
+     */
     public function insert(object $user)
     {
         $param = [
@@ -52,13 +59,20 @@ class User extends Service
         
         $this->oBdd->treatDatas($query,$param);
 
+        $lastInsert = $this->oBdd->getLastInsertId();
+
+        // Check if user has been added to databse before adding session.
+        if ($lastInsert == 0) {
+            return false;
+        }
+
         $paramFormation = [
             "formation"=> $user->Formation,
-            "id_user"=> $this->oBdd->getLastInsertId()
+            "id_user"=> $lastInsert
         ];
         $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation";';
         $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, @session)';
 
-        $this->oBdd->treatDatas($query,$paramFormation);
+        return $this->oBdd->treatDatas($query,$paramFormation);
     }
 }

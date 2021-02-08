@@ -20,7 +20,7 @@ class Response {
     public static function resp(string $message, int $code = 200)
     {
         http_response_code($code);
-        header('HTTP/1.0 Error');
+        header('HTTP/1.0 '.$code);
         self::json($message);
     }
 }
