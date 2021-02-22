@@ -1,12 +1,12 @@
 /**
-* USER MANAGE JAVASCRIPT
-*
-* @package AfpaConnect Project
-* @subpackage javascript
-* @author @Afpa Lab Team - Aufrère Guillian
-* @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
-* @version v1.0
-*/
+ * USER MANAGE JAVASCRIPT
+ *
+ * @package AfpaConnect Project
+ * @subpackage javascript
+ * @author @Afpa Lab Team - Aufrère Guillian
+ * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
+ * @version v1.0
+ */
 
 /**
  * Define table header fields.
@@ -51,9 +51,9 @@ get('user/get', {})
     })
     .catch(err => {
         let alert = document.createElement('div')
-            alert.classList.add('alert');
-            alert.classList.add('alert-danger');
-            alert.innerHTML = JSON.parse(err.responseText)
+        alert.classList.add('alert');
+        alert.classList.add('alert-danger');
+        alert.innerHTML = JSON.parse(err.responseText)
         $('.action-buttons').before(alert)
     })
 

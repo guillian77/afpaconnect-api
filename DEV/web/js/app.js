@@ -16,6 +16,7 @@
  * REQUEST
  * --------------------------------------------------------------
  */
+
 /**
  * XHR POST Request
  *
@@ -39,6 +40,7 @@ let post = function (url, parameters, file = false) {
  *
  * @param url
  * @param parameters
+ * @param file
  * @return {*}
  */
 let get = async function (url, parameters, file = false) {
@@ -46,8 +48,8 @@ let get = async function (url, parameters, file = false) {
         url: url,
         data: parameters,
         type: 'GET',
-        processData: file === false,
-        contentType: file === false,
+        processData: file,
+        contentType: file,
     });
 };
 

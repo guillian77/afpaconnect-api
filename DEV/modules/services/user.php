@@ -2,7 +2,6 @@
 namespace App\Service;
 
 use App\Core\Service;
-use function App\Core\dd;
 
 class User extends Service
 {
@@ -56,7 +55,7 @@ class User extends Service
         ];
 
         $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@fisrtname","@name")';
-        
+
         $this->oBdd->treatDatas($query,$param);
 
         $lastInsert = $this->oBdd->getLastInsertId();
