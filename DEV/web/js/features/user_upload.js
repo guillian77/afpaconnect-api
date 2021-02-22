@@ -27,15 +27,18 @@ let insert_user_bdd = async () => {
 
     await post("user/add",fd,false)
         .then((response) => {
-            $('#success')
+            $('#alert')
+                .addClass('alert-success')
+                .removeClass('alert-danger')
                 .html(response)
                 .show();
 
             $('html,body').animate({scrollTop: 0}, 'slow');
         })
         .catch((error) => {
-            console.log(error)
-            $('#error')
+            $('#alert')
+                .addClass('alert-danger')
+                .removeClass('alert-success')
                 .html(error.responseJSON)
                 .show();
 
