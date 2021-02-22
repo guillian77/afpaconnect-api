@@ -4,8 +4,6 @@ namespace Artisan;
 use App\Core\Configuration;
 use App\Core\Database;
 
-require 'DEV/modules/core/Configuration.php';
-
 // TODO: Factorise make methods
 // TODO: Use PATH from configuration instead of hard links.
 
@@ -17,6 +15,11 @@ class Artisan
      * Index[1] represent first argument.
      */
     public $args = [];
+
+    /**
+     * @var string Path of configuration file.
+     */
+    public $configPath = "DEV/modules/core/";
 
     /**
      * @var array $conf Configuration from configuration class.
@@ -35,8 +38,10 @@ class Artisan
             return;
         }
 
-        // Get configuration
-        $this->conf = Configuration::get();
+        if(!$this->checkConfigFile() && $this->args[2] != "config") {
+            echo "Configuration file does not exist, create it from sample.\n";
+            $this->makeConfiguration();
+        }
 
         // Auto call method in this class with first argument passed.
         call_user_func([$this, $this->args[1]]);
@@ -45,6 +50,40 @@ class Artisan
     public function __destruct()
     {
         unset($this->db);
+    }
+
+    /**
+     * Check if config file exist -> create it
+     *
+     * @return bool
+     */
+    public function checkConfigFile(): bool
+    {
+        return file_exists($this->configPath . 'Configuration.php');
+    }
+
+    /**
+     * Generate config file from sample and ask user some variables.
+     */
+    public function makeConfiguration()
+    {
+        $port = readline("PORT [80]: ");
+        $port = (!$port) ? "80" : $port ;
+
+        $configFilePath = $this->configPath . 'Configuration.php';
+
+        if ($this->checkConfigFile()) { // Delete if already exist
+            unlink($configFilePath);
+        }
+
+        copy($this->configPath . 'Configuration.sample.php', $configFilePath);
+
+        $stream = file_get_contents($configFilePath);
+        $conf = str_replace('$config["PORT"] = 80', '$config["PORT"] = ' . $port, $stream);
+        file_put_contents($this->configPath . 'Configuration.php', $conf);
+
+        require_once $this->configPath . 'Configuration.php';
+        $this->conf = Configuration::get(); // Get configuration
     }
 
     /**
@@ -57,6 +96,7 @@ class Artisan
         echo "COMMANDS AVAILABLE\n";
         echo "---------------------------------\n";
         echo "- help       Show help\n";
+        echo "- install    Show help\n";
         echo "- migrate    Execute migrations (SQL updates) to database.\n";
         echo "- make       Execute migrations\n";
         echo "  > make database [name]        Create database structure and apply migrations and fixtures.\n";
@@ -97,7 +137,8 @@ class Artisan
     {
         if (!isset($this->args[2]))
         {
-            echo "- make database [name]        Create database structure and apply migrations and fixtures.\n";
+            echo "- make database               Create database structure and apply migrations and fixtures.\n";
+            echo "- make config                 Create database structure and apply migrations and fixtures.\n";
             echo "- make migration [name]       Create a new migration file.\n";
             echo "- make fixture [name]         Create a new fixture file.\n";
             echo "- make controller [name]      Create a new controller file. \n";
@@ -108,6 +149,9 @@ class Artisan
         switch ($this->args[2]) {
             case 'database':
                 $this->makeDatabase();
+                break;
+            case 'config':
+                $this->makeConfiguration();
                 break;
             case 'migration':
                 $this->makeMigration();
