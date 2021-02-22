@@ -13,7 +13,7 @@ Class Configuration	{
          * GENERAL
          */
         $config["PORT"] = 80;
-        
+
         /**
          * PATH
          */
