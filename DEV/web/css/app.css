@@ -58,7 +58,37 @@ h3 { font-size: 1.4rem; margin-bottom: 10px; }
 
 a { text-decoration: none; }
 
+/**
+* --------------------------------------------------------------
+* GLOBAL
+* --------------------------------------------------------------
+*/
+.flex {
+    display: flex;
+}
 
+.center {
+    text-align: center;
+}
+
+.select {
+    position: relative;
+    width: 20em;
+    height: 2.5em;
+    line-height: 3;
+    background: #4e73df;
+    overflow: hidden;
+    border-radius: .25em;
+    cursor: pointer;
+    padding: 0 .5em;
+    color: #fff;
+    font-size: .875rem;
+    margin: 5px;
+}
+
+.d-none{
+    display: none;
+}
 /**
  * Buttons
  */
@@ -165,6 +195,10 @@ header {
 header>a {
     /*align-self: center;*/
 }
+
+header .header__title { color: inherit; transition: 0.3s }
+header .header__title:hover { opacity: 0.8 }
+
 /**
 * --------------------------------------------------------------
 * USERS LIST
@@ -199,6 +233,13 @@ header>a {
 
 .form__submit {
     display: block;
+}
+
+.form__manage{
+    text-align:center; 
+    padding:10px;
+    width:50%;
+    align-self: center;
 }
 
 /**
@@ -254,4 +295,5 @@ footer.footer {
         width: 100%;
         text-align: center;
     }
+    
 }

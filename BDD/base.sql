@@ -70,17 +70,17 @@ CREATE TABLE users(
         user_firstName         Varchar (255) NOT NULL ,
         user_mailPro           Varchar (255) ,
         user_mailPerso         Varchar (255) ,
-        user_psw               Varchar (255) NOT NULL ,
-        user_phone             Varchar (15) NOT NULL ,
-        user_address           Varchar (255) NOT NULL ,
-        user_complementAddress Varchar (255) NOT NULL ,
-        user_zipCode           Varchar (5) NOT NULL ,
-        user_city              Varchar (255) NOT NULL ,
-        user_country           Varchar (255) NOT NULL ,
-        user_gender            Bool NOT NULL ,
-        user_status            Bool NOT NULL ,
-        user_created_at        Date NOT NULL ,
-        user_updated_at        Datetime NOT NULL
+        user_psw               Varchar (255) ,
+        user_phone             Varchar (15) ,
+        user_address           Varchar (255) ,
+        user_complementAddress Varchar (255) ,
+        user_zipCode           Varchar (5) ,
+        user_city              Varchar (255) ,
+        user_country           Varchar (255) ,
+        user_gender            Bool ,
+        user_status            Bool ,
+        user_created_at        Date  ,
+        user_updated_at        Datetime
 	,CONSTRAINT users_PK PRIMARY KEY (id_user)
 
 	,CONSTRAINT users_centers_FK FOREIGN KEY (id_center) REFERENCES centers(id_center)

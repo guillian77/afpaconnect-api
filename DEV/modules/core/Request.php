@@ -2,12 +2,15 @@
 namespace App\Core;
 
 
+use App\Utility\Response;
+
 class Request
 {
     public $url;
     public $base;
 
     public $controller;
+    public $action;
     public $params;
 
     public $get;
@@ -24,22 +27,29 @@ class Request
             $exploded = explode("/", $this->url);
 
             $this->controller = $exploded[0];
-            $this->params = array_slice($exploded, 1);
 
-            $this->url = htmlspecialchars($this->url);
+            if ($this->isXhrRequest())
+            {
+                if (isset($exploded[1]))
+                {
+                    $this->action = $exploded[1];
+                }
 
-            foreach ($this->params as $k => $v) {
-                $this->params[$k] = htmlspecialchars($v);
+                $this->params = array_slice($exploded, 2);
+            } else {
+                $this->params = array_slice($exploded, 1);
             }
         }
 
-        foreach ($_GET as $k => $v) {
-            $this->get[$k] = htmlspecialchars($v);
-        }
-
-        foreach ($_POST as $k => $v) {
-            $this->post[$k] = htmlspecialchars($v);
-        }
+//        foreach ($_GET as $k => $v) {
+//            $this->get[$k] = htmlspecialchars($v);
+//        }
+//
+//        foreach ($_POST as $k => $v) {
+//            $this->post[$k] = htmlspecialchars($v);
+//        }
+        $this->get = $_GET;
+        $this->post = $_POST;
     }
 
     /**

@@ -1,0 +1,30 @@
+<!-- MAIN: Start -->
+<main class="main boxed">
+    <h2>Téléversement des utilisateurs</h2>
+    <div id="error" class="alert alert-danger d-none"></div>
+    <div id="success" class="alert alert-success d-none"></div>
+    <form method="post" action="user_upload" method="POST" enctype="multipart/form-data">
+        <select class="select" id="center">
+
+            <option value="null">Choisisser un centre</option>
+
+            <option value="1">Centre 1</option>
+
+        </select>
+        <input hidden id="upload_file" type="file" name="upload_user" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+    </form>
+    <div class="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">    
+        <label for="upload_file">
+            <div class="upload-zone">
+                <p>Sélectionner ou déposer un fichier</p>
+                <img src="https://img.icons8.com/carbon-copy/100/000000/download.png"/>
+            </div>
+        </label>
+    </div>
+
+
+    <div class="center" id="upload_confirm"></div>
+    <!-- TABLE: End -->
+</main>
+
+</aside>

@@ -33,7 +33,7 @@ class User_login extends Controller
         if (isset($this->VARS_HTML['submitted']) && $this->checkForm())
         {
 
-            $user = $User->getUser($this->VARS_HTML['username']);
+            $user = $User->getUser($this->VARS_HTML['identifier']);
 
             if (!isset($user[0])) {
                 array_push($this->errors, "Les identifiants semblent incorrects. Veuillez essayer avec d'autres identifiants.");
@@ -56,8 +56,8 @@ class User_login extends Controller
      */
     public function checkForm()
     {
-        if (!isset($this->VARS_HTML['username']) || empty($this->VARS_HTML['username'])) {
-            array_push($this->errors, "Nom d'utilisateur inexistant.");
+        if (!isset($this->VARS_HTML['identifier']) || empty($this->VARS_HTML['identifier'])) {
+            array_push($this->errors, "Numéro de matricule inexistant.");
         }
 
         if (!isset($this->VARS_HTML['password']) || empty($this->VARS_HTML['password'])) {

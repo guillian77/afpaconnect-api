@@ -16,18 +16,18 @@ class User extends Service
     }
 
     /**
-     * Get user by username.
+     * Get user by identifier.
      *
-     * @param string $username
+     * @param string $identifier
      * @return array
      */
-    public function getUser(string $username)
+    public function getUser(string $identifier)
     {
         $param = [
-            'username' => $username
+            'identifier' => $identifier
         ];
 
-        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_username = '@username'", $param);
+        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_identifier = '@identifier';", $param);
     }
 
     /**
@@ -37,16 +37,41 @@ class User extends Service
      */
     public function getUsers()
     {
-        return $this->oBdd->getSelectDatas("SELECT * FROM users GROUP BY id_user");
+        return $this->oBdd->getSelectDatas('SELECT * FROM users');
     }
 
     /**
-     * Get all users.
+     * Insert a user inside database.
      *
-     * @return array
+     * @param object $user
+     * @return \App\Core\PDOStatement|bool|false
      */
-    public function getUsersSecured()
+    public function insert(object $user)
     {
-        return $this->oBdd->getSelectDatas("SELECT id_user, id_center, user_username, user_identifier, user_name, user_firstName, user_mailPro, user_mailPerso, user_phone, user_address, user_complementAddress, user_zipCode, user_city, user_country, user_gender, user_status, user_created_at, user_updated_at FROM users GROUP BY id_user");
+        $param = [
+            "beneficiaire"=> $user->Beneficiaire,
+            "fisrtname"=> $user->Nom_usuel,
+            "name"=> $user->Prenom,
+        ];
+
+        $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@fisrtname","@name")';
+
+        $this->oBdd->treatDatas($query,$param);
+
+        $lastInsert = $this->oBdd->getLastInsertId();
+
+        // Check if user has been added to databse before adding session.
+        if ($lastInsert == 0) {
+            return false;
+        }
+
+        $paramFormation = [
+            "formation"=> $user->Formation,
+            "id_user"=> $lastInsert
+        ];
+        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation";';
+        $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, @session)';
+
+        return $this->oBdd->treatDatas($query,$paramFormation);
     }
 }

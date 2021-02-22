@@ -32,6 +32,9 @@ class Controller
             extract($params);
         }
 
+        $request = $this->request;
+        $vue = $this;
+
         // Get configuration for view path.
         $config = Configuration::get();
 
@@ -52,6 +55,19 @@ class Controller
         $javascript = ob_get_clean();
 
         /**
+         * CATCHING STYLE
+         * If there is a css file called like the controller name. Load it!
+         */
+        ob_start();
+
+        $cssPath = "css/features/" . $this->request->controller . ".css";
+        if ( file_exists($cssPath) )
+        {
+            echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$cssPath.'">';
+        }
+        $css = ob_get_clean();
+
+        /**
          * CATCHING THE VIEW
          */
         ob_start();
@@ -64,6 +80,17 @@ class Controller
         $content = ob_get_clean();
 
         require_once $config['PATH_FILES'] . "layout.html";
+    }
+
+    /**
+     * Construct an URL from base URL.
+     *
+     * @param $target
+     * @return string
+     */
+    public function path($target = null)
+    {
+        return $this->request->base . $target;
     }
 
     /**

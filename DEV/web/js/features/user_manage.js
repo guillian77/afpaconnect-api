@@ -1,18 +1,65 @@
 /**
-* COMMUN JAVASCRIPT
-*
-* @package AfpaConnect Project
-* @subpackage javascript
-* @author @Afpa Lab Team - Aufrère Guillian
-* @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
-* @version v1.0
-*
-* INDEX
-* - GENERAL
-*/
+ * USER MANAGE JAVASCRIPT
+ *
+ * @package AfpaConnect Project
+ * @subpackage javascript
+ * @author @Afpa Lab Team - Aufrère Guillian
+ * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
+ * @version v1.0
+ */
 
 /**
- * Fill user manager
+ * Define table header fields.
+ * @type {({orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean})[]}
+ */
+let tableFields = [
+    { "name": "UID", "orderable": true, "show": true},
+    { "name": "ID Centre", "orderable": false, "show": false},
+    { "name": "N° de matricule", "orderable": true, "show": true},
+    { "name": "Mot de passe", "orderable": false, "show": false},
+    { "name": "Nom", "orderable": true, "show": true},
+    { "name": "Prénom", "orderable": true, "show": true},
+    { "name": "Mail pro", "orderable": false, "show": false},
+    { "name": "Mail perso", "orderable": false, "show": false},
+    { "name": "Portable", "orderable": false, "show": false},
+    { "name": "Adresse", "orderable": false, "show": false},
+    { "name": "Complément adresse", "orderable": false, "show": false},
+    { "name": "Code postal", "orderable": false, "show": false},
+    { "name": "Ville", "orderable": false, "show": false},
+    { "name": "Pays", "orderable": false, "show": false},
+    { "name": "Sexe", "orderable": false, "show": false},
+    { "name": "Status", "orderable": true, "show": true},
+    { "name": "Enregistré le", "orderable": false, "show": false},
+    { "name": "Modifié le", "orderable": false, "show": false},
+    { "name": "Action", "orderable": false, "show": true},
+];
+
+/**
+ * Get users from API and fill table with.
+ */
+get('user/get', {})
+    .then(users => {
+        $(document).ready(() => {
+            let htmlTable = constructTable(tableFields, users, $('#user_manage_actions'));
+
+            let configuration = constructConfig(tableFields, [0, "asc"], "utilisateur");
+
+            $('#user_list')
+                .html(htmlTable)
+                .DataTable(configuration);
+        })
+    })
+    .catch(err => {
+        let alert = document.createElement('div')
+        alert.classList.add('alert');
+        alert.classList.add('alert-danger');
+        alert.innerHTML = JSON.parse(err.responseText)
+        $('.action-buttons').before(alert)
+    })
+
+
+/**
+ * Fill user edition section.
  *
  * @param user
  */
@@ -32,101 +79,9 @@ let fillUserManager = function(user) {
     $('.u_managment__form').find('#phone').val(user['phone'])
 
 
-    // Listen form submitting
+    // Listen form submiting
     uManagerBoxForm.on('submit', event => {
         event.preventDefault();
         uManagerBox.hide();
     })
 }
-
-/**
- * Fill HTML table with associative array of data
- * @param {*} table Table element selector
- * @param users
- */
-let fillTable = function(table, users) {
-    let tableBody = $(table + ' tbody');
-
-    $.each(users, (i, user) => {
-        let tr = document.createElement('tr');
-        tr.dataset.id = i;
-        tr.id = "user-" + i;
-        tr.addEventListener('click', evt => {fillUserManager(users[i])})
-        tableBody.append(tr)
-        $.each(user, (key, value) => {
-            let td = document.createElement('td');
-            td.innerHTML = value;
-            tr.append(td)
-        })
-    })
-}
-
-let getUsers = async function() {
-    let users = await post('user_manage')
-        .then(resp => {
-            // console.log(resp)
-            return resp
-        })
-        .catch(err => {
-            // console.log(err)
-            return err
-        })
-
-    fillTable('#user_list', users)
-}
-
-const configuration = {
-    "stateSave": false,
-    "order": [[2, "asc"]],
-    "pagingType": "simple_numbers",
-    "searching": true,
-    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tous"]],
-    "language": {
-        "info": "Utilisateurs _START_ à _END_ sur _TOTAL_ sélectionnées",
-        "emptyTable": "Aucun utilisateur",
-        "lengthMenu": "_MENU_ Utilisateurs par page",
-        "search": "Rechercher : ",
-        "zeroRecords": "Aucun résultat de recherche",
-        "paginate": {
-            "previous": "Précédent",
-            "next": "Suivant"
-        },
-        "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-        "sInfoEmpty": "Utilisateurs 0 à 0 sur 0 sélectionnée",
-    },
-    "columns": [
-        {// UID
-            // "data": "id",
-            "orderable": false,
-            "visible": false
-        },
-        {// BENEFICIARY
-            // "data": "beneficiary",
-            "orderable": true
-        },
-        {// LASTNAME
-            // "data": "lastname",
-            "orderable": false
-        },
-        {// FIRSTNAME
-            // "data": "firstname",
-            "orderable": true
-        },
-        {// EMAIL
-            // "data": "email",
-            "orderable": false,
-            "visible": false
-        },
-        {// PHONE
-            // "data": "phone",
-            "orderable": false,
-            "visible": false
-        }
-    ],
-    'retrieve': true
-};
-
-$(document).ready(function () {
-    getUsers();
-    $('#user_list').DataTable(configuration);
-})
