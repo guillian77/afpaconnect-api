@@ -1,6 +1,5 @@
 {
     "require": {
-        "shuchkin/simplexlsx": "^0.8.21",
         "firebase/php-jwt": "^5.2"
     }
 }

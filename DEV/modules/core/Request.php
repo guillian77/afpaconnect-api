@@ -6,8 +6,20 @@ use App\Utility\Response;
 
 class Request
 {
+    /**
+     * @var string The URL.
+     */
     public $url;
+
+    /**
+     * @var string The root of the URL.
+     */
     public $base;
+
+    /**
+     * @var array URL exploded.
+     */
+    public $exploded;
 
     public $controller;
     public $action;
@@ -16,28 +28,35 @@ class Request
     public $get;
     public $post;
 
+    /**
+     * @var string Bearer token
+     */
+    public $token;
+
     public function __construct()
     {
+        $this->token = self::getBearerToken(); // Get bearer token
+
         $this->defineBaseURL();
         $this->controller = "user_login"; // Default controller called
 
         if (isset($_SERVER['PATH_INFO']))
         {
             $this->url = trim($_SERVER['PATH_INFO'], "/");
-            $exploded = explode("/", $this->url);
+            $this->exploded = explode("/", $this->url);
 
-            $this->controller = $exploded[0];
-
-            if ($this->isXhrRequest())
+            if ($this->isApiRequest($this->exploded))
             {
-                if (isset($exploded[1]))
+                if (isset($this->exploded[1]))
                 {
-                    $this->action = $exploded[1];
+                    $this->controller = $this->exploded[1];
+                    $this->action = $this->exploded[2];
                 }
 
-                $this->params = array_slice($exploded, 2);
+                $this->params = array_slice($this->exploded, 3);
             } else {
-                $this->params = array_slice($exploded, 1);
+                $this->controller = $this->exploded[0];
+                $this->params = array_slice($this->exploded, 1);
             }
         }
 
@@ -67,6 +86,24 @@ class Request
         return FALSE;
     }
 
+    /**
+     * Check if request is send to API or not.
+     *
+     * Detect if there is /api/ at the beginning of the URL.
+     *
+     * @param array $explodedURL
+     *
+     * @return bool
+     */
+    public function isApiRequest(array $explodedURL):bool
+    {
+        if (isset($explodedURL[0]) && !empty($explodedURL[0]) && $explodedURL[0] == "api") {
+            return true;
+        }
+
+        return false;
+    }
+
     public function defineBaseURL()
     {
         $url = "http://";
@@ -81,5 +118,23 @@ class Request
 
         $this->base = $url . ":" . $config['PORT'] . $config["BASE_HREF"];
         $this->url = $this->base . $this->controller;
+    }
+
+    /**
+     * Get Bearer token from request header.
+     *
+     * If application is requested in API, we need to verify this token.
+     *
+     * @return mixed
+     */
+    public static function getBearerToken()
+    {
+        $header = getallheaders();
+
+        if ( !isset($header['Authorization']) || substr($header['Authorization'], 0, 7) !== 'Bearer ') {
+            return false;
+        }
+
+        return trim(str_replace("Bearer", "", $header['Authorization']));
     }
 }

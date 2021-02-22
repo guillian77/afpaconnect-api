@@ -3,6 +3,7 @@ namespace App\Core;
 
 
 use App\Middleware\Authenticate;
+use App\Middleware\JsonWebToken;
 use App\Utility\Response;
 
 class Dispatcher
@@ -20,12 +21,14 @@ class Dispatcher
         $this->config = $config;
         $this->request = new Request();
 
-        // Select STD HTML response or API response.
-        if ( !$this->request->isXhrRequest() )
+        if ( !$this->request->isApiRequest($this->request->exploded) ) // API or Legacy HTTP request
         {
             Authenticate::check($this->request);
             $this->loadController();
         } else {
+            if ($this->request->controller != "authenticate") {
+                (new JsonWebToken)->verify();
+            }
             $this->loadApiClass();
         }
     }

@@ -11,9 +11,15 @@ class Controller
      */
     public $request;
 
+    /**
+     * @var array $config Configurations
+     */
+    public $config;
+
     public function __construct()
     {
         $this->request = new Request();
+        $this->config = Configuration::get();
     }
 
     /**
