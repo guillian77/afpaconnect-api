@@ -2,6 +2,8 @@
 namespace App\Service;
 
 use App\Core\Service;
+use App\Utility\Response;
+use PDOStatement;
 
 class User extends Service
 {
@@ -21,7 +23,7 @@ class User extends Service
      * @param string $identifier
      * @return array
      */
-    public function getUser(string $identifier)
+    public function getUser(string $identifier): array
     {
         $param = [
             'identifier' => $identifier
@@ -35,7 +37,7 @@ class User extends Service
      *
      * @return array
      */
-    public function getUsers()
+    public function getUsers(): array
     {
         return $this->oBdd->getSelectDatas('SELECT * FROM users');
     }
@@ -44,23 +46,28 @@ class User extends Service
      * Insert a user inside database.
      *
      * @param object $user
-     * @return \App\Core\PDOStatement|bool|false
+     * @return PDOStatement|bool|false
      */
-    public function insert(object $user)
+    public function insert($user)
     {
+        if(isset($user->Beneficiaire) || isset($user->Nom_usuel) || isset($user->Prenom))
+        {
+            Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400);
+            exit();
+        }
         $param = [
             "beneficiaire"=> $user->Beneficiaire,
-            "fisrtname"=> $user->Nom_usuel,
+            "firstname"=> $user->Nom_usuel,
             "name"=> $user->Prenom,
         ];
 
-        $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@fisrtname","@name")';
+        $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@firstname","@name")';
 
         $this->oBdd->treatDatas($query,$param);
 
         $lastInsert = $this->oBdd->getLastInsertId();
 
-        // Check if user has been added to databse before adding session.
+        // Check if user has been added to database before adding session.
         if ($lastInsert == 0) {
             return false;
         }

@@ -53,8 +53,8 @@ class User extends Controller
     public function upload(){
         if(isset($_FILES["fileToUpload"]['type'])){
 
-            $isXLS = ($_FILES["fileToUpload"]['type'] === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-            $_FILES["upload_user"]['type'] === "application/vnd.ms-excel"  ? true : false);
+            $isXLS = $_FILES["fileToUpload"]['type'] === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                || $_FILES["upload_user"]['type'] === "application/vnd.ms-excel";
 
             if(isset($this->VARS_HTML['center']) && $this->VARS_HTML['center'] != null && $isXLS){
                 $tmp_name = $_FILES["fileToUpload"]["tmp_name"];
