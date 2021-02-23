@@ -30,7 +30,6 @@ class User extends Controller
         // Load User service
         $this->UserService = new UserService();
         $this->VARS_HTML = $this->UserService->VARS_HTML;
-
     }
 
     /**
