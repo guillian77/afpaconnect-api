@@ -25,7 +25,7 @@ let insert_user_bdd = async () => {
     let fd = new FormData();
     fd.append('uploaded_user', JSON.stringify(data))
 
-    await post("user/add",fd,false)
+    await post("api/user/add",fd,false)
         .then((response) => {
             $('#alert')
                 .addClass('alert-success')
@@ -51,7 +51,7 @@ let ajax_file_upload = async (fileobj) => {
     fd.append("fileToUpload", fileobj)
     fd.append('center' , $('#center').val())
 
-    await post("user/upload",fd,false)
+    await post("api/user/upload",fd,false)
     .then( (resp)=> {
         
         let parsedData = JSON.parse(resp)
