@@ -50,11 +50,11 @@ class User extends Service
      */
     public function insert($user)
     {
-        if(isset($user->Beneficiaire) || isset($user->Nom_usuel) || isset($user->Prenom))
+        if(!isset($user->Beneficiaire) || !isset($user->Nom_usuel) || !isset($user->Prenom))
         {
-            Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400);
-            exit();
+            Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400, true);
         }
+
         $param = [
             "beneficiaire"=> $user->Beneficiaire,
             "firstname"=> $user->Nom_usuel,
