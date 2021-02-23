@@ -26,9 +26,7 @@ class Dispatcher
             Authenticate::check($this->request);
             $this->loadController();
         } else {
-            if ($this->request->controller != "authenticate") {
-                (new JsonWebToken)->verify();
-            }
+            (new JsonWebToken)->verify();
             $this->loadApiClass();
         }
     }

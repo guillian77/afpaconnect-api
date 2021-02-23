@@ -137,4 +137,25 @@ class Request
 
         return trim(str_replace("Bearer", "", $header['Authorization']));
     }
+
+    /**
+     * Check if request come from same IP address.
+     *
+     * @return bool
+     */
+    public static function isSameOrigin()
+    {
+        if (
+            isset($_SERVER['REMOTE_ADDR']) &&
+            (
+                $_SERVER['REMOTE_ADDR'] == "::1" ||
+                $_SERVER['REMOTE_ADDR'] == "127.0.0.1" ||
+                $_SERVER['REMOTE_ADDR'] == "localhost"
+            )
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }

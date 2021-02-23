@@ -14,6 +14,13 @@ class JsonWebToken extends Controller
 
     public function verify()
     {
+        // TODO: Don't allow all request from local. This is not secure. Found an other way. Maybe Token CSRF can be great.
+
+        // Always allow local or login transactions
+        if (Request::isSameOrigin() || $this->request->controller != "authenticate") {
+            return;
+        }
+
         $publicKey = $this->getCert(self::CERT_TYPE_PUBLIC);
         $bearer = Request::getBearerToken();
 
