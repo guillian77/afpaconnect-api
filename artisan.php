@@ -30,6 +30,9 @@ class Artisan
 
     public function __construct()
     {
+        require_once $this->configPath . 'Configuration.php';
+        $this->conf = Configuration::get(); // Get configuration
+
         $this->args = $_SERVER['argv'];
 
         // Stop Artisan if command does not exist.
@@ -81,9 +84,6 @@ class Artisan
         $stream = file_get_contents($configFilePath);
         $conf = str_replace('$config["PORT"] = 80', '$config["PORT"] = ' . $port, $stream);
         file_put_contents($this->configPath . 'Configuration.php', $conf);
-
-        require_once $this->configPath . 'Configuration.php';
-        $this->conf = Configuration::get(); // Get configuration
     }
 
     /**
