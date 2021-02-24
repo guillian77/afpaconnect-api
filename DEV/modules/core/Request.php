@@ -91,11 +91,11 @@ class Request
      *
      * Detect if there is /api/ at the beginning of the URL.
      *
-     * @param array $explodedURL
+     * @param mixed $explodedURL
      *
      * @return bool
      */
-    public function isApiRequest(array $explodedURL):bool
+    public function isApiRequest($explodedURL):bool
     {
         if (isset($explodedURL[0]) && !empty($explodedURL[0]) && $explodedURL[0] == "api") {
             return true;
