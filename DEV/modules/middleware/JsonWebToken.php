@@ -6,6 +6,7 @@ use App\Core\Request;
 use App\Utility\Response;
 use Exception;
 use Firebase\JWT\JWT;
+use function App\Core\dd;
 
 class JsonWebToken extends Controller
 {
@@ -16,8 +17,8 @@ class JsonWebToken extends Controller
     {
         // TODO: Don't allow all request from local. This is not secure. Found an other way. Maybe Token CSRF can be great.
 
-        // Always allow local or login transactions
-        if (Request::isSameOrigin() || $this->request->controller != "authenticate") {
+        if (Authenticate::isLogged() || trim($this->request->url, "/") == "api/auth")
+        {
             return;
         }
 

@@ -21,8 +21,6 @@ class Authenticate extends Controller
      *
      * If private and public keys match. A JWT token is send in the response.
      *
-     * @param string $public_key
-     *
      * @return Response
      */
     public function auth()
