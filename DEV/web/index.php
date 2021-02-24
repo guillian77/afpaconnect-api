@@ -47,6 +47,14 @@ $_SESSION['BASE_HREF'] = $config['BASE_HREF'];
  * - composer autoloader for tiers libraries.
  * - custom autloader for every classes on this project.
  */
+if (!file_exists($config['PATH_CLASS'] . 'vendor/autoload.php'))
+{
+    echo "<h1>Vous êtes nouveau içi ? 😅</h1>";
+    echo "<p>Vous devez d'abord installer les dépendances nécessaires au fonctionnement de l'application.</p>";
+    echo "<p>Run this command inside your console in project root directory: <b>php artisan install</b></p>";
+    die();
+}
+
 require $config['PATH_CLASS'] . 'vendor/autoload.php';
 require 'Autoload.php';
 new Autoload($config);
