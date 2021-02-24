@@ -2,7 +2,6 @@
 namespace Artisan;
 
 use App\Core\Configuration;
-use App\Core\Database;
 
 // TODO: Factorise make methods
 // TODO: Use PATH from configuration instead of hard links.
@@ -30,21 +29,21 @@ class Artisan
 
     public function __construct()
     {
-        require_once $this->configPath . 'Configuration.php';
-        $this->conf = Configuration::get(); // Get configuration
 
         $this->args = $_SERVER['argv'];
 
+        if(!$this->checkConfigFile()) {
+            echo "Configuration file does not exist, create it from sample.\n";
+            $this->makeConfiguration();
+        }
+
         // Stop Artisan if command does not exist.
-        if (!method_exists($this, $this->args[1]) || !isset($this->args[1])) {
+        if (!isset($this->args[1]) || !method_exists($this, $this->args[1])) {
             $this->help();
             return;
         }
 
-        if(!$this->checkConfigFile() && $this->args[2] != "config") {
-            echo "Configuration file does not exist, create it from sample.\n";
-            $this->makeConfiguration();
-        }
+        $this->loadConfiguration();
 
         // Auto call method in this class with first argument passed.
         call_user_func([$this, $this->args[1]]);
@@ -53,6 +52,17 @@ class Artisan
     public function __destruct()
     {
         unset($this->db);
+    }
+
+    /**
+     * Load configuration from Configuration File.
+     *
+     * @return void
+     */
+    public function loadConfiguration()
+    {
+        require_once $this->configPath . 'Configuration.php';
+        $this->conf = Configuration::get(); // Get configuration
     }
 
     /**
@@ -70,8 +80,20 @@ class Artisan
      */
     public function makeConfiguration()
     {
-        $port = readline("PORT [80]: ");
+        $port = readline("[GENERAL] Apache port [80]: ");
         $port = (!$port) ? "80" : $port ;
+
+        $dbname = readline("[DATABASE] Hostname [localhost]: ");
+        $dbname = (!$dbname) ? "localhost" : $dbname ;
+
+        $dbhost = readline("[DATABASE] Name [afpaticket]: ");
+        $dbhost = (!$dbhost) ? "localhost" : $dbhost ;
+
+        $dbusername = readline("[DATABASE] Username [root]: ");
+        $dbusername = (!$dbusername) ? "root" : $dbusername ;
+
+        $dbpassword = readline("[DATABASE] Password [void]: ");
+        $dbpassword = (!$dbpassword) ? "" : $dbpassword ;
 
         $configFilePath = $this->configPath . 'Configuration.php';
 
@@ -79,11 +101,27 @@ class Artisan
             unlink($configFilePath);
         }
 
+        // Copy sample config file to definitive file
         copy($this->configPath . 'Configuration.sample.php', $configFilePath);
 
-        $stream = file_get_contents($configFilePath);
+        $stream = file_get_contents($configFilePath); // Get configuration file content
+
         $conf = str_replace('$config["PORT"] = 80', '$config["PORT"] = ' . $port, $stream);
+        $conf = str_replace('$config["db_name"] = "afpaconnect', '$config["afpaconnect"] = "' . $dbname, $stream);
+        $conf = str_replace('$config["db_hostname"] = "localhost', '$config["db_hostname"] = "' . $dbhost, $stream);
+        $conf = str_replace('$config["db_username"] = "root', '$config["db_username"] = "' . $dbusername, $stream);
+        $conf = str_replace('$config["db_password"] = "', '$config["db_password"] = "' . $dbpassword, $stream);
+
+        // Push modifications to config file
         file_put_contents($this->configPath . 'Configuration.php', $conf);
+
+        echo "\nConfiguration file created.\n";
+        $resp = readline("\nDo you want to installation ? [no/yes]");
+        if ($resp == "yes" | $resp == "y") {
+            $this->install();
+        }
+
+        exit();
     }
 
     /**
@@ -91,19 +129,47 @@ class Artisan
      */
     public function help()
     {
-        echo "No command " . $this->args[1] . " find.\n";
         echo "---------------------------------\n";
         echo "COMMANDS AVAILABLE\n";
         echo "---------------------------------\n";
         echo "- help       Show help\n";
-        echo "- install    Show help\n";
+        echo "\n";
+        echo "- install    Install project dependencies and database structure ,updates and optionaly data fixtures.\n";
+        echo "\n";
         echo "- migrate    Execute migrations (SQL updates) to database.\n";
-        echo "- make       Execute migrations\n";
+        echo "\n";
+        echo "  > make configuration          Create configuration file.\n";
         echo "  > make database [name]        Create database structure and apply migrations and fixtures.\n";
         echo "  > make migration [name]       Create a new migration file.\n";
         echo "  > make fixture [name]         Create a new fixture file.\n";
         echo "  > make controller [name]      Create a new controller file. \n";
         echo "  > make api [name]             Create a new API file.\n";
+    }
+
+    /**
+     * Install requirement for project.
+     *
+     * This app need external packages implement with composer.
+     *
+     * Also, database structure and migrations need to be set.
+     *
+     * @return void
+     */
+    public function install()
+    {
+        $this->loadConfiguration();
+
+        echo "[PACKAGES] Install additional dependencies with composer\n";
+        exec('composer install -d ' . $this->conf['PATH_CLASS']);
+
+        echo "\n[DATABASE] Install database structure\n";
+        $resp = readline("/!\ Continue ? [no/Yes]");
+
+        if ($resp == "y" || $resp == "yes") {
+            $this->makeDatabase();
+        }
+
+        echo "\n\nInstallation done. Enjoy !";
     }
 
     /**
@@ -150,7 +216,7 @@ class Artisan
             case 'database':
                 $this->makeDatabase();
                 break;
-            case 'config':
+            case $this->args[2] == "config" || $this->args[2] == "conf" || $this->args[2] == "configuration":
                 $this->makeConfiguration();
                 break;
             case 'migration':
@@ -170,14 +236,31 @@ class Artisan
 
     /**
      * Connect Database and get connexion handle.
+     * @param bool $useName
+     * @param bool $reset
      */
-    public function dbConnect()
+    public function dbConnect(bool $useName = true, bool $reset = false)
     {
+        if ($reset) { unset($this->db); }
+
         // Check if handle does not already exist.
         if ( !isset($this->db) )
         {
             require_once "DEV/modules/core/database.php";
-            $this->db = new Database($this->conf['db_hostname'], $this->conf['db_name'], $this->conf['db_username'], $this->conf['db_password']);
+
+            try {
+                $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
+
+                if ($useName) {
+                    $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";dbname=".$this->conf['db_name']."charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
+                } else {
+                    $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
+                }
+
+            } catch (\PDOException $PDOException) {
+                echo $PDOException;
+                die();
+            }
         }
     }
 
@@ -202,7 +285,7 @@ class Artisan
         /**
          * Get last migration from DB.
          */
-        $lastMigDateTime = $this->db->_hDb->query('SELECT * FROM migrations ORDER BY migration_datetime DESC LIMIT 1');
+        $lastMigDateTime = $this->db->query('SELECT * FROM migrations ORDER BY migration_datetime DESC LIMIT 1');
         if (!$lastMigDateTime)
         {
             return;
@@ -229,10 +312,10 @@ class Artisan
                 // Load an instance of current migration
                 require __DIR__ . "/" . $this->conf['PATH_MIGRATIONS'] . "/" . $migrationsFiles[$k];
                 $className = str_replace(".php", "","mig_".$migrationsFiles[$k]);
-                new $className($this->db->_hDb);
+                new $className($this->db);
 
                 // Insert last migration executed
-                $this->db->_hDb->query("INSERT INTO migrations VALUES (null, $migDateTime)");
+                $this->db->query("INSERT INTO migrations VALUES (null, $migDateTime)");
             }
         }
 
@@ -271,7 +354,7 @@ class Artisan
             // Load an instance of current migration
             require __DIR__ . "/" . $this->conf['PATH_FIXTURES'] . "/" . $fixturesFiles[$k];
             $className = str_replace(".php", "","fix_".$fixturesFiles[$k]);
-            new $className($this->db->_hDb);
+            new $className($this->db);
         }
 
         echo $fixCount . " fixture(s) has been applied to database.";
@@ -284,8 +367,8 @@ class Artisan
     public function makeDatabase()
     {
         $sql = file_get_contents(__DIR__ . "/BDD/base.sql");
-        $this->dbConnect();
-        if($this->db->_hDb->query($sql)){
+        $this->dbConnect(false, true);
+        if($this->db->query($sql)){
             echo "Database schema has been applied.\n";
             echo "Starting migrate\n";
             $this->migrate();
