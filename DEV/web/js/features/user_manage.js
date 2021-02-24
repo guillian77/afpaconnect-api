@@ -37,7 +37,7 @@ let tableFields = [
 /**
  * Get users from API and fill table with.
  */
-get('api/user/get', {})
+get('api/users', {})
     .then(users => {
         $(document).ready(() => {
             let htmlTable = constructTable(tableFields, users, $('#user_manage_actions'));

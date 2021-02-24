@@ -35,7 +35,7 @@ class User extends Controller
     /**
      * Get all users.
      */
-    public function get()
+    public function getAllUsers()
     {
         $users = $this->UserService->getUsers();
 

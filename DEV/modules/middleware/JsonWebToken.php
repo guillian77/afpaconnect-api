@@ -40,7 +40,24 @@ class JsonWebToken extends Controller
      *
      * @return false|string
      */
-    public function getCert($type)
+    public function getCert(string $type)
+    {
+        $certsPath = $this->config['PATH_SSL']; // Define certificates path
+        $certFilePath = $certsPath . $this->getIssuer() . "_". $type . ".key";
+
+        if (!file_exists($certFilePath)) { // Check public key file exist
+            Response::resp('Oups, contact administrator. Something went wrong.', 404, true);
+        }
+
+        return file_get_contents($certFilePath);
+    }
+
+    /**
+     * Find issuer
+     *
+     * @return mixed
+     */
+    public function getIssuer()
     {
         if ( // Check issuer has been sent
             (!isset($this->request->post['issuer']) || empty($this->request->post['issuer'])) &&
@@ -51,18 +68,9 @@ class JsonWebToken extends Controller
 
         // Define issuer
         if (!isset($this->request->post['issuer']) || empty($this->request->post['issuer'])) {
-            $issuser = $this->request->get['issuer'];
+            return $this->request->get['issuer'];
         } else {
-            $issuser = $this->request->post['issuer'];
+            return $this->request->post['issuer'];
         }
-
-        $certsPath = $this->config['PATH_SSL']; // Define certificates path
-        $certFilePath = $certsPath . $issuser . "_". $type . ".key";
-
-        if (!file_exists($certFilePath)) { // Check public key file exist
-            Response::resp('Oups, contact administrator. Something went wrong.', 404, true);
-        }
-
-        return file_get_contents($certFilePath);
     }
 }

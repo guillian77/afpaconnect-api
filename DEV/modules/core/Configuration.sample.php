@@ -20,6 +20,7 @@ Class Configuration	{
         $config["PATH_HOME"]        = "C:/laragon/";
         $config["PATH_FILES"]       = $config["PATH_HOME"] . "files/afpaconnect/HTML/";
         $config["PATH_SQL"]         = $config["PATH_HOME"] . "files/afpaconnect/SQL/";
+        $config["PATH_SSL"]         = $config["PATH_HOME"] . "files/afpaconnect/SSL/";
         $config["PATH_CLASS"]       = $config["PATH_HOME"] . "modules/afpaconnect/";
         $config["PATH_CORE"]        = $config["PATH_CLASS"] . "core/";
         $config["PATH_UPLOAD"]      = $config["PATH_HOME"] . "www/afpaconnect/upload/";

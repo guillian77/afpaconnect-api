@@ -45,28 +45,15 @@ class Request
             $this->url = trim($_SERVER['PATH_INFO'], "/");
             $this->exploded = explode("/", $this->url);
 
-            if ($this->isApiRequest($this->exploded))
+            if (!$this->isApiRequest($this->exploded))
             {
-                if (isset($this->exploded[1]))
-                {
-                    $this->controller = $this->exploded[1];
-                    $this->action = $this->exploded[2];
-                }
-
-                $this->params = array_slice($this->exploded, 3);
-            } else {
                 $this->controller = $this->exploded[0];
                 $this->params = array_slice($this->exploded, 1);
             }
         }
 
-//        foreach ($_GET as $k => $v) {
-//            $this->get[$k] = htmlspecialchars($v);
-//        }
-//
-//        foreach ($_POST as $k => $v) {
-//            $this->post[$k] = htmlspecialchars($v);
-//        }
+        // TODO: secure GET, POST && FILE superglobals.
+
         $this->get = $_GET;
         $this->post = $_POST;
     }
