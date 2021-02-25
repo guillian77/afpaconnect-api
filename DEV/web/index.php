@@ -33,6 +33,14 @@ function debug($toDebug)
     echo '<hr/>';
 }
 
+if (!file_exists($config['PATH_CLASS'] . 'vendor/autoload.php') || $config['PATH_CLASS'] . 'core/Configuration.php')
+{
+    echo "<h1>Vous êtes nouveau içi ? 😅</h1>";
+    echo "<p>Vous devez d'abord installer les dépendances nécessaires au fonctionnement de l'application.</p>";
+    echo "<p>Exécutez cette commande dans la racine du répertoire du projet: <b>php artisan install</b></p>";
+    die();
+}
+
 /**
  * Load configuration
  */
@@ -40,20 +48,6 @@ require "../modules/core/Configuration.php";
 $config = Configuration::get();
 
 $_SESSION['BASE_HREF'] = $config['BASE_HREF'];
-
-/**
- * AUTOLOAD
- *
- * - composer autoloader for tiers libraries.
- * - custom autloader for every classes on this project.
- */
-if (!file_exists($config['PATH_CLASS'] . 'vendor/autoload.php'))
-{
-    echo "<h1>Vous êtes nouveau içi ? 😅</h1>";
-    echo "<p>Vous devez d'abord installer les dépendances nécessaires au fonctionnement de l'application.</p>";
-    echo "<p>Run this command inside your console in project root directory: <b>php artisan install</b></p>";
-    die();
-}
 
 require $config['PATH_CLASS'] . 'vendor/autoload.php';
 require 'Autoload.php';
