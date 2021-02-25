@@ -8,7 +8,7 @@ root=$(dirname "$SCRIPT")
 
 cd $root
 
-apps=("afpanier" "afpaticket" "resasalles")
+apps=("afpasla")
 
 for app in "${apps[@]}"
 do
