@@ -33,7 +33,7 @@ function debug($toDebug)
     echo '<hr/>';
 }
 
-if (!file_exists($config['PATH_CLASS'] . 'vendor/autoload.php') || $config['PATH_CLASS'] . 'core/Configuration.php')
+if (!file_exists('../modules/vendor/autoload.php') || !file_exists('../modules/core/Configuration.php'))
 {
     echo "<h1>Vous êtes nouveau içi ? 😅</h1>";
     echo "<p>Vous devez d'abord installer les dépendances nécessaires au fonctionnement de l'application.</p>";
