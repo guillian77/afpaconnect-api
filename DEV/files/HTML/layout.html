@@ -36,8 +36,22 @@
 
     <div class="container">
         <header class="header boxed">
-            <h1><a class="header__title" href="<?= $vue->path(); ?>" title="Aller sur l'accueil">AfpaConnect</a></h1>
+            <div class="flex topheader">
+                <h1><a class="header__title" href="<?= $vue->path(); ?>" title="Aller sur l'accueil">AfpaConnect</a></h1>
+                <!-- Hamburger Icon for responsive Menu -->
+                <a href="javascript:void(0);" class="icon" onclick="mobileMenuHeader()">
+                      <i id="menuIcon" class="fa fa-bars"></i>
+                </a>
+            </div>
+            <nav id="navbar" class="flex navbar">
+                <ul>
+                    <li><a href="<?= $vue->path('user_manage'); ?>">Gestion utilisateurs</a></li>
+                    <li><a href="<?= $vue->path('user_upload'); ?>">Nouveaux utilisateurs</a></li>
+                    <li><a href="<?= $vue->path(''); ?>">Configuration</a></li>
 
+
+                </ul>
+            </nav>
             <?php if(isset($_SESSION['user']['uid'])): ?>
                 <a class="btn" href="<?= $vue->path('user_logout'); ?>"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             <?php endif; ?>

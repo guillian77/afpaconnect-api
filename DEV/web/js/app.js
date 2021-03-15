@@ -180,3 +180,18 @@ let constructConfig = function(fields, order = [0, "asc"], name = "unknow") {
     }
     return config;
 }
+
+
+/**
+ * --------------------------------------------------------------
+ * MENU HEADER
+ * --------------------------------------------------------------
+ */
+
+
+ function mobileMenuHeader() {
+     
+    $("#navbar").toggleClass("responsive");
+    $("#menuIcon").toggleClass('fa-times').toggleClass('fa-bars');
+
+  }
