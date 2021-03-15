@@ -5,6 +5,7 @@ namespace App\Core;
 use App\Middleware\Authenticate;
 use App\Middleware\JsonWebToken;
 use App\Utility\Response;
+use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
 
 class Dispatcher
@@ -15,7 +16,10 @@ class Dispatcher
 
     /**
      * Dispatcher constructor.
+     *
      * @param $config
+     *
+     * @throws ReflectionException
      */
     public function __construct($config)
     {
@@ -52,7 +56,8 @@ class Dispatcher
      * Load API class where API request is detected.
      *
      * API request is detect by /api/ path at the beginning of the URL.
-     * @throws \ReflectionException
+     *
+     * @throws ReflectionException
      */
     public function loadApiClass()
     {
@@ -91,6 +96,7 @@ class Dispatcher
                 $associatedParameters = $this->associateParameters($class, $methodName, $pathParameters);
 
                 call_user_func([$class, $methodName], ...$associatedParameters);
+
                 return;
             }
         }
@@ -183,7 +189,7 @@ class Dispatcher
      *
      * @return array
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function associateParameters($class, string $method, array $parameters):array
     {

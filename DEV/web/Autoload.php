@@ -66,6 +66,8 @@ class Autoload
         if ( file_exists($path) ) {
             require $path;
         } else {
+            echo "<h1>404 Page not found</h1>";
+            echo "<p>Class ".$this->classname." not found in " . $dir . "</p>";
             http_response_code(404);
         }
     }
