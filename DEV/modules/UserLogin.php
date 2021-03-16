@@ -70,6 +70,7 @@ class UserLogin extends Controller
     public function connectUser($user)
     {
         $_SESSION['user']['uid'] = $user[0]['id_user'];
+        $_SESSION['user']['center'] = $user[0]['id_center'];
         header('Location: UserManage');
     }
 }

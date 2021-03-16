@@ -2,14 +2,9 @@
 <main class="main boxed">
     <h2>Téléversement des utilisateurs</h2>
     <div id="alert" class="alert d-none"></div>
+    <input id="id_user_center" type="hidden" value="<?= $user_center_id ?>"/>
     <form method="post" action="user_upload" method="POST" enctype="multipart/form-data">
-        <select class="select" id="center">
-
-            <option value="null">Choisisser un centre</option>
-
-            <option value="1">Centre 1</option>
-
-        </select>
+        <select class="select" id="center"></select>
         <input hidden id="upload_file" type="file" name="upload_user" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
     </form>
     <div class="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">    

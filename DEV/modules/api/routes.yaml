@@ -23,3 +23,9 @@ api_users_upload:
   path: /user/upload
   controller: App\Api\User::upload
   methods: POST
+
+# CENTERS
+api_centers_get:
+  path: /centers
+  controller: App\Api\Center::getAllCenters
+  methods: GET
