@@ -73,10 +73,12 @@ class User extends Service
         }
 
         $paramFormation = [
+            "date_debut" => $user->Date_de_debut,
+            "date_fin" => $user->Date_de_fin,
             "formation"=> $user->Formation,
             "id_user"=> $lastInsert
         ];
-        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation";';
+        $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation" AND session_start_at = "@date_debut" AND session_end_at = "@date_fin";';
         $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, @session)';
 
         return $this->oBdd->treatDatas($query,$paramFormation);
