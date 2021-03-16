@@ -2,13 +2,14 @@
 namespace App\Controller;
 
 use App\Core\Controller;
+use function App\Core\debug;
 
-class token extends Controller
+class UserManage extends Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->render('token');
+        $this->render("user_manage");
     }
 }

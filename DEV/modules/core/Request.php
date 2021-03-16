@@ -38,7 +38,7 @@ class Request
         $this->token = self::getBearerToken(); // Get bearer token
 
         $this->defineBaseURL();
-        $this->controller = "user_login"; // Default controller called
+        $this->controller = "UserLogin"; // Default controller called
 
         if (isset($_SERVER['PATH_INFO']))
         {

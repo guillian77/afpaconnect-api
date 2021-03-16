@@ -16,6 +16,9 @@ class Controller
      */
     public $config;
 
+    const FILETYPE_CSS = "css";
+    const FILETYPE_JS = "js";
+
     public function __construct()
     {
         $this->request = new Request();
@@ -47,31 +50,8 @@ class Controller
         // Define path of the view asked.
         $viewPath = $config['PATH_FILES'] . $name . ".html";
 
-        /**
-         * CATCHING JAVASCRIPT
-         * If there is a javascript file called like the controller name. Load it!
-         */
-        ob_start();
-
-        $jsPath = "js/features/" . $this->request->controller . ".js";
-        if ( file_exists($jsPath) )
-        {
-            echo '<script src="' . $jsPath . '"></script>';
-        }
-        $javascript = ob_get_clean();
-
-        /**
-         * CATCHING STYLE
-         * If there is a css file called like the controller name. Load it!
-         */
-        ob_start();
-
-        $cssPath = "css/features/" . $this->request->controller . ".css";
-        if ( file_exists($cssPath) )
-        {
-            echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$cssPath.'">';
-        }
-        $css = ob_get_clean();
+        $javascript = $this->loadAssetFile($this->request->controller, self::FILETYPE_JS);
+        $css = $this->loadAssetFile($this->request->controller, self::FILETYPE_CSS);
 
         /**
          * CATCHING THE VIEW
@@ -86,6 +66,60 @@ class Controller
         $content = ob_get_clean();
 
         require_once $config['PATH_FILES'] . "layout.html";
+    }
+
+    /**
+     * Format filename for CSS and Javascript files.
+     *
+     * Routes are loaded with classname (also controller name).
+     *
+     * The Classname is respect upper camel case syntax.
+     *
+     * So just split the controller name on upper letters.
+     *
+     * @param string $controllerName The controller name.
+     * @param string $type           The asset file type.
+     *
+     * @return string Return path and type of asset file to load.
+     */
+    private function formatAssetFilename(string $controllerName, string $type):string
+    {
+        $split = preg_split('/(?=[A-Z])/', $controllerName, -1, PREG_SPLIT_NO_EMPTY);
+
+        $path = $type . "/features/" . strtolower($split[0]) . "." . $type;
+
+        if (isset($split[1])) {
+            $path =  $type . "/features/" . strtolower($split[0]) . "_" . strtolower($split[1]) . "." . $type;
+        }
+
+        return $path;
+    }
+
+    /**
+     * Buffer assets file call if file exist.
+     *
+     * @param string $controllerName
+     * @param string $type
+     *
+     * @return false|string
+     */
+    private function loadAssetFile(string $controllerName, string $type)
+    {
+        $assetFilePath = $this->formatAssetFilename($controllerName, $type);
+
+        if (!file_exists($assetFilePath)) {
+            return false;
+        }
+
+        ob_start();
+
+        if ($type === self::FILETYPE_CSS) {
+            echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$assetFilePath.'">';
+        } elseif ($type === self::FILETYPE_JS) {
+            echo '<script src="' . $assetFilePath . '"></script>';
+        }
+
+        return ob_get_clean();
     }
 
     /**

@@ -10,7 +10,7 @@ class Authenticate
     public static function check($request)
     {
         $offlinePages = [
-            "user_login"
+            "UserLogin"
         ];
 
         /**
@@ -26,7 +26,7 @@ class Authenticate
          */
         if (!self::isLogged())
         {
-            header('Location: ' . $request->base . 'user_login');
+            header('Location: ' . $request->base . 'UserLogin');
         }
     }
 

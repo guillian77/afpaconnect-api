@@ -53,7 +53,7 @@
                 </ul>
             </nav>
             <?php if(isset($_SESSION['user']['uid'])): ?>
-                <a class="btn" href="<?= $vue->path('user_logout'); ?>"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                <a class="btn" href="<?= $vue->path('UserLogout'); ?>"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             <?php endif; ?>
         </header>
 

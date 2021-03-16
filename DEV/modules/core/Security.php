@@ -2,7 +2,7 @@
 namespace App\Core;
 
 /**
- * Class Security | file security.php
+ * Class Security | file Security.php
  *
  * In this class, we find all about security
  *

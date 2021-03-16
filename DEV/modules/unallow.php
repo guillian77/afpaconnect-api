@@ -1,13 +1,13 @@
 <?php
 
-require_once "service.php";
+require_once "Service.php";
 
 /**
- * Class Unfound | fichier unfound.php
+ * Class Unfound | fichier Unfound.php
  *
  * List of classes needed for this class :
  *
- * require_once "service.php";
+ * require_once "Service.php";
  *
  * @package Afpanier Project
  * @subpackage service
