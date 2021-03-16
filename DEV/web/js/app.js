@@ -103,10 +103,6 @@ let constructTable = function(fields, data, actions = 0) {
             i++;
         }
 
-        /**
-         * Actions
-         */
-        table += "<td>";
 
         // transform object to array
         let rowToArray = Object.values(row);
@@ -164,7 +160,9 @@ let constructConfig = function(fields, order = [0, "asc"], name = "unknow") {
             "sInfoEmpty":      "" + name + " 0 à 0 sur 0 sélectionnée",
         },
         "columns": [],
-        'retrieve': true
+        'retrieve': true,
+        "responsive": true,
+        "autoWidth": false
     }
 
     // Edit fields settings

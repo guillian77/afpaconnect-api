@@ -31,7 +31,6 @@ let tableFields = [
     { "name": "Status", "orderable": true, "show": true},
     { "name": "Enregistré le", "orderable": false, "show": false},
     { "name": "Modifié le", "orderable": false, "show": false},
-    { "name": "Action", "orderable": false, "show": true},
 ];
 
 /**
