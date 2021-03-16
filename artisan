@@ -80,48 +80,67 @@ class Artisan
      */
     public function makeConfiguration()
     {
-        $port = readline("[GENERAL] Apache port [80]: ");
-        $port = (!$port) ? "80" : $port ;
-
-        $dbname = readline("[DATABASE] Hostname [localhost]: ");
-        $dbname = (!$dbname) ? "localhost" : $dbname ;
-
-        $dbhost = readline("[DATABASE] Name [afpaticket]: ");
-        $dbhost = (!$dbhost) ? "localhost" : $dbhost ;
-
-        $dbusername = readline("[DATABASE] Username [root]: ");
-        $dbusername = (!$dbusername) ? "root" : $dbusername ;
-
-        $dbpassword = readline("[DATABASE] Password [void]: ");
-        $dbpassword = (!$dbpassword) ? "" : $dbpassword ;
-
+        /** @var  $configFilePath */
         $configFilePath = $this->configPath . 'Configuration.php';
 
+        /** Delete configuration file if already exist */
         if ($this->checkConfigFile()) { // Delete if already exist
             unlink($configFilePath);
         }
 
-        // Copy sample config file to definitive file
+        /** Copy sample config file to definitive file */
         copy($this->configPath . 'Configuration.sample.php', $configFilePath);
 
-        $stream = file_get_contents($configFilePath); // Get configuration file content
+        $srvroot = readline("[GENERAL] Apache server root [/var/www/]: ");
+        $srvroot = (!$srvroot) ? "/var/www/" : $srvroot ;
+        $this->editConfigParameter($configFilePath, "__SRV_ROOT__", $srvroot);
 
-        $conf = str_replace('$config["PORT"] = 80', '$config["PORT"] = ' . $port, $stream);
-        $conf = str_replace('$config["db_name"] = "afpaconnect', '$config["afpaconnect"] = "' . $dbname, $stream);
-        $conf = str_replace('$config["db_hostname"] = "localhost', '$config["db_hostname"] = "' . $dbhost, $stream);
-        $conf = str_replace('$config["db_username"] = "root', '$config["db_username"] = "' . $dbusername, $stream);
-        $conf = str_replace('$config["db_password"] = "', '$config["db_password"] = "' . $dbpassword, $stream);
+        $webroot = readline("[GENERAL] Apache public web root [html/]: ");
+        $webroot = (!$webroot) ? "html/" : $webroot ;
+        $this->editConfigParameter($configFilePath, "__WEB_ROOT__", $webroot);
 
-        // Push modifications to config file
-        file_put_contents($this->configPath . 'Configuration.php', $conf);
+        $port = readline("[GENERAL] Apache port [80]: ");
+        $port = (!$port) ? "80" : $port ;
+        $this->editConfigParameter($configFilePath, "__PORT__", $port);
+
+        $dbhost = readline("[DATABASE] Hostname [localhost]: ");
+        $dbhost = (!$dbhost) ? "localhost" : $dbhost ;
+        $this->editConfigParameter($configFilePath, "__DB_HOSTNAME__", $dbhost);
+
+        $dbname = readline("[DATABASE] Name [afpaconnect]: ");
+        $dbname = (!$dbname) ? "afpaconnect" : $dbname ;
+        $this->editConfigParameter($configFilePath, "__DB_NAME__", $dbname);
+
+        $dbusername = readline("[DATABASE] Username [afpaconnect]: ");
+        $dbusername = (!$dbusername) ? "afpaconnect" : $dbusername ;
+        $this->editConfigParameter($configFilePath, "__DB_USERNAME__", $dbusername);
+
+        $dbpassword = readline("[DATABASE] Password [afpaconnect]: ");
+        $dbpassword = (!$dbpassword) ? "afpaconnect" : $dbpassword ;
+        $this->editConfigParameter($configFilePath, "__DB_PASSWORD__", $dbpassword);
 
         echo "\nConfiguration file created.\n";
+
         $resp = readline("\nDo you want to installation ? [no/yes]");
         if ($resp == "yes" | $resp == "y") {
             $this->install();
         }
 
         exit();
+    }
+
+    /**
+     * Edit configuration parameter from configuration file.
+     *
+     * @param string $path
+     * @param string $before
+     * @param string $after
+     */
+    private function editConfigParameter(string $path, string $search, string $replace)
+    {
+        $stream = file_get_contents($path); // Get configuration file content
+        $conf = str_replace($search, $replace, $stream);
+        file_put_contents($path, $conf);
     }
 
     /**
@@ -244,6 +263,7 @@ class Artisan
 
     /**
      * Connect Database and get connexion handle.
+     *
      * @param bool $useName
      * @param bool $reset
      */
@@ -257,10 +277,8 @@ class Artisan
             require_once "DEV/modules/core/Database.php";
 
             try {
-                $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
-
                 if ($useName) {
-                    $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";dbname=".$this->conf['db_name']."charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
+                    $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";dbname=".$this->conf['db_name'].";charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
                 } else {
                     $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";charset=utf8", $this->conf['db_username'], $this->conf['db_password']);
                 }
