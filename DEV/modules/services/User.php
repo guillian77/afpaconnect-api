@@ -50,18 +50,19 @@ class User extends Service
      */
     public function insert($user)
     {
-        if(!isset($user->Beneficiaire) || !isset($user->Nom_usuel) || !isset($user->Prenom))
+        if(!isset($user->Beneficiaire) || !isset($user->Nom_usuel) || !isset($user->Prenom) || !isset($this->VARS_HTML['center']))
         {
             Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400, true);
         }
 
         $param = [
+            "center" => $this->VARS_HTML['center'],
             "beneficiaire"=> $user->Beneficiaire,
             "firstname"=> $user->Nom_usuel,
             "name"=> $user->Prenom,
         ];
 
-        $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (1, "@beneficiaire","@firstname","@name")';
+        $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (@center, "@beneficiaire","@firstname","@name")';
 
         $this->oBdd->treatDatas($query,$param);
 

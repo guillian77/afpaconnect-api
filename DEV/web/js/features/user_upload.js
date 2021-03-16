@@ -24,6 +24,7 @@ let upload_file = (e)=>  {
 let insert_user_bdd = async () => {
     let fd = new FormData();
     fd.append('uploaded_user', JSON.stringify(data))
+    fd.append('center' , $('#center').val())
 
     await post("api/user/add",fd,false)
         .then((response) => {
@@ -49,7 +50,6 @@ let insert_user_bdd = async () => {
 let ajax_file_upload = async (fileobj) => {
     let fd = new FormData();
     fd.append("fileToUpload", fileobj)
-    fd.append('center' , $('#center').val())
 
     await post("api/user/upload",fd,false)
     .then( (resp)=> {

@@ -55,12 +55,11 @@ class User extends Controller
             $isXLS = $_FILES["fileToUpload"]['type'] === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 || $_FILES["upload_user"]['type'] === "application/vnd.ms-excel";
 
-            if(isset($this->VARS_HTML['center']) && $this->VARS_HTML['center'] != null && $isXLS){
+            if($isXLS){
                 $tmp_name = $_FILES["fileToUpload"]["tmp_name"];
                 $content = Upload::parse($tmp_name);
                 echo json_encode($content,JSON_FORCE_OBJECT|JSON_UNESCAPED_UNICODE);
             }
-            
         }
     }
 
@@ -69,8 +68,8 @@ class User extends Controller
      */
     public function add() {
         $users = json_decode(htmlspecialchars_decode($this->VARS_HTML['uploaded_user']));
-        foreach($users as $user) {
 
+        foreach($users as $user) {
             // Check if user insertion work
             if(!$this->UserService->insert($user))
             {
