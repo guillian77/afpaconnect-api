@@ -296,6 +296,52 @@ footer.footer {
 
 /**
 * --------------------------------------------------------------
+* DEV DEBUGBAR
+* --------------------------------------------------------------
+*/
+.debugbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.debugbar__wrapper {
+    height: 28px;
+    width: var(--container-width);
+    margin: 80px auto 0 auto;
+    transition: 0.4s;
+    background-color: #fff;
+}
+
+.debugbar__wrapper:hover {
+    height: 450px;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.debugbar__wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.debugbar__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.debugbar__section_title {
+    margin-bottom: 3px;
+}
+
+.debugbar__main { padding: 5px; }
+
+/**
+* --------------------------------------------------------------
 * RESPONSIVE
 * --------------------------------------------------------------
 */

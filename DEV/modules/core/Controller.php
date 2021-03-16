@@ -65,6 +65,13 @@ class Controller
 
         $content = ob_get_clean();
 
+        $debug = "";
+        if ($this->config['DEV']) {
+            ob_start();
+            require_once $config['PATH_FILES'] . "debug.html";
+            $debug = ob_get_clean();
+        }
+
         require_once $config['PATH_FILES'] . "layout.html";
     }
 

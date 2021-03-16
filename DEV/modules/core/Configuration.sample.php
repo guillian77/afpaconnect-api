@@ -12,6 +12,7 @@ Class Configuration	{
         /**
          * GENERAL
          */
+        $config["DEV"]  = "__DEV__";
         $config["PORT"] = "__PORT__";
 
         /**
