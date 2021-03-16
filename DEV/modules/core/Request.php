@@ -27,6 +27,7 @@ class Request
 
     public $get;
     public $post;
+    public $session;
 
     /**
      * @var string Bearer token
@@ -52,10 +53,7 @@ class Request
             }
         }
 
-        // TODO: secure GET, POST && FILE superglobals.
-
-        $this->get = $_GET;
-        $this->post = $_POST;
+        $this->requestSecurization();
     }
 
     /**
@@ -144,5 +142,28 @@ class Request
         }
 
         return false;
+    }
+
+    /**
+     * Secure external data come from user.
+     */
+    private function requestSecurization()
+    {
+        array_walk_recursive($_POST, '\App\Core\Request::escapeHTML');
+        array_walk_recursive($_GET, '\App\Core\Request::escapeHTML');
+        array_walk_recursive($_SESSION, '\App\Core\Request::escapeHTML');
+
+        $this->get = $_GET;
+        $this->post = $_POST;
+        $this->session = $_SESSION;
+    }
+
+    /**
+     * Escape HTML tags from values.
+     *
+     * @param $value
+     */
+    public static function escapeHTML(&$value) {
+        $value = htmlspecialchars($value);
     }
 }
