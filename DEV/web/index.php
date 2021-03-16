@@ -47,6 +47,12 @@ if (!file_exists('../modules/vendor/autoload.php') || !file_exists('../modules/c
 require "../modules/core/Configuration.php";
 $config = Configuration::get();
 
+if ($config['DEV']) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+
 $_SESSION['BASE_HREF'] = $config['BASE_HREF'];
 
 require $config['PATH_CLASS'] . 'vendor/autoload.php';

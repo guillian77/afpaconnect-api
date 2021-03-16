@@ -91,12 +91,16 @@ class Artisan
         /** Copy sample config file to definitive file */
         copy($this->configPath . 'Configuration.sample.php', $configFilePath);
 
+        $devmode = readline("[GENERAL] Development mode [true]: ");
+        $devmode = (!$devmode) ? "true" : $devmode ;
+        $this->editConfigParameter($configFilePath, '"__DEV__"', $devmode);
+
         $srvroot = readline("[GENERAL] Apache server root [/var/www/]: ");
         $srvroot = (!$srvroot) ? "/var/www/" : $srvroot ;
         $this->editConfigParameter($configFilePath, "__SRV_ROOT__", $srvroot);
 
-        $webroot = readline("[GENERAL] Apache public web root [html/]: ");
-        $webroot = (!$webroot) ? "html/" : $webroot ;
+        $webroot = readline("[GENERAL] Apache public web root [html]: ");
+        $webroot = (!$webroot) ? "html" : $webroot ;
         $this->editConfigParameter($configFilePath, "__WEB_ROOT__", $webroot);
 
         $port = readline("[GENERAL] Apache port [80]: ");
