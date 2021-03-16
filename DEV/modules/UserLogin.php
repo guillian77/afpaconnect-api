@@ -6,7 +6,7 @@ use App\Middleware\Authenticate;
 use App\Service\User;
 use function App\Core\dd;
 
-class User_login extends Controller
+class UserLogin extends Controller
 {
     /**
      * @var array
@@ -20,10 +20,10 @@ class User_login extends Controller
 
     public function __construct()
     {
-        // Disallow this page is user is already logged.
-        if (Authenticate::isLogged()) { $this->redirect('user_manage'); }
-
         parent::__construct();
+
+        // Disallow this page is user is already logged.
+        if (Authenticate::isLogged()) { $this->redirect('UserManage'); }
 
         // Load User service
         $User = new User();
@@ -70,6 +70,6 @@ class User_login extends Controller
     public function connectUser($user)
     {
         $_SESSION['user']['uid'] = $user[0]['id_user'];
-        header('Location: user_manage');
+        header('Location: UserManage');
     }
 }

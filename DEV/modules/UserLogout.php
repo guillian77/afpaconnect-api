@@ -1,11 +1,11 @@
 <?php
 namespace App\Controller;
 
-class User_logout
+class UserLogout
 {
     public function __construct()
     {
         unset($_SESSION['user']['uid']);
-        header('Location: user_login');
+        header('Location: UserLogin');
     }
 }

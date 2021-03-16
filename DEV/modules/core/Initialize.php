@@ -1,8 +1,8 @@
 <?php
 namespace App\Core;
 
-require_once "database.php";
-require_once "security.php";
+require_once "Database.php";
+require_once "Security.php";
 
 Class Initialize	{
 	/**

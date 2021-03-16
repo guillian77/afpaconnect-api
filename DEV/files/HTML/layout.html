@@ -39,7 +39,7 @@
             <h1><a class="header__title" href="<?= $vue->path(); ?>" title="Aller sur l'accueil">AfpaConnect</a></h1>
 
             <?php if(isset($_SESSION['user']['uid'])): ?>
-                <a class="btn" href="<?= $vue->path('user_logout'); ?>"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                <a class="btn" href="<?= $vue->path('UserLogout'); ?>"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             <?php endif; ?>
         </header>
 

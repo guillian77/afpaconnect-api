@@ -146,6 +146,14 @@ class Artisan
         echo "  > make api [name]             Create a new API file.\n";
     }
 
+    public function composer()
+    {
+        $this->loadConfiguration();
+
+        echo "[PACKAGES] Install additional dependencies with composer\n";
+        exec('composer install -d ' . $this->conf['PATH_CLASS']);
+    }
+
     /**
      * Install requirement for project.
      *
@@ -246,7 +254,7 @@ class Artisan
         // Check if handle does not already exist.
         if ( !isset($this->db) )
         {
-            require_once "DEV/modules/core/database.php";
+            require_once "DEV/modules/core/Database.php";
 
             try {
                 $this->db = new \PDO("mysql:host=".$this->conf['db_hostname'].";charset=utf8", $this->conf['db_username'], $this->conf['db_password']);

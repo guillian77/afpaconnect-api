@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Core\Controller;
 
-class User_upload extends Controller
+class UserUpload extends Controller
 {
     /**
      * @var array
