@@ -1,8 +1,22 @@
-
 let data = []
 
-$('.select').change( () => {
-    $( ".select" ).val() != "null" ? $(".drop_file_zone").show() : $(".drop_file_zone").hide()
+$(document).ready( async ()=> {
+    await get("api/centers",false)
+        .then( (centers)=> {
+
+            centers.forEach(center => {
+                let el = document.createElement("option");
+                el.textContent = center.center_name;
+                el.value = center.id_center;
+                el.selected = $("#id_user_center").val() === el.value
+                $('#center').append(el);
+            });
+
+        })
+        .catch((err) => {
+            console.log(err)
+            $('#error').html("Un problème est survenu lors du chargement des centres").show()
+        })
 })
 
 $('#upload_file').change( (e) => {

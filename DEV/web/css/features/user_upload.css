@@ -41,7 +41,6 @@ table, th, td {
     top: 40%;
 }
 .drop_file_zone{
-    display: none;
     margin-top: 15px;
     border: dashed blue 1px;
     cursor: pointer;
