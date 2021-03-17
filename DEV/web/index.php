@@ -15,7 +15,7 @@ session_start();
 function dd($toDebug)
 {
     echo '<pre>';
-    print_r($toDebug);
+    var_dump($toDebug);
     echo '</pre>';
     echo '<hr/>';
     die();
@@ -28,7 +28,7 @@ function dd($toDebug)
 function debug($toDebug)
 {
     echo '<pre>';
-    print_r($toDebug);
+    var_dump($toDebug);
     echo '</pre>';
     echo '<hr/>';
 }

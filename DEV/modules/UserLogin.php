@@ -4,7 +4,6 @@ namespace App\Controller;
 use App\Core\Controller;
 use App\Middleware\Authenticate;
 use App\Service\User;
-use function App\Core\dd;
 
 class UserLogin extends Controller
 {
@@ -18,15 +17,18 @@ class UserLogin extends Controller
      */
     public $errors = [];
 
-    public function __construct()
+    /**
+     * UserLogin constructor.
+     *
+     * @param User $User User service
+     */
+    public function __construct(User $User)
     {
         parent::__construct();
 
         // Disallow this page is user is already logged.
         if (Authenticate::isLogged()) { $this->redirect('UserManage'); }
 
-        // Load User service
-        $User = new User();
         $this->VARS_HTML = $User->VARS_HTML;
 
         // Check if form is submitted

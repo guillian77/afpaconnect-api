@@ -4,16 +4,18 @@ namespace App\Api;
 use App\Core\Controller;
 use App\Service\User;
 use App\Utility\Response;
-use function App\Core\dd;
 
 class user_manage extends Controller
 {
-    public function __construct()
+    /**
+     * user_manage constructor.
+     * @param User $user
+     */
+    public function __construct(User $user)
     {
         parent::__construct();
 
-        $userService = new User();
-        $users = $userService->getUsersSecured();
+        $users = $user->getUsersSecured();
 
         Response::json($users);
     }

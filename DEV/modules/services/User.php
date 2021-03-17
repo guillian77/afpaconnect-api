@@ -1,9 +1,11 @@
 <?php
 namespace App\Service;
 
+use App\Core\Request;
 use App\Core\Service;
 use App\Utility\Response;
 use PDOStatement;
+use function App\Core\debug;
 
 class User extends Service
 {

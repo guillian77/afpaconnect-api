@@ -20,15 +20,7 @@ Class Initialize	{
 	private $oSecu;
 	// Array of data
 	public $VARS_HTML;
-	
 
-	/**
-	 * 
-	 * Fill GLOBAL_INI with an array of path variables
-	 * Create instance of Security and Database connection 
-	 * Set data in public VARS_HTML from Security Object VARS_HTML argument
-	 * 
-	 */
 	public function __construct()	{
 		// Instance of Config
 		$this->GLOBALS_INI= Configuration::get();

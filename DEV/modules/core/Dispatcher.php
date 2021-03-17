@@ -38,6 +38,8 @@ class Dispatcher
 
     /**
      * Load controller.
+     *
+     * @throws ReflectionException
      */
     public function loadController()
     {
@@ -46,7 +48,7 @@ class Dispatcher
         if ( file_exists($controllerPath) )
         {
             $class = "\App\Controller\\" . ucfirst($this->request->controller);
-            new $class();
+            new $class(...Dependencies::getClassDependencies($class));
         } else {
             $this->notFound();
         }
@@ -95,7 +97,7 @@ class Dispatcher
 
                 $associatedParameters = $this->associateParameters($class, $methodName, $pathParameters);
 
-                call_user_func([$class, $methodName], ...$associatedParameters);
+                (new $class(...Dependencies::getClassDependencies($class)))->$methodName(...$associatedParameters);
 
                 return;
             }
