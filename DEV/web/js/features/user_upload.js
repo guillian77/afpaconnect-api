@@ -59,16 +59,15 @@ let ajax_file_upload = async (fileobj) => {
 
         $.each(parsedData,(index,row) => {
 
-            index != 0 ? data[index-1] = {} : false
+            index !== 0 ? data[index-1] = {} : false
             dataHTML += "<tr>"
             
             $.each(row,(i,el) => {
-                index != 0 ? data[index-1][parsedData[0][i].replaceAll(' ', '_')] = el : false
+                index !== 0 ? data[index-1][parsedData[0][i].replaceAll(' ', '_').toLowerCase()] = el : false
                 dataHTML += "<td>"+el+"</td>"
             })
-
             dataHTML += "</tr>"
-            index != 0 ? JSON.stringify(data[index-1]) : false
+            index !== 0 && JSON.stringify(data[index-1])
         });
         console.log(data)
         dataHTML += "</table>"
