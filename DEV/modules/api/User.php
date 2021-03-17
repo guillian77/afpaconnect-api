@@ -86,25 +86,27 @@ class User extends Controller
      */
     public function login()
     {
-        if (!isset($this->request->get['user']['identifier'])) {
+        $data = $this->request->query()->all();
+
+        if (!isset($data['user']['identifier'])) {
             Response::resp("Unknow user identifier", 403);
             return;
-        } else if (!isset($this->request->get['user']['password'])) {
+        } else if (!isset($data['user']['password'])) {
             Response::resp("Unknow user password", 403);
             return;
-        } else if (!isset($this->request->get['app']['name'])) {
+        } else if (!isset($data['app']['name'])) {
             Response::resp("Unknow app name", 403);
             return;
-        } else if (!isset($this->request->get['app']['token'])) {
+        } else if (!isset($data['app']['token'])) {
             Response::resp("Unknow app token", 403);
             return;
-        } else if($this->request->get['app']['token'] != "123456789") {
+        } else if($data['app']['token'] != "123456789") {
             Response::resp("Token is not granted or already used", 403);
             return;
         }
 
         $userService = new UserService();
-        $user = $userService->getUser($this->request->get['user']['identifier']);
+        $user = $userService->getUser($data['user']['identifier']);
 
         if ( !isset($user[0]) ) {
             Response::resp("No user found", 403);

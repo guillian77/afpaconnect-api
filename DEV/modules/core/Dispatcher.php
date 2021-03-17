@@ -148,9 +148,9 @@ class Dispatcher
                 $matches = str_replace("{", "", $matches);
                 $matches = str_replace("}", "", $matches);
 
-                if (isset($this->request->get[$matches[0]]))
+                if ($this->request->query()->get($matched[0]))
                 {
-                    $parameters[$matches[0]] = $this->request->get[$matches[0]];
+                    $parameters[$matches[0]] = $this->request->query()->get($matched[0]);
                 }
             }
         }

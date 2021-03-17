@@ -1,37 +1,40 @@
 <?php
 namespace App\Core;
 
-
-use App\Utility\Response;
-
 class Request
 {
-    /**
-     * @var string The URL.
-     */
+    /** @var string The URL */
     public $url;
 
-    /**
-     * @var string The root of the URL.
-     */
+    /** @var string $base The root of the URL */
     public $base;
 
-    /**
-     * @var array URL exploded.
-     */
+    /** @var false|string[] $exploded Exploded URL */
     public $exploded;
 
+    /** @var mixed|string $controller Controller called by the URL */
     public $controller;
-    public $action;
+
+    /** @var false|string[] $params Parameters set inside URL just after the controller: /ControllerName/param1/param2 */
     public $params;
 
-    public $get;
-    public $post;
-    public $session;
+    /** @var array $query $_GET data */
+    private $query;
 
-    /**
-     * @var string Bearer token
-     */
+    /** @var array $request $_POST data */
+    private $request;
+
+    /** @var array $session $_SESSION data */
+    private $session;
+
+    /** @var string $lastMethod Determine last method used. */
+    private $lastMethod;
+
+    const METH_POST = "POST";
+    const METH_GET  = "GET";
+    const METH_SESSION  = "SESSION";
+
+    /** @var false|mixed Bearer token  */
     public $token;
 
     public function __construct()
@@ -52,8 +55,6 @@ class Request
                 $this->params = array_slice($this->exploded, 1);
             }
         }
-
-        $this->requestSecurization();
     }
 
     /**
@@ -89,6 +90,9 @@ class Request
         return false;
     }
 
+    /**
+     * Define application base URL.
+     */
     public function defineBaseURL()
     {
         $url = "http://";
@@ -145,17 +149,90 @@ class Request
     }
 
     /**
-     * Secure external data come from user.
+     * Get query parameters come from request.
+     *
+     * @param bool $secure Securize external data or not.
+     *
+     * @return $this
      */
-    private function requestSecurization()
+    public function query(bool $secure = true):Request
     {
-        array_walk_recursive($_POST, '\App\Core\Request::escapeHTML');
-        array_walk_recursive($_GET, '\App\Core\Request::escapeHTML');
-        array_walk_recursive($_SESSION, '\App\Core\Request::escapeHTML');
+        $this->query = $_GET;
+        ($secure) && array_walk_recursive($this->query, '\App\Core\Request::escapeHTML');
+        $this->lastMethod = self::METH_GET;
+        return $this;
+    }
 
-        $this->get = $_GET;
-        $this->post = $_POST;
+    /**
+     * Get request parameters come from request payload.
+     *
+     * @param bool $secure Securize external data or not.
+     *
+     * @return $this
+     */
+    public function request(bool $secure = true):Request
+    {
+        $this->request = $_POST;
+        ($secure) && array_walk_recursive($this->request, '\App\Core\Request::escapeHTML');
+        $this->lastMethod = self::METH_POST;
+        return $this;
+    }
+
+    /**
+     * Get session data.
+     *
+     * @param bool $secure
+     *
+     * @return $this
+     */
+    public function session(bool $secure = false):Request
+    {
         $this->session = $_SESSION;
+        ($secure) && array_walk_recursive($this->session, '\App\Core\Request::escapeHTML');
+        $this->lastMethod = self::METH_SESSION;
+        return $this;
+    }
+
+    /**
+     * Get one parameter from query, request or session properties.
+     *
+     * @param $param
+     *
+     * @return false|mixed
+     */
+    public function get($param)
+    {
+        switch ($this->lastMethod) {
+            case self::METH_GET:
+                return (isset($this->query[$param])) ? $this->query[$param] : false;
+                break;
+            case self::METH_POST:
+                return (isset($this->request[$param])) ? $this->request[$param] : false;
+                break;
+            case self::METH_SESSION:
+                return (isset($this->session[$param])) ? $this->session[$param] : false;
+                break;
+        }
+    }
+
+    /**
+     * Get all parameters from query, request or session properties.
+     *
+     * @return mixed
+     */
+    public function all()
+    {
+        switch ($this->lastMethod) {
+            case self::METH_GET:
+                return $this->query;
+                break;
+            case self::METH_POST:
+                return $this->request;
+                break;
+            case self::METH_SESSION:
+                return $this->session;
+                break;
+        }
     }
 
     /**
@@ -163,7 +240,18 @@ class Request
      *
      * @param $value
      */
-    public static function escapeHTML(&$value) {
+    public static function escapeHTML(&$value)
+    {
         $value = htmlspecialchars($value);
+    }
+
+    /**
+     * Decode encoded HTML tags.
+     *
+     * @param $value
+     */
+    public static function decodeHtmlSpecialChars(&$value)
+    {
+        $value = htmlspecialchars_decode($value);
     }
 }

@@ -26,7 +26,7 @@ class Authenticate extends Controller
     public function auth()
     {
         $private_key = (new JsonWebToken())->getCert(JsonWebToken::CERT_TYPE_PRIVATE);
-        $public_key = $this->request->post['public_key'];
+        $public_key = $this->request->request()->get('public_key');
 
         $publicKeyId = \openssl_get_publickey($public_key);
         \openssl_sign("test", $signature, openssl_get_privatekey($private_key));
