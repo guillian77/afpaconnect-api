@@ -197,6 +197,12 @@ header>a {
     /*align-self: center;*/
 }
 
+li>a:hover {
+    /*align-self: center;*/
+    opacity: 0.8;
+    letter-spacing: 0.005em;
+}
+
 header .header__title { color: inherit; transition: 0.3s }
 header .header__title:hover { opacity: 0.8 }
 
@@ -247,6 +253,7 @@ header .topheader {
 * --------------------------------------------------------------
 */
 #user_list tbody tr {
+    text-align: center;
     cursor: pointer;
 }
 
@@ -359,7 +366,7 @@ footer.footer {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 830px) {
 
     .container, .header {
         margin-top: 0;
@@ -369,11 +376,10 @@ footer.footer {
         margin-bottom: 15px;
     }
 
-    .action-buttons, header {
+   .action-buttons, header {
         height: auto;
         display: block;
     }
-
     .action-buttons .btn {
         margin-bottom: 15px;
     }
@@ -383,13 +389,13 @@ footer.footer {
         width: 100%;
         text-align: center;
     }
-    
+  
 }
 
 
 
 /* Responsive Navbar - hide all links and display menu icon*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 830px) {
 
     .navbar {
         display: block;
