@@ -4,18 +4,10 @@ namespace App\Controller;
 use App\Core\Controller;
 use App\Middleware\Authenticate;
 use App\Service\User;
-use function App\Core\dd;
 
 class UserLogin extends Controller
 {
-    /**
-     * @var array
-     */
-    public $VARS_HTML;
-
-    /**
-     * @var array
-     */
+    /** @var array $errors Errors */
     public $errors = [];
 
     public function __construct()
@@ -27,18 +19,15 @@ class UserLogin extends Controller
 
         // Load User service
         $User = new User();
-        $this->VARS_HTML = $User->VARS_HTML;
 
         // Check if form is submitted
-        if (isset($this->VARS_HTML['submitted']) && $this->checkForm())
-        {
-
-            $user = $User->getUser($this->VARS_HTML['identifier']);
+        if ($this->request->request()->get('submitted') && $this->checkForm()) {
+            $user = $User->getUser($this->request->request()->get('identifier'));
 
             if (!isset($user[0])) {
                 array_push($this->errors, "Les identifiants semblent incorrects. Veuillez essayer avec d'autres identifiants.");
             } else {
-                $checked = password_verify($this->VARS_HTML['password'], $user[0]['user_password']);
+                $checked = password_verify($this->request->request()->get('password'), $user[0]['user_password']);
 
                 if ($checked)
                 {
@@ -56,11 +45,11 @@ class UserLogin extends Controller
      */
     public function checkForm()
     {
-        if (!isset($this->VARS_HTML['identifier']) || empty($this->VARS_HTML['identifier'])) {
+        if (!$this->request->request()->get('identifier') || empty($this->request->request()->get('identifier'))) {
             array_push($this->errors, "Numéro de matricule inexistant.");
         }
 
-        if (!isset($this->VARS_HTML['password']) || empty($this->VARS_HTML['password'])) {
+        if (!$this->request->request()->get('password') || empty($this->request->request()->get('password'))) {
             array_push($this->errors, "Mot de passe inexistant.");
         }
 

@@ -1,8 +1,18 @@
 <?php
 namespace App\Core;
 
+/**
+ * Class Request : Singleton
+ *
+ * @package App\Core
+ *
+ * @author Aufrère Guillian
+ */
 class Request
 {
+    /** @var Request $_instance */
+    private static $_instance;
+
     /** @var string The URL */
     public $url;
 
@@ -36,6 +46,15 @@ class Request
 
     /** @var false|mixed Bearer token  */
     public $token;
+
+    public static function getInstance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Request();
+        }
+
+        return self::$_instance;
+    }
 
     public function __construct()
     {
@@ -103,7 +122,7 @@ class Request
 
         $url .= $_SERVER['SERVER_NAME'];
 
-        $config = Configuration::get();
+        $config = (App::getInstance())->configuration();
 
         $this->base = $url . ":" . $config['PORT'] . $config["BASE_HREF"];
         $this->url = $this->base . $this->controller;

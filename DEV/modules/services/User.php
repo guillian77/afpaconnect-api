@@ -7,11 +7,6 @@ use PDOStatement;
 
 class User extends Service
 {
-    /**
-     * @var array $VARS_HTML Secured POST, GET, SESSION.
-     */
-    public $VARS_HTML;
-
     public  function __construct()
     {
         parent::__construct();
@@ -29,7 +24,7 @@ class User extends Service
             'identifier' => $identifier
         ];
 
-        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE user_identifier = '@identifier';", $param);
+        return $this->db->getSelectDatas("SELECT * FROM users WHERE user_identifier = '@identifier';", $param);
     }
 
     /**
@@ -39,7 +34,7 @@ class User extends Service
      */
     public function getUsers(): array
     {
-        return $this->oBdd->getSelectDatas('SELECT * FROM users');
+        return $this->db->getSelectDatas('SELECT * FROM users');
     }
 
     /**
@@ -50,13 +45,13 @@ class User extends Service
      */
     public function insert($user)
     {
-        if(!isset($user->beneficiaire) || !isset($user->nom_usuel) || !isset($user->prenom) || !isset($this->VARS_HTML['center']))
+        if(!isset($user->beneficiaire) || !isset($user->nom_usuel) || !isset($user->prenom) || !($this->request->request()->get('center')))
         {
             Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400, true);
         }
 
         $param = [
-            "center" => $this->VARS_HTML['center'],
+            "center" => $this->request->request()->get('center'),
             "beneficiaire"=> $user->beneficiaire,
             "firstname"=> $user->nom_usuel,
             "name"=> $user->prenom,
@@ -64,9 +59,9 @@ class User extends Service
 
         $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (@center, "@beneficiaire","@firstname","@name")';
 
-        $this->oBdd->treatDatas($query,$param);
+        $this->db->treatDatas($query,$param);
 
-        $lastInsert = $this->oBdd->getLastInsertId();
+        $lastInsert = $this->db->getLastInsertId();
 
         // Check if user has been added to database before adding session.
         if ($lastInsert == 0) {
@@ -82,6 +77,6 @@ class User extends Service
         $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation" AND session_start_at = "@date_debut" AND session_end_at = "@date_fin";';
         $query .= 'INSERT INTO `users__sessions`(`id_user`, `id_session`) VALUES (@id_user, @session)';
 
-        return $this->oBdd->treatDatas($query,$paramFormation);
+        return $this->db->treatDatas($query,$paramFormation);
     }
 }

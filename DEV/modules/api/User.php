@@ -18,19 +18,13 @@ class User extends Controller
     /**
      * @var array
      */
-    public $VARS_HTML;
-
-    /**
-     * @var array
-     */
     public $errors = [];
 
     public function __construct()
     {
         parent::__construct();
-        // Load User service
+
         $this->UserService = new UserService();
-        $this->VARS_HTML = $this->UserService->VARS_HTML;
     }
 
     /**
@@ -50,7 +44,8 @@ class User extends Controller
         Response::json($users);
     }
 
-    public function upload(){
+    public function upload()
+    {
         if(isset($_FILES["fileToUpload"]['type'])){
 
             $isXLS = $_FILES["fileToUpload"]['type'] === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -67,7 +62,8 @@ class User extends Controller
     /**
      * Add users from XLSX file to database.
      */
-    public function add() {
+    public function add()
+    {
         $users = json_decode(htmlspecialchars_decode($this->request->request(false)->get('uploaded_user')));
 
         foreach($users as $user) {

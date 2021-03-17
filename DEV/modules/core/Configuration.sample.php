@@ -2,9 +2,23 @@
 
 namespace App\Core;
 
-Class Configuration	{
+Class Configuration
+{
+    /** @var Configuration $_instance */
+    private static $_instance;
+
+    public static function getInstance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Configuration();
+        }
+
+        return self::$_instance;
+    }
 
     /**
+     * Return all configurations.
+     *
      * @return array
      */
 	public static function get(): array

@@ -6,16 +6,6 @@ use App\Core\Controller;
 
 class UserUpload extends Controller
 {
-    /**
-     * @var array
-     */
-    public $VARS_HTML;
-
-    /**
-     * @var array
-     */
-    public $errors = [];
-
     public function __construct()
     {
         parent::__construct();

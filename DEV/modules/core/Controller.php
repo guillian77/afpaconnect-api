@@ -22,7 +22,7 @@ class Controller
     public function __construct()
     {
         $this->request = new Request();
-        $this->config = Configuration::get();
+        $this->config = (App::getInstance())->configuration();
     }
 
     /**
@@ -41,17 +41,8 @@ class Controller
             extract($params);
         }
 
-        $request = $this->request;
-        $vue = $this;
-
-        // Get configuration for view path.
-        $config = Configuration::get();
-
         // Define path of the view asked.
-        $viewPath = $config['PATH_FILES'] . $name . ".html";
-
-        $javascript = $this->loadAssetFile($this->request->controller, self::FILETYPE_JS);
-        $css = $this->loadAssetFile($this->request->controller, self::FILETYPE_CSS);
+        $viewPath = $this->config['PATH_FILES'] . $name . ".html";
 
         /**
          * CATCHING THE VIEW
@@ -63,16 +54,21 @@ class Controller
             require $viewPath;
         }
 
+        // Define theses variables to be used by the view.
         $content = ob_get_clean();
-
+        $request = $this->request;
+        $vue = $this;
+        $config = $this->config;
+        $javascript = $this->loadAssetFile($this->request->controller, self::FILETYPE_JS);
+        $css = $this->loadAssetFile($this->request->controller, self::FILETYPE_CSS);
         $debug = "";
         if ($this->config['DEV']) {
             ob_start();
-            require_once $config['PATH_FILES'] . "debug.html";
+            require_once $this->config['PATH_FILES'] . "debug.html";
             $debug = ob_get_clean();
         }
 
-        require_once $config['PATH_FILES'] . "layout.html";
+        require_once $this->config['PATH_FILES'] . "layout.html";
     }
 
     /**

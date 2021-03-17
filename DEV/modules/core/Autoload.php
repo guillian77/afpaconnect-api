@@ -11,9 +11,9 @@ class Autoload
     /**
      * Autoload constructor.
      */
-    public function __construct($_config)
+    public function __construct()
     {
-        $this->_config = $_config;
+        $this->_config = (App::getInstance())->configuration();
 
         spl_autoload_register(function($className) {
             $expload = explode("\\", $className);

@@ -4,44 +4,61 @@ namespace App\Core;
 use PDO;
 
 /**
- * Class Database
+ * Class Database : Singleton
+ *
+ * @package App\Core
+ *
+ * @author Aufrère Guillian
  */
-Class Database {
+Class Database
+{
+    /** @var Database $_instance */
+    private static $_instance;
 
-	/**
-	 * @var PDO $_hDb
-	 */
-	public $_hDb;
+    /** @var PDO $_hDb */
+    public $_hDb;
 
-	/**
-	 * Database constructor.
-	 * @param string $host Database hostname.
-	 * @param string $name Database name.
-	 * @param string $login Database username.
-	 * @param string $psw Database password.
-	 */
-	function __construct($host, $name, $login, $psw)	{
-		// Connection to DB : SERVEUR / LOGIN / PASSWORD / NOM_BDD
+    /**
+     * Create an instance of Database.
+     *
+     * @return Database
+     */
+    public static function getInstance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Database();
+        }
+        return self::$_instance;
+    }
+
+	public function __construct()
+    {
 		try {
-			$this->_hDb= new \PDO('mysql:host='.$host.';dbname='.$name.';charset=utf8', $login, $psw);
+		    $conf = (App::getInstance())->configuration();
+
+			$this->_hDb= new \PDO('mysql:host='.$conf["db_hostname"].';dbname='.$conf["db_name"].';charset=utf8', $conf["db_username"], $conf["db_password"]);
 		} catch (\PDOException $e) {
 			echo 'Échec lors de la connexion : ' . $e->getMessage();
 		}
 	}
 
-	function __destruct()	{
+	public function __destruct()
+    {
 		$this->_hDb= null;
 	}
 
-	function prepare($sql) {
+	public function prepare($sql)
+    {
 		return $this->_hDb->prepare($sql);
 	}
 
 	/**
-	 * Get last insert ID
-	 * @return string lastInsertId
+	 * Get last ID inserted in database.
+     *
+	 * @return string Last ID inserted in database.
 	 */
-	public function getLastInsertId()	{
+	public function getLastInsertId()
+    {
 		error_log('getLastInsertId DETAILS = '.$this->_hDb->lastInsertId());
 		return $this->_hDb->lastInsertId();
 	}

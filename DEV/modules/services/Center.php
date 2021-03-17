@@ -17,6 +17,6 @@ class Center extends Service
      */
     public function getCenters(): array
     {
-        return $this->oBdd->getSelectDatas('SELECT * FROM centers');
+        return $this->db->getSelectDatas('SELECT * FROM centers');
     }
 }

@@ -1,32 +1,26 @@
 <?php
 namespace App\Core;
 
-class Service extends Initialize {
+class Service
+{
+    /** @var Request $request An instance of Request class. */
+    protected $request;
 
-    /**
-     * public $resultat is used to store all datas needed for HTML Templates
-     * @var array
-     */
-    public $resultat;
+    /** @var array $configuration */
+    protected $configuration;
 
-    /**
-     * Call the parent constructor
-     *
-     * init variables resultat
-     */
-    public function __construct() {
-        // Call Parent Constructor
-        parent::__construct();
+    /** @var Database $db The instance of Database class. */
+    protected $db;
 
-        // init variables resultat
-        $this->resultat = [];
+    public function __construct()
+    {
+        $this->configuration= (App::getInstance())->configuration();
+        $this->db = Database::getInstance();
+        $this->request = Request::getInstance();
     }
 
-    /**
-     * Call the parent destructor
-     */
-    public function __destruct() {
-        // Call Parent destructor
-        parent::__destruct();
+    public function __destruct()
+    {
+        unset($this->db);
     }
 }
