@@ -33,6 +33,19 @@ class User extends Service
     }
 
     /**
+     * Get user by id.
+     *
+     * @return array
+     */
+    public function getUserById(string $id): array
+    {
+        $param = [
+            'id' => $id
+        ];
+        return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE id_user = '@id';", $param);
+    }
+
+    /**
      * Get all users.
      *
      * @return array

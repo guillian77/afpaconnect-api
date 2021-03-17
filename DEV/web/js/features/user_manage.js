@@ -43,9 +43,15 @@ get('api/users', {})
 
             let configuration = constructConfig(tableFields, [0, "asc"], "utilisateur");
 
-            $('#user_list')
+            
+            let table = $('#user_list')
                 .html(htmlTable)
                 .DataTable(configuration);
+
+            $('#user_list tbody').on( 'click', 'tr', function() {
+               fillUserManager(table.row(this).data()[0]);
+            });
+
         })
     })
     .catch(err => {
@@ -62,13 +68,21 @@ get('api/users', {})
  *
  * @param user
  */
-let fillUserManager = function(user) {
+let fillUserManager = function(userId) {
     let uManagerBox = $('.u_managment');
     let uManagerBoxForm = $('.u_managment__form');
 
+    get('api/user?id=1')
+        .then(data =>
+            console.log(data)
+    )
+    .catch(err => {
+        console.log(err)
+    })
+
     // Show user managment form
     uManagerBox.show(150);
-
+/*
     // Fill user basic informations
     $('.u_managment__form').find('#uid').val(user['id'])
     $('.u_managment__form').find('#beneficiary').val(user['beneficiary'])
@@ -77,10 +91,21 @@ let fillUserManager = function(user) {
     $('.u_managment__form').find('#email').val(user['email'])
     $('.u_managment__form').find('#phone').val(user['phone'])
 
-
+*/
     // Listen form submiting
     uManagerBoxForm.on('submit', event => {
         event.preventDefault();
         uManagerBox.hide();
     })
+}
+
+/*
+/**
+ * Displays User edition section 
+ * @param {*} userId 
+ */
+
+let displayUserEdit = function(userId) {
+
+    $('.u_managment').toggle();
 }

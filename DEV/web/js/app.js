@@ -44,9 +44,9 @@ let post = function (url, parameters, file = false) {
  * @return {*}
  */
 let get = async function (url, parameters, file = false) {
+    
     return $.ajax({
         url: url,
-        data: parameters,
         type: 'GET',
         processData: file,
         contentType: file,
@@ -193,3 +193,4 @@ let constructConfig = function(fields, order = [0, "asc"], name = "unknow") {
     $("#menuIcon").toggleClass('fa-times').toggleClass('fa-bars');
 
   }
+

@@ -28,7 +28,7 @@ class Dispatcher
 
         if ( !$this->request->isApiRequest($this->request->exploded) ) // API or Legacy HTTP request
         {
-            Authenticate::check($this->request);
+            //Authenticate::check($this->request);
             $this->loadController();
         } else {
             (new JsonWebToken)->verify();
@@ -141,9 +141,10 @@ class Dispatcher
     {
         $parameters = [];
 
+        
         foreach ($pathExploaded as $key => $value) {
             $matched = preg_match('({.*})', $value, $matches);
-
+            
             if ($matched) {
                 $matches = str_replace("{", "", $matches);
                 $matches = str_replace("}", "", $matches);

@@ -6,6 +6,7 @@ use App\Service\User as UserService;
 use App\Utility\Upload;
 use App\Core\Controller;
 use App\Utility\Response;
+use App\Core\Request;
 use Exception;
 
 class User extends Controller
@@ -49,6 +50,25 @@ class User extends Controller
 
         Response::json($users);
     }
+
+
+    public function getUserById() {
+        $id = $this->request->query()->get('id');
+        var_dump($id);
+        
+        $user = $this->UserService->getUserById($id);
+
+        if (!$user)
+        {
+            http_response_code(404);
+            Response::json("Impossible de récupérer la liste des utilisateurs.");
+            return;
+        }
+
+        Response::json($user);
+    }
+
+
 
     public function upload(){
         if(isset($_FILES["fileToUpload"]['type'])){
