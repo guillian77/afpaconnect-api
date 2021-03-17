@@ -10,15 +10,12 @@ class UserLogin extends Controller
     /** @var array $errors Errors */
     public $errors = [];
 
-    public function __construct()
+    public function __construct(User $User)
     {
         parent::__construct();
 
         // Disallow this page is user is already logged.
         if (Authenticate::isLogged()) { $this->redirect('UserManage'); }
-
-        // Load User service
-        $User = new User();
 
         // Check if form is submitted
         if ($this->request->request()->get('submitted') && $this->checkForm()) {
