@@ -60,18 +60,16 @@ class JsonWebToken extends Controller
      */
     public function getIssuer()
     {
-        if ( // Check issuer has been sent
-            (!isset($this->request->post['issuer']) || empty($this->request->post['issuer'])) &&
-            (!isset($this->request->get['issuer']) || empty($this->request->get['issuer']))
-        ) {
+        /** Check issuer has been sent */
+        if (!$this->request->request()->get('issuer') && !$this->request->query()->get('issuer')) {
             Response::resp("I need to know who is talking to me. Please specify an issuer.", 400, true);
         }
 
-        // Define issuer
-        if (!isset($this->request->post['issuer']) || empty($this->request->post['issuer'])) {
-            return $this->request->get['issuer'];
+        /** Define issuer */
+        if (!$this->request->request()->get('issuer')) {
+            return $this->request->query()->get('issuer');
         } else {
-            return $this->request->post['issuer'];
+            return $this->request->request()->get('issuer');
         }
     }
 }
