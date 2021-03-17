@@ -50,16 +50,16 @@ class User extends Service
      */
     public function insert($user)
     {
-        if(!isset($user->Beneficiaire) || !isset($user->Nom_usuel) || !isset($user->Prenom) || !isset($this->VARS_HTML['center']))
+        if(!isset($user->beneficiaire) || !isset($user->nom_usuel) || !isset($user->prenom) || !isset($this->VARS_HTML['center']))
         {
             Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400, true);
         }
 
         $param = [
             "center" => $this->VARS_HTML['center'],
-            "beneficiaire"=> $user->Beneficiaire,
-            "firstname"=> $user->Nom_usuel,
-            "name"=> $user->Prenom,
+            "beneficiaire"=> $user->beneficiaire,
+            "firstname"=> $user->nom_usuel,
+            "name"=> $user->prenom,
         ];
 
         $query = 'INSERT INTO users (`id_center`,`user_identifier`, `user_name` , `user_firstname`) VALUES (@center, "@beneficiaire","@firstname","@name")';
@@ -74,9 +74,9 @@ class User extends Service
         }
 
         $paramFormation = [
-            "date_debut" => $user->Date_de_debut,
-            "date_fin" => $user->Date_de_fin,
-            "formation"=> $user->Formation,
+            "date_debut" => $user->date_de_debut,
+            "date_fin" => $user->date_de_fin,
+            "formation"=> $user->formation,
             "id_user"=> $lastInsert
         ];
         $query = 'SELECT @session := id_session FROM sessions WHERE session_code = "@formation" AND session_start_at = "@date_debut" AND session_end_at = "@date_fin";';
