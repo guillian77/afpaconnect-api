@@ -93,11 +93,9 @@ class Dispatcher
                 // Extract method name
                 $methodName = $explodedController[1];
 
-                $class = new $className(); // Initialize object from classname
+                $associatedParameters = $this->associateParameters($className, $methodName, $pathParameters);
 
-                $associatedParameters = $this->associateParameters($class, $methodName, $pathParameters);
-
-                (new $class(...Dependencies::getClassDependencies($class)))->$methodName(...$associatedParameters);
+                (new $className(...Dependencies::getClassDependencies($className)))->$methodName(...$associatedParameters);
 
                 return;
             }
