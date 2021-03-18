@@ -63,19 +63,19 @@ class App
      */
     public function initialize()
     {
-        /** Display more error in development */
-        if ($this->configuration['DEV']) {
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
-        }
-
         /** Check requirements */
         $this->requirements();
 
         /** Initialize configuration */
         require $this->root.'/modules/core/Configuration.php';
         $this->configuration();
+
+        /** Display more error in development */
+        if ($this->configuration['DEV']) {
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+        }
 
         $_SESSION['BASE_HREF'] = $this->configuration['BASE_HREF'];
 
