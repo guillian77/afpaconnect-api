@@ -43,7 +43,7 @@ let post = function (url, parameters, file = false) {
  * @param file
  * @return {*}
  */
-let get = async function (url, parameters, file = false) {
+let get = async function (url, file = false) {
     
     return $.ajax({
         url: url,
@@ -51,6 +51,7 @@ let get = async function (url, parameters, file = false) {
         processData: file,
         contentType: file,
     });
+    
 };
 
 /**

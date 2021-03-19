@@ -13,7 +13,7 @@
 <aside class="u_managment boxed">
     <h2 class="u_managment__title">Editer utilisateur</h2>
 
-    <form class="u_managment__form">
+    <form id="u_managment__form" class="u_managment__form">
 
         <h3>Informations principales</h3>
 
@@ -25,34 +25,11 @@
         <input class="form__field" type="tel" name="phone" id="phone" placeholder="Numéro de téléphone" />
 
         <h3>Droits sur les applications</h3>
-        <div class="form__field">
-            <label for="app_ticket">Audace</label>
-            <select name="app_audace" id="app_audace">
-                <option value="none">Aucun</option>
-                <option value="none" selected>Utilisateur</option>
-                <option value="none">Administrateur</option>
-            </select>
-        </div>
-
-        <div class="form__field">
-            <label for="app_ticket">AfpaTicket</label>
-            <select name="app_ticket" id="app_ticket">
-                <option value="none">Aucun</option>
-                <option value="none" selected>Utilisateur</option>
-                <option value="none">Administrateur</option>
-            </select>
-        </div>
-
-        <div class="form__field">
-            <label for="app_ticket">Afpanier</label>
-            <select name="app_panier" id="app_panier">
-                <option value="none">Aucun</option>
-                <option value="none" selected>Utilisateur</option>
-                <option value="none">Administrateur</option>
-            </select>
-        </div>
-
+        
+        <div class="applications"></div>
+        
         <button class="form__submit btn" type="submit">Éditer l'utilisateur</button>
+   
     </form>
 </aside>
 

@@ -35,6 +35,7 @@ class User extends Service
     /**
      * Get user by id.
      *
+     * @param string $id
      * @return array
      */
     public function getUserById(string $id): array
@@ -42,6 +43,7 @@ class User extends Service
         $param = [
             'id' => $id
         ];
+        
         return $this->oBdd->getSelectDatas("SELECT * FROM users WHERE id_user = '@id';", $param);
     }
 
@@ -54,6 +56,8 @@ class User extends Service
     {
         return $this->oBdd->getSelectDatas('SELECT * FROM users');
     }
+
+
 
     /**
      * Insert a user inside database.
@@ -97,4 +101,50 @@ class User extends Service
 
         return $this->oBdd->treatDatas($query,$paramFormation);
     }
+
+
+    /**
+     * TODO : dynamic update of role by application
+     */
+    public function update($user, $role) {
+       
+          if(!isset($user->id) )
+        {
+            Response::resp("Erreur: Impossible d'ajouter les utilisateurs dans la base de données. Arrêt de l'import, veuillez vérifier le format du tableau XLSX", 400, true);
+        }
+
+        $param = [
+            "beneficiary"=> $user->beneficiary,
+            "lastname"=> $user->lastname,
+            "firstname"=> $user->firstname,
+            "email"=> $user->email,
+            "phone"=> $user->phone,
+            "id" => $user->id
+        ];
+
+    
+        $query = "UPDATE `users` SET `user_identifier`='@beneficiary',`user_name`='@lastname',`user_firstName`='@firstname',`user_mailPerso`='@email',`user_phone`='@phone' WHERE `id_user`=@id;";
+        
+
+        // TODO : fix query (returns false)
+        foreach ($role as $a => $r) {
+            if($r != 0) {
+                $param["app"] = substr($a, -1);
+                $param["role"] = $r;
+                
+               
+                $update_role_query = "UPDATE `apps__users__roles` SET `id_role`= @role WHERE `user_id` = @id AND application_id = @app;";
+                
+               if(!$this->oBdd->treatDatas($update_role_query,$param)){
+                $insert_role_query = "INSERT INTO `apps__users__roles`(`id_application`, `id_user`, `id_role`) VALUES (@app, @id, @role)";
+                var_dump($this->oBdd->treatDatas($insert_role_query, $param));
+                };
+            }
+           
+        }
+        
+        return $this->oBdd->treatDatas($query,$param);
+    }
+
+   
 }

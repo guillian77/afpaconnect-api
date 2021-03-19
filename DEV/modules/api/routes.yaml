@@ -24,6 +24,11 @@ api_users_add:
   controller: App\Api\User::add
   methods: POST
 
+api_users_update:
+  path: /user/update
+  controller: App\Api\User::update
+  methods: POST
+
 api_users_upload:
   path: /user/upload
   controller: App\Api\User::upload
@@ -33,4 +38,11 @@ api_users_upload:
 api_centers_get:
   path: /centers
   controller: App\Api\Center::getAllCenters
+  methods: GET
+
+  # APPLICATION 
+
+api_app_role_get:
+  path: /roleapp
+  controller: App\Api\Application::getRolesAppsUser
   methods: GET

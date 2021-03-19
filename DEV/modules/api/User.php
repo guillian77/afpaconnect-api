@@ -51,11 +51,13 @@ class User extends Controller
         Response::json($users);
     }
 
-
+    /**
+     * Get User by user_idd
+     */
     public function getUserById() {
-        $id = $this->request->query()->get('id');
-        var_dump($id);
         
+        $id = $this->request->query()->get('id');
+
         $user = $this->UserService->getUserById($id);
 
         if (!$user)
@@ -63,11 +65,10 @@ class User extends Controller
             http_response_code(404);
             Response::json("Impossible de récupérer la liste des utilisateurs.");
             return;
-        }
+        } 
 
-        Response::json($user);
+        Response::json($user); 
     }
-
 
 
     public function upload(){
@@ -101,6 +102,43 @@ class User extends Controller
             }
         }
 
+        Response::resp("Tous les utilisateurs ont été ajouté avec succès.", 200);
+    }
+
+    /**
+     * Update User
+     */
+    public function update() {
+
+      
+        $data = json_decode(htmlspecialchars_decode($this->request->request(false)->get('updated_user')));
+        
+        //Construc User from data
+      
+        $updated_user = (object)[];
+        $updated_user_role = (object)[];
+
+        foreach($data as $v) {
+            //Check if data is to update role or user
+            if(strpos($v->name, 'app') === 0) {
+                $name = $v->name;
+                $updated_user_role->$name = $v->value; 
+            } else {
+                $name = $v->name;
+                $updated_user->$name = $v->value;
+            }
+        }
+        
+        // Check if user insertion work
+            try {
+                $this->UserService->update($updated_user, $updated_user_role);
+
+           }
+            catch (Exception $e) {
+                Response::resp("Erreur: Impossible de mettre à jour l'utilisateur " . $updated_user->firstname ." ". $user->lastname ." dans la base de données.", 400);
+                return;
+            }
+     
         Response::resp("Tous les utilisateurs ont été ajouté avec succès.", 200);
     }
 

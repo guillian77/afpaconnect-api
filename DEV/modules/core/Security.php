@@ -34,12 +34,11 @@ class Security {
 		 * Get data from AXIOS (ajax librarie)
 		 */
 		$axios = json_decode(file_get_contents("php://input"), true);
-
 		/**
 		 * Filter arrays
 		 */
 		if ($axios) {
-			array_walk_recursive($axios, 'security::filter');
+			array_walk_recursive($axios, '\App\Core\security::filter');
 		} else {
 			$axios = [];
 		}
