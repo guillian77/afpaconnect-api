@@ -1,6 +1,2 @@
-.DS_Store
-.idea
-DEV/modules/vendor
-DEV/web/configuration_phpunit.php
 vendor
-DEV/modules/core/Configuration.php
+.idea
