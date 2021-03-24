@@ -4,9 +4,10 @@
 namespace App\Core;
 
 
-use App\Controller\BlogController;
 use DI\Container;
 use DI\ContainerBuilder;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Class App : Singleton
@@ -36,6 +37,16 @@ class App
     private Router $router;
 
     /**
+     * @var FilesystemLoader
+     */
+    private FilesystemLoader $twigLoader;
+
+    /**
+     * @var Environment
+     */
+    private Environment $twig;
+
+    /**
      * Always get the same instance of App.
      *
      * @return self
@@ -60,10 +71,16 @@ class App
         $this->container = $this->containerBuilder->build();
 
         $this->router = $this->container->get(Router::class);
+
+        $this->twigLoader = $this->container->get(FilesystemLoader::class);
+
+        $this->twig = $this->container->get(Environment::class);
     }
 
     public function boot()
     {
+        session_start();
+
         require ROOT.'routes/web.php';
 
         $this->container->get(Dispatcher::class);

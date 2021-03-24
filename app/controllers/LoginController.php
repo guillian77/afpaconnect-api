@@ -10,6 +10,9 @@ class LoginController extends Controller
 
     public function index():void
     {
-        $this->render('user/login');
+        $this->render('user/login', [
+            'appTitle' => "Mon titre de page",
+            'test' => "<script>alert('Salut les gens')</script>"
+        ]);
     }
 }

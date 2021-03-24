@@ -10,6 +10,6 @@ class UserManageController extends Controller
 
     public function index(): void
     {
-        $this->render('user/user_manage');
+        $this->render('user/manage.html.twig');
     }
 }

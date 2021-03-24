@@ -10,6 +10,6 @@ class UserUploadController extends Controller
 
     public function index(): void
     {
-        $this->render('user/user_upload');
+        $this->render('user/upload.html.twig');
     }
 }

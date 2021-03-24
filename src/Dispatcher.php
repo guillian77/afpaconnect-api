@@ -67,11 +67,11 @@ class Dispatcher
 
     private function loadController()
     {
-        ob_start();
+//        ob_start();
 
         $this->container->call([$this->router->className, $this->router->methodName]);
 
-        $this->render(ob_get_clean());
+//        $this->render(ob_get_clean());
     }
 
     private function loadAPI()
@@ -104,6 +104,6 @@ class Dispatcher
 
         $router = $this->router; // expose router to layout
 
-        require VIEWS.'layout.php';
+        require VIEWS . 'layout.html.twig';
     }
 }

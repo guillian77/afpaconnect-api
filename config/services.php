@@ -2,6 +2,8 @@
 
 
 use App\Core\Conf;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 return [
     'db.host' => \DI\env('db_host', Conf::get('db_host')),
@@ -13,5 +15,15 @@ return [
                                     Conf::get('db_name'),
                                     Conf::get('db_username'),
                                     Conf::get('db_password')
+                                ),
+    FilesystemLoader::class => \DI\create()->constructor(VIEWS),
+    Environment::class => \DI\create()->constructor(
+                                    \DI\get(FilesystemLoader::class),
+                                    [
+                                        'cache' => CACHE,
+                                        'auto_reload' => (Conf::get('env') === 'dev') ?? true,
+                                        'strict_variables' => (Conf::get('env') === 'dev') ?? true,
+                                        'debug' => true
+                                    ]
                                 )
 ];

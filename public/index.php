@@ -9,7 +9,8 @@ define('CONTROLLER', ROOT.'app/controllers/');
 define('MODEL', ROOT.'app/models/');
 define('MIDDLEWARE', ROOT.'app/middlewares/');
 define('WWW', ROOT.'public/');
-define('VIEWS', ROOT.'ressources/views/');
+define('VIEWS', ROOT.'app/views/');
+define('CACHE', ROOT.'storage/cache/');
 
 require ROOT . 'vendor/autoload.php';
 
