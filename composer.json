@@ -23,7 +23,8 @@
             "App\\Core\\Facade\\" : "src/facades",
             "App\\Controller\\" : "app/controllers",
             "App\\Middleware\\" : "app/middlewares",
-            "App\\Model\\" : "app/models"
+            "App\\Model\\" : "app/models",
+            "App\\Command\\" : "app/commands"
         }
     }
 }

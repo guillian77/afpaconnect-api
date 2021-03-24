@@ -67,11 +67,7 @@ class Dispatcher
 
     private function loadController()
     {
-//        ob_start();
-
         $this->container->call([$this->router->className, $this->router->methodName]);
-
-//        $this->render(ob_get_clean());
     }
 
     private function loadAPI()
@@ -88,22 +84,5 @@ class Dispatcher
         $middleware = $this->router->middlewares[$this->router->routeName];
 
         $this->container->get('\App\Middleware\\'.ucfirst($middleware));
-    }
-
-    private function render($content)
-    {
-        $controller = $this->container->get($this->router->className);
-
-        $appTitle = "";
-
-        if (!empty($controller->pageTitle)) {
-            $appTitle .= $controller->pageTitle.' - ';
-        }
-
-        $appTitle .= "AfpaConnect"; // expose app name to layout
-
-        $router = $this->router; // expose router to layout
-
-        require VIEWS . 'layout.html.twig';
     }
 }

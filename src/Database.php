@@ -27,4 +27,13 @@ class Database
     {
         return $this->pdo->query($query)->fetchAll();
     }
+
+    /**
+     * @return PDO
+     */
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
+
 }
