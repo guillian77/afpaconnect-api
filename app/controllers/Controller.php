@@ -38,13 +38,46 @@ class Controller
      */
     public function render(string $view, array $parameters = []): void
     {
-        $params = array_merge($parameters, [
-            'appTitle' => Conf::get('appTitle'),
-            'copyright' => Conf::get('copyright'),
-            'path' => $this->router,
-            'session' => $_SESSION
-        ]);
+        $assets = $this->autoloadAssets($view);
+
+        $params = array_merge(
+            $parameters,
+            [
+                'appTitle' => Conf::get('appTitle'),
+                'copyright' => Conf::get('copyright'),
+                'path' => $this->router,
+                'session' => $_SESSION
+            ],
+            $assets
+        );
 
         $this->twig->display($view, $params);
+    }
+
+    /**
+     * Autoload assets files : javascript | css
+     *
+     * @param string $viewPath
+     * @return array|null
+     */
+    private function autoloadAssets(string $viewPath): ?array
+    {
+        $fileExtensions = ['.php', '.html', '.twig', '.tpl', '.blade'];
+
+        $assets = [];
+
+        foreach ($fileExtensions as $extension) {
+            $viewPath = str_replace($extension, '', $viewPath);
+        }
+
+        $javascriptPath = 'js/features/'.$viewPath.'.js';
+
+        $cssPath        = 'css/features/'.$viewPath.'.css';
+
+        $assets['js'] = (file_exists($javascriptPath)) ? "<script src=\"$javascriptPath\"></script>" : null;
+
+        $assets['css'] = (file_exists($cssPath)) ? "<link rel=\"stylesheet\" href=\"$cssPath\" />" : null;
+
+        return $assets;
     }
 }

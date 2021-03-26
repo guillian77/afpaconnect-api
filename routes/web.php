@@ -17,7 +17,7 @@ use App\Core\Facade\Router;
 | MAIN
 |----------------------------
 */
-Router::get('/', function() { echo "Ma page d'accueil !"; }, 'home');
+Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home');
 
 /*
 |----------------------------

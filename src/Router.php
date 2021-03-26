@@ -31,22 +31,22 @@ class Router
     /**
      * @var mixed
      */
-    public string $className;
+    public ?string $className = null;
 
     /**
      * @var mixed
      */
-    public string $methodName;
+    public ?string $methodName = null;
 
     /**
      * @var mixed
      */
-    public array $routeParams;
+    public ?array $routeParams = [];
 
     /**
      * @var string
      */
-    public string $routeName;
+    public ?string $routeName = null;
 
     public function __construct(AltoRouter $altoRouter, Container $container)
     {
@@ -85,6 +85,10 @@ class Router
     public function run()
     {
         $route =  $this->router->match();
+
+        if (!$route) {
+            return false;
+        }
 
         if (!$route['target'] instanceof Closure) {
             $this->className      = $route['target'][0];

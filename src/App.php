@@ -91,8 +91,6 @@ class App
     {
         session_start();
 
-        require ROOT.'routes/web.php';
-
         $this->container->get(Dispatcher::class);
     }
 

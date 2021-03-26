@@ -15,11 +15,27 @@
     <!-- WEBSITE: Title -->
     <title>{% block title %}{{ appTitle }}{% endblock %}</title>
 
-    <!-- WEBSITE: STYLES -->
+    <!-- WEBSITE: Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
+
     {% block css %}
-        <link rel="stylesheet" href="css/reset.css" />
-        <link rel="stylesheet" href="css/app.css" />
+    <!-- WEBSITE: STYLES -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="libs/datatable/datatables.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+
+    <!-- LOAD: FEATURES CSS -->
+    {{ css|raw }}
     {% endblock %}
+
+    <!-- GOOGLE reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- LOAD: jQuery  -->
+    <script src="libs/jquery.min.js"></script>
+
+    <!-- LOAD: Axios -->
+    <script src="libs/axios.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -55,7 +71,13 @@
     </div>
 
     {% block javascript %}
-        <script src="js/app.js"></script>
+    <!-- Global JS file -->
+    <script src="libs/datatable/datatables.min.js"></script>
+    <script src="libs/fontawesome/js/all.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- JS FOR FEATURE -->
+    {{ js|raw }}
     {% endblock %}
 </body>
 </html>

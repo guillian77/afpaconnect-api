@@ -6,7 +6,7 @@
  * @author @Afpa Lab Team - Aufrère Guillian && Campillo Lucas
  * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
  * @version v1.0
- *
+ * 
  * INDEX
  * - GENERAL
  */
@@ -187,9 +187,9 @@ let constructConfig = function(fields, order = [0, "asc"], name = "unknow") {
  */
 
 
-function mobileMenuHeader() {
-
+ function mobileMenuHeader() {
+     
     $("#navbar").toggleClass("responsive");
     $("#menuIcon").toggleClass('fa-times').toggleClass('fa-bars');
 
-}
+  }

@@ -2,7 +2,7 @@
 * Cascade Style Sheet
 * @copyright 2020 - Project AfpaConnect
 * @author Aufrère Guillian && Campillo Lucas
-*
+* 
 * INDEX
 * - General
 *   > variables
@@ -212,7 +212,7 @@ header .topheader {
 }
 
 /**
-*  Header - Navbar
+*  Header - Navbar 
 */
 
 .navbar {
@@ -233,9 +233,9 @@ header .topheader {
 
 }
 
-.icon {
+ .icon {
 
-    display: none;
+  display: none;
 
 }
 
@@ -285,7 +285,7 @@ header .topheader {
 }
 
 .form__manage{
-    text-align:center;
+    text-align:center; 
     padding:10px;
     width:50%;
     align-self: center;
@@ -376,7 +376,7 @@ footer.footer {
         margin-bottom: 15px;
     }
 
-    .action-buttons, header {
+   .action-buttons, header {
         height: auto;
         display: block;
     }
@@ -389,7 +389,7 @@ footer.footer {
         width: 100%;
         text-align: center;
     }
-
+  
 }
 
 
@@ -400,7 +400,7 @@ footer.footer {
     .navbar {
         display: block;
     }
-
+  
     .navbar a {
         display: none;
     }
@@ -422,27 +422,27 @@ footer.footer {
     .navbar li {
         margin: 0;
     }
-}
-
-/* Responsive Navbar - Open menu and display links when .menuIcon is clicked (.responsive is added to .navbar in app.js)  */
-@media screen and (max-width: 600px) {
+  }
+  
+  /* Responsive Navbar - Open menu and display links when .menuIcon is clicked (.responsive is added to .navbar in app.js)  */
+  @media screen and (max-width: 600px) {
 
     .responsive {
         position: relative;
     }
 
     .navbar.responsive a.icon {
-        position: absolute;
-        right: 0;
-        top: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
     }
-
+   
     .navbar.responsive ul {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-
+  
     .navbar.responsive a {
         display: block;
         margin: 15px;

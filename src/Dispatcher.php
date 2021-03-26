@@ -4,7 +4,12 @@
 namespace App\Core;
 
 
+use App\Controller\Controller;
+use App\Utility\Response;
+use Closure;
 use DI\Container;
+use Exception;
+use phpDocumentor\Reflection\Types\Callable_;
 
 class Dispatcher
 {
@@ -31,19 +36,15 @@ class Dispatcher
 
         $this->container = $container;
 
-        $callable = $this->router->run();
+        require ROOT.'routes/web.php';
 
-        if ($callable) {
-            $callable();
+        require ROOT.'routes/api.php';
+
+        $match = $this->router->run();
+
+        if ($match instanceof Closure) {
+            $match();
             return;
-        }
-
-        if (!class_exists($this->router->className)) {
-            throw new \Exception("Invalid class ". $this->router->className);
-        }
-
-        if(!method_exists($this->router->className, $this->router->methodName)) {
-            throw new \Exception("Invalid method ".$this->router->methodName." for ".$this->router->className);
         }
 
         $this->dispatch();
@@ -51,10 +52,9 @@ class Dispatcher
 
     private function dispatch()
     {
-        $this->loadMiddleware();
-
         switch ($this->request->type) {
             case Request::TYPE_WEB:
+                $this->loadMiddleware();
                 $this->loadController();
                 break;
             case Request::TYPE_API:
@@ -67,12 +67,20 @@ class Dispatcher
 
     private function loadController()
     {
-        $this->container->call([$this->router->className, $this->router->methodName]);
+        try {
+            $this->container->call([$this->router->className, $this->router->methodName]);
+        } catch (Exception $exception) {
+            require VIEWS . '404.html';
+        }
     }
 
     private function loadAPI()
     {
-        $this->container->call([$this->router->className, $this->router->methodName]);
+        try {
+            $this->container->call([$this->router->className, $this->router->methodName]);
+        } catch (Exception $exception) {
+            Response::resp('Class not found', 404, true);
+        }
     }
 
     private function loadMiddleware()

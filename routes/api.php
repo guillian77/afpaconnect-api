@@ -1,5 +1,8 @@
 <?php
 
+use App\Core\Facade\Router;
+use App\Utility\Response;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,3 +14,6 @@
 |
 */
 
+
+Router::get('/api/users', function () { Response::resp('API not implemented yet.', 400, true); }, 'api.users');
+Router::get('/api/centers', function () { Response::resp('API not implemented yet.', 400, true); }, 'api.centers.get');
