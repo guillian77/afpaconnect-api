@@ -45,7 +45,7 @@ class Request
     {
         $this->uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 
-        $this->type = $this->isXhrRequest() ? self::TYPE_API : self::TYPE_WEB;
+        $this->type = (mb_strpos($this->uri, 'api')) ? self::TYPE_API : self::TYPE_WEB;
     }
 
     /**

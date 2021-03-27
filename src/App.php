@@ -17,7 +17,7 @@ define('MODEL', ROOT.'app/models/');
 define('MIDDLEWARE', ROOT.'app/middlewares/');
 define('WWW', ROOT.'public/');
 define('VIEWS', ROOT.'app/views/');
-define('CACHE', ROOT.'storage/cache/');
+define('STORAGE', ROOT.'storage/');
 
 /**
  * Class App : Singleton

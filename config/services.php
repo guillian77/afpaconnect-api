@@ -20,7 +20,7 @@ return [
     Environment::class => \DI\create()->constructor(
                                     \DI\get(FilesystemLoader::class),
                                     [
-                                        'cache' => CACHE,
+                                        'cache' => STORAGE.'cache/',
                                         'auto_reload' => (Conf::get('env') === 'dev') ?? true,
                                         'strict_variables' => (Conf::get('env') === 'dev') ?? true,
                                         'debug' => true

@@ -14,6 +14,29 @@ use App\Utility\Response;
 |
 */
 
+/*
+|----------------------------
+| AUTHENTICATE
+|----------------------------
+*/
+Router::get('/api/auth', function () { Response::resp('Auth not implemented yet.', 400, true); }, 'api.auth');
 
+/*
+|----------------------------
+| GLOBAL
+|----------------------------
+*/
 Router::get('/api/users', function () { Response::resp('API not implemented yet.', 400, true); }, 'api.users');
 Router::get('/api/centers', function () { Response::resp('API not implemented yet.', 400, true); }, 'api.centers.get');
+
+/*
+|----------------------------
+| AFPANIER
+|----------------------------
+*/
+
+/*
+|----------------------------
+| AFPALA
+|----------------------------
+*/

@@ -76,6 +76,8 @@ class Dispatcher
 
     private function loadAPI()
     {
+        $this->container->call([JsonWebToken::class, 'checkToken']);
+
         try {
             $this->container->call([$this->router->className, $this->router->methodName]);
         } catch (Exception $exception) {
