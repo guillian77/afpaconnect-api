@@ -3,8 +3,18 @@
 
 use App\Command\Command;
 
-require 'vendor/autoload.php';
-
 set_time_limit(0);
+
+if (!file_exists(__DIR__.'/vendor/autoload.php')) {
+    $resp = readline("vendor directory not detected, run install ? [no/Yes]");
+
+    if ($resp == "y" || $resp == "yes") {
+        exec('composer install');
+    }
+
+    exit();
+}
+
+require __DIR__.'/vendor/autoload.php';
 
 new Command();

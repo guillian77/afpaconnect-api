@@ -109,7 +109,7 @@ class Command {
     private function listCommands()
     {
         foreach ($this->commands as $key => $command) {
-            echo $key."    -    ".$command['description']."\n";
+            echo str_pad($key, 30) . " " . $command['description']."\n";
         }
     }
 }
