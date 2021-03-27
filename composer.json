@@ -27,6 +27,7 @@
             "App\\Controller\\" : "app/controllers",
             "App\\Middleware\\" : "app/middlewares",
             "App\\Model\\" : "app/models",
+            "App\\Api\\" : "app/api",
             "App\\Utility\\" : "app/utilities",
             "App\\Command\\" : "app/commands"
         }

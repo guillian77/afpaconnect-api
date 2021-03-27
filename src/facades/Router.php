@@ -8,6 +8,7 @@ use App\Core\App;
 
 /**
  * @method static get(string $path, Mixed|\Closure $target, string $name, Mixed|null $middleware = null)
+ * @method static post(string $path, Mixed|\Closure $target, string $name, Mixed|null $middleware = null)
  */
 class Router
 {

@@ -82,6 +82,25 @@ class Router
         return $this;
     }
 
+    /**
+     * @param string $url
+     * @param $target
+     * @param string $name
+     * @param null $middleware
+     * @return $this
+     * @throws Exception
+     */
+    public function post(string $url, $target, string $name, $middleware = null): self
+    {
+        $this->router->map('POST', $url, $target, $name);
+
+        if (!is_null($middleware)) {
+            $this->middlewares[$name] = $middleware;
+        }
+
+        return $this;
+    }
+
     public function run()
     {
         $route =  $this->router->match();
