@@ -26,6 +26,7 @@
             "App\\Core\\Facade\\" : "src/facades",
             "App\\Controller\\" : "app/controllers",
             "App\\Middleware\\" : "app/middlewares",
+            "App\\Core\\TwigExtension\\" : "src/twig",
             "App\\Model\\" : "app/models",
             "App\\Api\\" : "app/api",
             "App\\Utility\\" : "app/utilities",

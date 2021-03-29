@@ -11,6 +11,11 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+/**
+ * Class Controller
+ * @package App\Controller
+ * @author Aufrère Guillian
+ */
 class Controller
 {
     /**
@@ -23,9 +28,15 @@ class Controller
      */
     private Router $router;
 
+    /**
+     * Controller constructor.
+     * @param Environment $twig
+     * @param Router $router
+     */
     public function __construct(Environment $twig, Router $router)
     {
         $this->twig = $twig;
+
         $this->router = $router;
     }
 
@@ -44,9 +55,7 @@ class Controller
             $parameters,
             [
                 'appTitle' => Conf::get('appTitle'),
-                'copyright' => Conf::get('copyright'),
-                'path' => $this->router,
-                'session' => $_SESSION
+                'copyright' => Conf::get('copyright')
             ],
             $assets
         );

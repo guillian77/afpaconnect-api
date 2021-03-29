@@ -4,9 +4,12 @@
 namespace App\Core;
 
 
+use App\Core\TwigExtension\RouterExtension;
+use App\Core\TwigExtension\SessionExtension;
 use DI\Container;
 use DI\ContainerBuilder;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 define('ROOT', dirname(__DIR__) . '/');
@@ -91,6 +94,8 @@ class App
     {
         session_start();
 
+        $this->loadTemplateExtensions();
+
         $this->container->get(Dispatcher::class);
     }
 
@@ -116,5 +121,14 @@ class App
     public function getRouter(): Router
     {
         return $this->router;
+    }
+
+    private function loadTemplateExtensions()
+    {
+        $this->twig->addExtension($this->container->get(DebugExtension::class));
+
+        $this->twig->addExtension($this->container->get(RouterExtension::class));
+
+        $this->twig->addExtension($this->container->get(SessionExtension::class));
     }
 }

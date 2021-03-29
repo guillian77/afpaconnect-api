@@ -61,6 +61,10 @@ class JsonWebToken
         }
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     */
     private function getIssuer(): string
     {
         /** Check issuer has been sent */
@@ -83,6 +87,11 @@ class JsonWebToken
         }
     }
 
+    /**
+     * URi is accessible without a token or not.
+     *
+     * @return bool|false|int
+     */
     private function isPublicUri()
     {
 
