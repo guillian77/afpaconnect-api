@@ -4,8 +4,8 @@
 namespace App\Core;
 
 
+use Exception;
 use PDO;
-use PHPUnit\Exception;
 
 class Database
 {
@@ -14,6 +14,9 @@ class Database
      */
     private PDO $pdo;
 
+    /**
+     * @throws Exception
+     */
     public function __construct(string $db_host, string $db_name, string $db_username, string $db_password)
     {
         try {

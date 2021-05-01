@@ -15,10 +15,10 @@ return [
     | Database
     |--------------------------------
     */
-    'db_host' => "localhost",
-    'db_name' => "afpaticket",
-    'db_username' => "root",
-    'db_password' => "",
+    'db_host' => "127.0.0.1",
+    'db_name' => "afpaconnect",
+    'db_username' => "afpaconnect",
+    'db_password' => "afpaconnect",
 
     /*
     |--------------------------------
