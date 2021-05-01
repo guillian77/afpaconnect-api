@@ -16,19 +16,27 @@ class DatabaseCreateCommand extends Console
     protected function configure()
     {
         $this->setName('database:create');
-        $this->setDescription('Create and install the database.');
+        $this->setDescription('Install the database.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $app = App::get();
+
         $container = $app->getContainer();
 
-        $db = $container->get(Database::class);
+        $db = $container->get(Database::class)->getPdo();
 
-        dump($db);
+        $sql = file_get_contents(DB . 'base.sql');
 
-        $output->writeln(sprintf('Salut les gens'));
+        if (!$sql) { return self::FAILURE; }
+
+        $output->writeln("Creating database from ".DB."base.sql.");
+
+        $db->query($sql);
+
+        $output->writeln('Database created successfully.');
+
         return self::SUCCESS;
     }
 }

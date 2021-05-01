@@ -21,6 +21,7 @@ define('MIDDLEWARE', ROOT.'app/middlewares/');
 define('WWW', ROOT.'public/');
 define('VIEWS', ROOT.'app/views/');
 define('STORAGE', ROOT.'storage/');
+define('DB', ROOT.'database/');
 
 /**
  * Class App : Singleton
