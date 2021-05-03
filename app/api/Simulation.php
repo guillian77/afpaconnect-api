@@ -4,29 +4,35 @@
 namespace App\Api;
 
 
-class TestApi
+use App\Utility\Response;
+
+class Simulation
 {
+    private Response $response;
 
+    public function __construct(Response $response)
+    {
+        $this->response = $response;
+    }
 
-    
-    /***
-     * Simulation - return an user with password
-     * 
+    /**
+     * Simulation - return a user with password
+     *
      * code 001 : password found
-     * 
-    */
+     */
     public function getUser()
     {
+        $user = [
+            'firstname' => 'Guillian',
+            'lastname' => 'Campillo',
+            'email' => 'guillian.campillo@wanadoo.fr',
+        ];
 
-    $response = [];
-    $response["message"] = "";
-    $response["code"] = "001";
-    $response["prenom"] = "Lucas";
-    $response["nom"] = "Aufrere";
-    $response["email"] = "lucas.aufrere@wanadoo.fr";
-
-    Response::resp($response);
-    
+        $this->response
+            ->setStatusCode("001")
+            ->setStatusMessage("User is registered.")
+            ->setBodyContent($user)
+            ->send();
     }
 
 
@@ -38,18 +44,16 @@ class TestApi
     */
     public function getBlankUser()
     {
+        $user = [
+            'firstname' => 'Guillian',
+            'lastname' => 'Campillo',
+            'email' => 'guillian.campillo@wanadoo.fr',
+        ];
 
-    $response = [];
-    $response["message"] = "This user has never logged in one of the AFPA services : no password";
-    $response["code"] = "000";
-    $response["prenom"] = "Guillian";
-    $response["nom"] = "Campillo";
-    $response["email"] = "guillian.campillo@wanadoo.fr";
-
-    Response::resp($response);
-    
+        $this->response
+            ->setStatusCode("000")
+            ->setStatusMessage("This user has never logged in one of the AFPA services : no password")
+            ->setBodyContent($user)
+            ->send();
     }
-
-
-
 }
