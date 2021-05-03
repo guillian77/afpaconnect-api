@@ -107,7 +107,7 @@ class Response {
         return $this;
     }
 
-    public function send(int $httpResponseCode = 200)
+    public function send(int $httpResponseCode = 200, bool $stop = false)
     {
         http_response_code($httpResponseCode);
 
@@ -118,5 +118,7 @@ class Response {
             'message' => $this->getStatusMessage(),
             'content' => $this->bodyContent
         ]);
+
+        if ($stop) { die(); }
     }
 }

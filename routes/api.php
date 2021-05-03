@@ -19,7 +19,7 @@ use App\Utility\Response;
 | AUTHENTICATE
 |----------------------------
 */
-Router::post('/api/auth', function () { Response::resp('Auth not implemented yet.', 400, true); }, 'api.auth');
+Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 
 /*
 |----------------------------
@@ -46,5 +46,5 @@ Router::get('/api/centers', function () { Response::resp('API not implemented ye
 | SIMULATION
 |----------------------------
 */
-Router::get('/api/simulation', [\App\Api\Simulation::class, 'getUser'], 'api.simulation'); //Add Middleware Authenticate
-Router::get('/api/simulationblank', [\App\Api\Simulation::class, 'getBlankUser'], 'api.simulationblank'); //Add Middleware Authenticate
+Router::get('/api/simulation', [\App\Api\Simulation::class, 'getUser'], 'api.simulation');
+Router::get('/api/simulationblank', [\App\Api\Simulation::class, 'getBlankUser'], 'api.simulationblank');
