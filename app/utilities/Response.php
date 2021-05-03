@@ -25,7 +25,7 @@ class Response {
      * @param int $code
      * @param bool $stop stop code execution ?
      */
-    public static function resp(string $message, int $code = 200, bool $stop = false)
+    public static function resp($message, int $code = 200, bool $stop = false)
     {
         http_response_code($code);
         header('HTTP/1.0 '.$code);
