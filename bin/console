@@ -7,6 +7,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $application = new Symfony\Component\Console\Application;
 
 $application->add(new \App\Command\DatabaseCreateCommand());
+$application->add(new \App\Command\FixturesCommand());
+$application->add(new \App\Command\MakeFixtureCommand());
 $application->add(new \App\Command\MigrationsCommand());
 
 // Run it
