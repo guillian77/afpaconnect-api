@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Core\App;
-use App\Core\Database;
+use App\Core\PdoDriver;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
@@ -36,7 +36,7 @@ class MigrationsCommand extends Console
 
         $this->container = $this->app->getContainer();
 
-        $this->pdo = $this->container->get(Database::class)->getPdo();
+        $this->pdo = $this->container->get(PdoDriver::class)->getPdo();
 
         parent::__construct($name);
     }

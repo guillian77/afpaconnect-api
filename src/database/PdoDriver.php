@@ -1,15 +1,15 @@
 <?php
 
 
-namespace App\Core;
+namespace App\Core\Database;
 
 
 use PDO;
 use PDOException;
 
-class Database
+class PdoDriver
 {
-    private PDO $pdo;
+    private PDO $connection;
 
     /**
      * @param string $db_host
@@ -21,9 +21,9 @@ class Database
     public function __construct(string $db_host, int $db_port, string $db_name, string $db_username, string $db_password)
     {
         try {
-            $this->pdo = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name",$db_username,$db_password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $this->connection = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name",$db_username,$db_password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         } catch(PDOException $e){
             echo "Connection failed: " . $e->getMessage();
         }
@@ -32,9 +32,9 @@ class Database
     /**
      * @return PDO
      */
-    public function getPdo(): PDO
+    public function getConnection(): PDO
     {
-        return $this->pdo;
+        return $this->connection;
     }
 
 }

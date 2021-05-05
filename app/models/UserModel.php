@@ -4,34 +4,25 @@
 namespace App\Model;
 
 
-use App\Core\Database;
+use App\Core\Database\EloquentDriver;
 
 class UserModel
 {
-    private Database $database;
+    private EloquentDriver $db;
 
-    public function __construct(Database $database)
+    public function __construct(EloquentDriver $database)
     {
-        $this->database = $database;
-    }
-
-    /**
-     * Find one user by column name.
-     * @param $key
-     * @param $value
-     */
-    public function findOneBy($key, $value)
-    {
-        $stmt = $this->database->getPdo()->query('SELECT * FROM users')->fetch();
+        $this->db = $database;
     }
 
     public function findOneByUsername($username)
     {
-        $stmt = $this->database->getPdo()->prepare(
-            'SELECT * FROM users WHERE user_identifier = :username OR user_mailPro =:username OR user_mailPerso =:username'
-        );
-        $stmt->bindParam("username", $username);
-        $stmt->execute();
-        return $stmt->fetch();
+        return $this->db->getConnection()
+            ->table('users')
+            ->where('user_identifier', '=', $username)
+            ->orWhere('user_mailPro', '=', $username)
+            ->orWhere('user_mailPerso', '=', $username)
+            ->get()
+            ->first();
     }
 }

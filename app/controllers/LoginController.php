@@ -32,7 +32,6 @@ class LoginController extends Controller
         $this->userModel = $userModel;
         $this->identifier = $this->request->request()->get("identifier");
         $this->password = $this->request->request()->get("password");
-    
     }
 
     /**

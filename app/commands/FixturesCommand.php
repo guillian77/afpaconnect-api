@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Core\App;
-use App\Core\Database;
+use App\Core\PdoDriver;
 use Symfony\Component\Console\Command\Command as Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,7 +36,7 @@ class FixturesCommand extends Console
 
         if (empty($listFixtures)) { return self::FAILURE; }
 
-        $db = $this->container->get(Database::class)->getPdo();
+        $db = $this->container->get(PdoDriver::class)->getPdo();
 
         foreach ($listFixtures as $k => $fixtureFile)
         {
