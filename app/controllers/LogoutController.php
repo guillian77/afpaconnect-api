@@ -4,10 +4,18 @@
 namespace App\Controller;
 
 
+use App\Core\Session;
+use Exception;
+
 class LogoutController extends Controller
 {
-    public function index():void
+    /**
+     * @throws Exception
+     */
+    public function index(Session $session):void
     {
-        $this->render('user/logout');
+        $session->remove('user');
+
+        $this->redirect('home');
     }
 }
