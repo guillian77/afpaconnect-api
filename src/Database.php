@@ -4,7 +4,6 @@
 namespace App\Core;
 
 
-use Exception;
 use PDO;
 use PDOException;
 
@@ -24,19 +23,10 @@ class Database
         try {
             $this->pdo = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name",$db_username,$db_password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         } catch(PDOException $e){
             echo "Connection failed: " . $e->getMessage();
         }
-    }
-
-    public function prepare($parameters, $values)
-    {
-        $this->pdo->prepare('SELECT * FROM users WHERE user_identifier = :user_identifier');
-    }
-
-    public function fetchAll(string $query): array
-    {
-        return $this->pdo->query($query)->fetchAll();
     }
 
     /**

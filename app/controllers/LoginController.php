@@ -64,7 +64,7 @@ class LoginController extends Controller
      */
     public function login()
     {
-        if ($this->isValid()) 
+        if ($this->isValidUser())
         {
             $this->redirect('user.manage');
         } else {
@@ -73,50 +73,39 @@ class LoginController extends Controller
     }
 
 
-    private function isValid()
+    private function isValidUser()
     {
-        if( !$this->formIsValid()) 
-        {
+        if( !$this->formIsValid()) {
             return false;
         } 
 
-        $userQueried = $this->userModel->findOneByUsername($this->identifier);
+        $user = $this->userModel->findOneByUsername($this->identifier);
         
-        if(!$userQueried) 
-        {
-            $errors['identifier'] = 'Numéro de matricule inexistant';
-            $this->session->set('error.login', $errors);
+        if(!$user) {
+            $this->session->set('error.login', ['Numéro de matricule inexistant']);
             return false;
         }
-        
-        $passwordQueried = $userQueried["user_password"];
 
-        if($this->passwordIsValid($passwordQueried))
-        {
-            $this->session->set('uid', $userQueried["id_user"]);
-            return true; 
+        if(!$this->isValidPassword($user->user_password)) {
+            return false;
         }
 
-        return false;
-        
+        $this->updateSession($user);
+
+        return true;
     }
 
     private function formIsValid(): bool
     {
- 
-
-        if (!isset($this->identifier) || empty($this->identifier))
-        {
+        if (!isset($this->identifier) || empty($this->identifier)) {
             $errors['identifier'] = 'Identifiant de connexion manquant.';
         }
 
-        if (!isset($this->password) || empty($this->password))
-        {
+        if (!isset($this->password) || empty($this->password)) {
             $errors['password'] = 'Mot de passe manquant.';
         }
 
-        if (isset($errors)) 
-        {
+        if (isset($errors)) {
             $this->session->set('error.login', $errors);
             return false;
         }
@@ -125,17 +114,19 @@ class LoginController extends Controller
     }
 
 
-    private function passwordIsValid($passwordQueried) : bool 
+    /**
+     * @param $password
+     * @return bool
+     */
+    private function isValidPassword($password) : bool
     {
-        if(password_verify($this->password, $passwordQueried)) 
-        {
+        if(password_verify($this->password, $password)) {
             return true; 
         } 
 
-        $errors['password'] = 'Mot de passe erroné';       
-        $this->session->set('error.login', $errors);
-        return false;
+        $this->session->set('error.login', ['Mot de passe erroné']);
 
+        return false;
     }
 
     /**
@@ -144,5 +135,18 @@ class LoginController extends Controller
     private function resetErrors()
     {
         $this->session->remove('error.login');
+    }
+
+    private function updateSession($user)
+    {
+        $session = [];
+
+        foreach ($user as $k => $u) {
+            if (!strstr($k, 'passw')) {
+                $session[$k] = $u;
+            }
+        }
+
+        $this->session->set('user', $session);
     }
 }

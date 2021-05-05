@@ -27,6 +27,5 @@ Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home',
 Router::get('/login', [\App\Controller\LoginController::class, 'index'], 'login');
 Router::post('/login', [\App\Controller\LoginController::class, 'login'], 'login.post');
 Router::get('/logout', [\App\Controller\LogoutController::class, 'index'], 'logout', 'Authenticate');
-Router::get('/user-manage', [\App\Controller\UserManageController::class, 'index'], 'user.manage');
-Router::get('/user-upload', [\App\Controller\UserUploadController::class, 'index'], 'user.upload');
-
+Router::get('/user-manage', [\App\Controller\UserManageController::class, 'index'], 'user.manage', 'Authenticate');
+Router::get('/user-upload', [\App\Controller\UserUploadController::class, 'index'], 'user.upload', 'Authenticate');
