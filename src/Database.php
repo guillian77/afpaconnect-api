@@ -10,9 +10,6 @@ use PDOException;
 
 class Database
 {
-    /**
-     * @var PDO
-     */
     private PDO $pdo;
 
     /**
@@ -30,6 +27,11 @@ class Database
         } catch(PDOException $e){
             echo "Connection failed: " . $e->getMessage();
         }
+    }
+
+    public function prepare($parameters, $values)
+    {
+        $this->pdo->prepare('SELECT * FROM users WHERE user_identifier = :user_identifier');
     }
 
     public function fetchAll(string $query): array

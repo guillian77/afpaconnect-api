@@ -11,18 +11,13 @@ namespace App\Core;
 class Session
 {
     /**
-     * @var array
-     */
-    private array $storage = [];
-
-    /**
      * @param $key
      * @param mixed $value
      * @return $this
      */
     public function set($key, $value): self
     {
-        $this->storage[$key] = $value;
+        $_SESSION[$key] = $value;
 
         return $this;
     }
@@ -34,7 +29,7 @@ class Session
     public function remove($key): self
     {
         if ($this->has($key)) {
-            unset($this->storage[$key]);
+            unset($_SESSION[$key]);
         }
 
         return $this;
@@ -50,7 +45,12 @@ class Session
             return false;
         }
 
-        return $this->storage[$key];
+        return $_SESSION[$key];
+    }
+
+    public function all(): array
+    {
+        return $_SESSION;
     }
 
     /**
@@ -59,6 +59,21 @@ class Session
      */
     public function has($key): bool
     {
-        return isset($this->storage[$key]);
+        return isset($_SESSION[$key]);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function contain($needle): bool
+    {
+        foreach ($_SESSION as $key => $session) {
+            if (strstr($key, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
