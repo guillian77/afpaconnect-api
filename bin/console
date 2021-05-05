@@ -10,6 +10,7 @@ $application->add(new \App\Command\DatabaseCreateCommand());
 $application->add(new \App\Command\FixturesCommand());
 $application->add(new \App\Command\MakeFixtureCommand());
 $application->add(new \App\Command\MigrationsCommand());
+$application->add(new \App\Command\ServerCommand());
 
 // Run it
 $application->run();
