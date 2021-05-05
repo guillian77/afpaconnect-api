@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Core\App;
-use App\Core\PdoDriver;
+use App\Core\Database\PdoDriver;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Exception;
@@ -39,7 +39,7 @@ class DatabaseCreateCommand extends Console
 
         $container = $app->getContainer();
 
-        $db = $container->get(PdoDriver::class)->getPdo();
+        $db = $container->get(PdoDriver::class)->getConnection();
 
         $sql = file_get_contents(DB . 'base.sql');
 

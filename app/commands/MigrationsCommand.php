@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Core\App;
-use App\Core\PdoDriver;
+use App\Core\Database\EloquentDriver;
+use App\Core\Database\PdoDriver;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
+use Illuminate\Database\Connection;
 use PDO;
 use Symfony\Component\Console\Command\Command as Console;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,6 +26,8 @@ class MigrationsCommand extends Console
 
     private OutputInterface $output;
 
+    private ?Connection $orm;
+
     /**
      * MigrationsCommand constructor.
      * @param string|null $name
@@ -36,7 +40,12 @@ class MigrationsCommand extends Console
 
         $this->container = $this->app->getContainer();
 
-        $this->pdo = $this->container->get(PdoDriver::class)->getPdo();
+        /** @var EloquentDriver $driver */
+        $driver = $this->container->get(EloquentDriver::class);
+
+        $this->orm = $driver->getConnection();
+
+        $this->pdo = $this->orm->getPdo();
 
         parent::__construct($name);
     }
@@ -76,12 +85,9 @@ class MigrationsCommand extends Console
         /**
          * Get last migration from DB.
          */
-        $lastMigDateTime = $this->pdo->query('SELECT * FROM migrations ORDER BY migration_datetime DESC LIMIT 1');
+        $lastMigDateTime = $this->orm->table('migrations')->orderByDesc('migration_datetime')->first();
 
         if (!$lastMigDateTime) { return; }
-
-        $lastMigDateTime = $lastMigDateTime->fetch();
-        $lastMigDateTime = $lastMigDateTime['migration_datetime'];
 
         /**
          * Filter on datetime.
@@ -94,7 +100,7 @@ class MigrationsCommand extends Console
         $migCount = 0;
         foreach ($migDateTimes as $k => $migDateTime)
         {
-            if ($migDateTime > $lastMigDateTime)
+            if ($migDateTime > $lastMigDateTime->migration_datetime)
             {
                 $migCount++;
 
@@ -106,7 +112,9 @@ class MigrationsCommand extends Console
                 new $className($this->pdo);
 
                 // Insert last migration executed
-                $this->pdo->query("INSERT INTO migrations VALUES (null, $migDateTime)");
+                $this->orm
+                    ->table('migrations')
+                    ->insert(['migration_datetime' => $migDateTime]);
             }
         }
 
