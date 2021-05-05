@@ -17,7 +17,7 @@ use App\Core\Facade\Router;
 | MAIN
 |----------------------------
 */
-Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home');
+Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home', 'Authenticate');
 
 /*
 |----------------------------
@@ -25,8 +25,8 @@ Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home')
 |----------------------------
 */
 Router::get('/login', [\App\Controller\LoginController::class, 'index'], 'login');
+Router::post('/login', [\App\Controller\LoginController::class, 'login'], 'login.post');
 Router::get('/logout', [\App\Controller\LogoutController::class, 'index'], 'logout', 'Authenticate');
 Router::get('/user-manage', [\App\Controller\UserManageController::class, 'index'], 'user.manage');
 Router::get('/user-upload', [\App\Controller\UserUploadController::class, 'index'], 'user.upload');
 
-Router::post('/test', [\App\Api\TestApi::class, 'test'], 'test');

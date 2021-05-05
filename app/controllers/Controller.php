@@ -4,8 +4,13 @@
 namespace App\Controller;
 
 
+use App\Core\App;
 use App\Core\Conf;
 use App\Core\Router;
+use DI\DependencyException;
+use DI\NotFoundException;
+use Exception;
+use http\Client;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -19,33 +24,16 @@ use Twig\Error\SyntaxError;
 class Controller
 {
     /**
-     * @var Environment
-     */
-    private Environment $twig;
-
-    /**
-     * @var Router
-     */
-    private Router $router;
-
-    /**
-     * Controller constructor.
-     * @param Environment $twig
-     * @param Router $router
-     */
-    public function __construct(Environment $twig, Router $router)
-    {
-        $this->twig = $twig;
-
-        $this->router = $router;
-    }
-
-    /**
+     * Render a view from path.
+     *
      * @param string $view
      * @param array $parameters
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function render(string $view, array $parameters = []): void
     {
@@ -60,7 +48,11 @@ class Controller
             $assets
         );
 
-        $this->twig->display($view, $params);
+        $twig = App::get()
+            ->getContainer()
+            ->get(Environment::class);
+
+        $twig->display($view, $params);
     }
 
     /**
@@ -88,5 +80,21 @@ class Controller
         $assets['css'] = (file_exists($cssPath)) ? "<link rel=\"stylesheet\" href=\"$cssPath\" />" : null;
 
         return $assets;
+    }
+
+    /**
+     * Redirect to a target route.
+     *
+     * @param string $target Target route.
+     *
+     * @throws Exception
+     */
+    public function redirect(string $target)
+    {
+        $router = App::get()->getRouter();
+
+        $route = $router->generate($target);
+
+        header('Location: '.$route);
     }
 }

@@ -14,9 +14,6 @@ use Twig\TwigFunction;
  */
 class SessionExtension extends AbstractExtension
 {
-    /**
-     * @var Session
-     */
     private Session $session;
 
     /**
@@ -44,6 +41,10 @@ class SessionExtension extends AbstractExtension
      */
     public function getSession(string $key)
     {
-        return $this->session->get($key);
+        if ($this->session->has($key)) {
+            return $this->session->get($key);
+        }
+
+        return false;
     }
 }

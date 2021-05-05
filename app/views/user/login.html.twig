@@ -9,18 +9,16 @@
         <h2>S'identifier</h2>
 
         <form action="" method="POST">
-
-            <?php if(!empty($errors)): ?>
-            <?php foreach($errors as $error): ?>
-            <div class="alert alert-warning">
-                <p><?= $error; ?></p>
-            </div>
-            <?php endforeach; ?>
-            <?php endif; ?>
+            {% if errors is defined %}
+                {% for error in errors  %}
+                <div class="alert alert-warning">
+                    <p>{{ error }}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
 
             <input class="form__field" type="text" name="identifier" id="identifier" placeholder="Numéro de matricule" />
             <input class="form__field" type="password" name="password" id="password" placeholder="Mot de passe" />
-            <input class="form__field" type="hidden" name="submitted" id="submitted" />
 
             <button class="btn" type="submit">Se connecter</button>
         </form>
