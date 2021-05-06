@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Core\App;
+use App\Core\Database\EloquentDriver;
 use App\Core\Database\PdoDriver;
 use Symfony\Component\Console\Command\Command as Console;
 use Symfony\Component\Console\Input\InputInterface;

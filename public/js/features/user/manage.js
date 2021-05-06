@@ -36,10 +36,10 @@ let tableFields = [
 /**
  * Get users from API and fill table with.
  */
-get('api/users', {})
-    .then(users => {
+axios.get('api/users')
+    .then(resp => {
         $(document).ready(() => {
-            let htmlTable = constructTable(tableFields, users, $('#user_manage_actions'));
+            let htmlTable = constructTable(tableFields, resp.data.content, $('#user_list'));
 
             let configuration = constructConfig(tableFields, [0, "asc"], "utilisateur");
 

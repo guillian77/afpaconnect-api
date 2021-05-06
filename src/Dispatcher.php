@@ -28,13 +28,20 @@ class Dispatcher
      */
     private Container $container;
 
-    public function __construct(Router $router, Request $request, Container $container)
+    /**
+     * @var Session
+     */
+    private Session $session;
+
+    public function __construct(Router $router, Request $request, Container $container, Session $session)
     {
         $this->router = $router;
 
         $this->request = $request;
 
         $this->container = $container;
+
+        $this->session = $session;
 
         require ROOT.'routes/web.php';
 
@@ -76,7 +83,9 @@ class Dispatcher
 
     private function loadAPI()
     {
-        $this->container->call([JsonWebToken::class, 'checkToken']);
+        if (!$this->session->has('user')) {
+            $this->container->call([JsonWebToken::class, 'checkToken']);
+        }
 
         try {
             $this->container->call([$this->router->className, $this->router->methodName]);
