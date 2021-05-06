@@ -77,6 +77,7 @@ class Dispatcher
         try {
             $this->container->call([$this->router->className, $this->router->methodName]);
         } catch (Exception $exception) {
+            $this->showExeption($exception);
             require VIEWS . '404.html';
         }
     }
@@ -90,6 +91,7 @@ class Dispatcher
         try {
             $this->container->call([$this->router->className, $this->router->methodName]);
         } catch (Exception $exception) {
+            $this->showExeption($exception);
             Response::resp('Class not found', 404, true);
         }
     }
@@ -103,5 +105,12 @@ class Dispatcher
         $middleware = $this->router->middlewares[$this->router->routeName];
 
         $this->container->get('\App\Middleware\\'.ucfirst($middleware));
+    }
+
+    private function showExeption($exception)
+    {
+        if (Conf::get('env') == 'dev') { // Show PHP errors.
+            dump($exception);
+        }
     }
 }

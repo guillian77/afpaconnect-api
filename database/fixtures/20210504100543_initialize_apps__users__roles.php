@@ -72,16 +72,16 @@ class fix_20210504100543_initialize_apps__users__roles
          */
         $query = "INSERT INTO `roles` (`id`, `tag`,`name`) 
                     VALUES 
-                    (NULL, 100, 'SuperAdmin'),
-                    (NULL, 10, 'Admin'),
-                    (NULL, 1, 'User');";
+                    (NULL, 'ROLE_USER', 'Utilisateur'),
+                    (NULL, 'ROLE_ADMIN', 'Utilisateur'),
+                    (NULL, 'ROLE_SUPER_ADMIN', 'Super Admin')";
         $this->dbHandle->query($query);
 
         /**
          * Create apps__users__roles
          */
         $query = "INSERT INTO `apps__users__roles` (`id_app`, `id_user`, `id_role`) 
-                    VALUES (1, 1, 1),(2, 2, 2),(3, 3, 3),(1, 4, 3),(2, 5, 2),(3, 6, 1),(1, 2, 2),(2, 3, 3),(3, 4, 1);";
+                    VALUES (1, 1, 1),(1, 1, 2),(1, 1, 3),(2, 2, 2),(3, 3, 3),(1, 4, 3),(2, 5, 2),(3, 6, 1),(1, 2, 2),(2, 3, 3),(3, 4, 1);";
         $this->dbHandle->query($query);
     }
     

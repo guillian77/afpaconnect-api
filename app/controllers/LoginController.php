@@ -12,20 +12,20 @@ use Exception;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use App\Model\UserModel;
+use App\Model\UserRepository;
 
 class LoginController extends Controller
 {
     private Session $session;
     private Request $request;
-    private UserModel $userModel;
+    private UserRepository $userModel;
    
     private $identifier;
     private $password;
 
 
 
-    public function __construct(Session $session, Request $request, UserModel $userModel)
+    public function __construct(Session $session, Request $request, UserRepository $userModel)
     {
         $this->session = $session;
         $this->request = $request;
@@ -78,14 +78,14 @@ class LoginController extends Controller
             return false;
         } 
 
-        $user = $this->userModel->findOneByUsername($this->identifier);
+        $user = $this->userModel->findOneByUsernames($this->identifier);
         
         if(!$user) {
             $this->session->set('error.login', ['Numéro de matricule inexistant']);
             return false;
         }
 
-        if(!$this->isValidPassword($user->user_password)) {
+        if(!$this->isValidPassword($user->password)) {
             return false;
         }
 
