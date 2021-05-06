@@ -2,8 +2,9 @@
 #        Script MySQL.
 #------------------------------------------------------------
 
+SET NAMES utf8;
 DROP DATABASE IF EXISTS afpaconnect;
-CREATE DATABASE IF NOT EXISTS afpaconnect;
+CREATE DATABASE IF NOT EXISTS afpaconnect CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE afpaconnect;
 
 #------------------------------------------------------------

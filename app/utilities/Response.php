@@ -13,6 +13,8 @@ class Response {
     public function __construct()
     {
         header('Content-type: application/json');
+
+        header('charset: utf-8');
     }
 
     /**
@@ -53,7 +55,7 @@ class Response {
     /**
      * @return string
      */
-    public function getStatusMessage(): ?string
+    private function getStatusMessage(): ?string
     {
         return $this->statusMessage;
     }
@@ -72,7 +74,7 @@ class Response {
     /**
      * @return string
      */
-    public function getStatusCode(): ?string
+    private function getStatusCode(): ?string
     {
         return $this->statusCode;
     }
@@ -91,7 +93,7 @@ class Response {
     /**
      * @return mixed
      */
-    public function getBodyContent()
+    private function getBodyContent()
     {
         return $this->bodyContent;
     }
@@ -116,7 +118,7 @@ class Response {
         echo json_encode([
             'code' => $this->getStatusCode(),
             'message' => $this->getStatusMessage(),
-            'content' => $this->bodyContent
+            'content' => $this->bodyContent,
         ]);
 
         if ($stop) { die(); }

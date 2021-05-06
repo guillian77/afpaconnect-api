@@ -1,7 +1,6 @@
 <?php
 
 use App\Core\Facade\Router;
-use App\Utility\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,36 +14,27 @@ use App\Utility\Response;
 */
 
 /*
-|----------------------------
+|--------------------------------------------------------------------------
 | AUTHENTICATE
-|----------------------------
+|--------------------------------------------------------------------------
 */
 Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 
 /*
-|----------------------------
-| GLOBAL
-|----------------------------
+|--------------------------------------------------------------------------
+| GENERAL
+|--------------------------------------------------------------------------
+| Here are routes only used by the application itself.
 */
-Router::get('/api/users', function () { Response::resp('API not implemented yet.', 400, true); }, 'api.users');
-Router::get('/api/centers', function () { Response::resp('API not implemented yet.', 400, true); }, 'api.centers.get');
+Router::get('/api/users', [\App\Api\User::class, 'getAll'], 'api.users', 'Authenticate');
+Router::get('/api/centers', [\App\Api\User::class, 'getAll'], 'api.centers.get', 'Authenticate');
 
 /*
-|----------------------------
-| AFPANIER
-|----------------------------
-*/
-
-/*
-|----------------------------
-| AFPALA
-|----------------------------
-*/
-
-/*
-|----------------------------
+|--------------------------------------------------------------------------
 | SIMULATION
-|----------------------------
+|--------------------------------------------------------------------------
+| Here are emulated routes for development only.
+| Static data will be provided.
 */
 Router::get('/api/simulation', [\App\Api\Simulation::class, 'getUser'], 'api.simulation');
 Router::get('/api/simulationblank', [\App\Api\Simulation::class, 'getBlankUser'], 'api.simulationblank');

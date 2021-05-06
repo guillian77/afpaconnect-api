@@ -38,11 +38,15 @@ class EloquentDriver
             'username'  => $db_username,
             'password'  => $db_password,
             'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'collation' => 'utf8_general_ci',
             'prefix'    => ''
         ]);
 
         $this->connection = $capsule->getConnection();
+
+        $capsule->setAsGlobal();
+
+        $capsule->bootEloquent();
     }
 
     public function getConnection(): ?Connection
