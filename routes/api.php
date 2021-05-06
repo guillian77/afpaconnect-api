@@ -26,8 +26,8 @@ Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 |--------------------------------------------------------------------------
 | Here are routes only used by the application itself.
 */
-Router::get('/api/users', [\App\Api\User::class, 'getAll'], 'api.users', 'Authenticate');
-Router::get('/api/centers', [\App\Api\User::class, 'getAll'], 'api.centers.get', 'Authenticate');
+Router::get('/api/users', [\App\Api\User::class, 'getAll'], 'api.users');
+Router::get('/api/centers', [\App\Api\User::class, 'getAll'], 'api.centers.get');
 
 /*
 |--------------------------------------------------------------------------
