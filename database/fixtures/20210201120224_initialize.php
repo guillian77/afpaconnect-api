@@ -27,7 +27,7 @@ class fix_20210201120224_initialize
 
         $tableList = $tableList->fetchAll();
 
-        $query = "SET FOREIGN_KEY_CHECKS=0;";
+        $query = "SET FOREIGN_KEY_CHECKS=0;SET NAMES utf8;SET CHARACTER SET utf8;";
 
         foreach ($tableList as $table) {
             $query .= $table['concat_table'] .';';
