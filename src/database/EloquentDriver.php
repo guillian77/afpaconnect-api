@@ -7,8 +7,10 @@ namespace App\Core\Database;
 use App\Core\App;
 use DI\DependencyException;
 use DI\NotFoundException;
+use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Connection;
+use Illuminate\Events\Dispatcher;
 use PDO;
 
 class EloquentDriver
@@ -41,6 +43,8 @@ class EloquentDriver
             'collation' => 'utf8_general_ci',
             'prefix'    => ''
         ]);
+
+        $capsule->setEventDispatcher(new Dispatcher(new Container()));
 
         $this->connection = $capsule->getConnection();
 

@@ -24,10 +24,12 @@ Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 |--------------------------------------------------------------------------
 | GENERAL
 |--------------------------------------------------------------------------
-| Here are routes only used by the application itself.
 */
-Router::get('/api/users', [\App\Api\User::class, 'getAll'], 'api.users');
-Router::get('/api/centers', [\App\Api\User::class, 'getAll'], 'api.centers.get');
+Router::get('/api/login', [\App\Api\LoginApi::class, 'login'], 'api.login');
+Router::get('/api/user', [\App\Api\UserApi::class, 'getOneByUsername'], 'api.user');
+Router::get('/api/users', [\App\Api\UserApi::class, 'getAll'], 'api.users');
+
+Router::get('/api/centers', [\App\Api\CenterApi::class, 'getAll'], 'api.centers');
 
 /*
 |--------------------------------------------------------------------------
