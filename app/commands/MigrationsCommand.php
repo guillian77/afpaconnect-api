@@ -73,7 +73,7 @@ class MigrationsCommand extends Console
     private function listMigrationsFiles(): ?array
     {
         $filelist = scandir(DB.'migrations');
-        return preg_grep("/[0-9]{14}_([a-zA-Z_.])*/", $filelist);
+        return $filelist === false ? [] :preg_grep("/[0-9]{14}_([a-zA-Z_.])*/", $filelist);
     }
 
     /**
@@ -85,7 +85,8 @@ class MigrationsCommand extends Console
         /**
          * Get last migration from DB.
          */
-        $lastMigDateTime = $this->orm->table('migrations')->orderByDesc('migration_datetime')->first();
+
+        $lastMigDateTime = $this->orm->table('migrations')->orderByDesc('datetime')->first();
 
         if (!$lastMigDateTime) { return; }
 

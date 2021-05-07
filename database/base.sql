@@ -1,7 +1,6 @@
 #------------------------------------------------------------
 #        Script MySQL.
 #------------------------------------------------------------
-
 SET NAMES utf8;
 DROP DATABASE IF EXISTS afpaconnect;
 CREATE DATABASE IF NOT EXISTS afpaconnect CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -13,27 +12,25 @@ USE afpaconnect;
 
 DROP TABLE IF EXISTS apps;
 CREATE TABLE apps(
-        id_application Int  Auto_increment  NOT NULL ,
-        app_name       Varchar (255) NOT NULL ,
-        app_status     Bool NOT NULL ,
-        app_hostname   Varchar (255) ,
-        app_bddName    Varchar (255) NOT NULL
-	,CONSTRAINT apps_PK PRIMARY KEY (id_application)
+        id Int  Auto_increment  NOT NULL ,
+        name       Varchar (255) NOT NULL ,
+        status     Bool NOT NULL
+    ,CONSTRAINT apps_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: trainings
+# Table: formations
 #------------------------------------------------------------
 
-DROP TABLE IF EXISTS trainings;
-CREATE TABLE trainings(
-        id_training     Int  Auto_increment  NOT NULL ,
-        training_name   Varchar (255) NOT NULL ,
-        training_degree Varchar (255) NOT NULL ,
-        training_code   Varchar (15) NOT NULL ,
-        training_status Bool NOT NULL
-	,CONSTRAINT trainings_PK PRIMARY KEY (id_training)
+DROP TABLE IF EXISTS formations;
+CREATE TABLE formations(
+        id     Int  Auto_increment  NOT NULL ,
+        tag   Varchar (15) NOT NULL ,
+        name   Varchar (255) NOT NULL ,
+        degree Varchar (255) NOT NULL ,
+        status Bool NOT NULL
+	,CONSTRAINT formations_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -43,20 +40,32 @@ CREATE TABLE trainings(
 
 DROP TABLE IF EXISTS centers;
 CREATE TABLE centers(
-        id_center                 Int  Auto_increment  NOT NULL ,
-        center_name               Varchar (255) NOT NULL ,
-        center_address            Varchar (255) NOT NULL ,
-        center_complementAddress  Varchar (255) NOT NULL ,
-        center_zipCode            Varchar (5) NOT NULL ,
-        center_city               Varchar (255) NOT NULL ,
-        center_schedule           Text NOT NULL ,
-        center_contactMail        Varchar (255) NOT NULL ,
-        center_withdrawalPlace    Varchar (255) NOT NULL ,
-        center_withdrawalSchedule Varchar (255) NOT NULL ,
-        center_urlGoogleMap       Text NOT NULL
-	,CONSTRAINT centers_PK PRIMARY KEY (id_center)
+        id                 Int  Auto_increment  NOT NULL ,
+        name               Varchar (255) NOT NULL ,
+        address            Varchar (255) NOT NULL ,
+        complementAddress  Varchar (255) NOT NULL ,
+        zip            Varchar (5) NOT NULL ,
+        city               Varchar (255) NOT NULL ,
+        schedule           Text NOT NULL ,
+        mail        Varchar (255) NOT NULL ,
+        withdrawalPlace    Varchar (255) NOT NULL ,
+        withdrawalSchedule Varchar (255) NOT NULL ,
+        urlGoogleMap       Text NOT NULL
+	,CONSTRAINT centers_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
+#------------------------------------------------------------
+# Table: financials
+#------------------------------------------------------------
+
+DROP TABLE IF EXISTS financials;
+CREATE TABLE financials(
+                        id                 Int  Auto_increment  NOT NULL ,
+                        tag     Varchar (255) NOT NULL ,
+                        name               Varchar (255) NOT NULL ,
+                        public_name               Varchar (255) NOT NULL
+    ,CONSTRAINT financials_PK PRIMARY KEY (id)
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: users
@@ -64,27 +73,30 @@ CREATE TABLE centers(
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
-        id_user                Int  Auto_increment  NOT NULL ,
+        id                Int  Auto_increment  NOT NULL ,
         id_center              Int NOT NULL ,
-        user_identifier        Varchar (20) NOT NULL ,
-        user_name              Varchar (255) NOT NULL ,
-        user_firstName         Varchar (255) NOT NULL ,
-        user_mailPro           Varchar (255) ,
-        user_mailPerso         Varchar (255) ,
-        user_psw               Varchar (255) ,
-        user_phone             Varchar (15) ,
-        user_address           Varchar (255) ,
-        user_complementAddress Varchar (255) ,
-        user_zipCode           Varchar (5) ,
-        user_city              Varchar (255) ,
-        user_country           Varchar (255) ,
-        user_gender            Bool ,
-        user_status            Bool ,
-        user_created_at        Date  ,
-        user_updated_at        Datetime
-	,CONSTRAINT users_PK PRIMARY KEY (id_user)
+        id_financial              Int NOT NULL ,
+        identifier        Varchar (20) NOT NULL UNIQUE ,
+        lastname              Varchar (255) NOT NULL ,
+        firstname         Varchar (255) NOT NULL ,
+        mailPro           Varchar (255) ,
+        mailPerso         Varchar (255) ,
+        password               Varchar (255) ,
+        phone             Varchar (15) ,
+        address           Varchar (255) ,
+        complementAddress Varchar (255) ,
+        zip           Varchar (5) ,
+        city              Varchar (255) ,
+        country           Varchar (255) ,
+        gender            Bool ,
+        status            Bool NOT NULL DEFAULT '1',
+        created_at        Date  ,
+        updated_at        Datetime
+	,CONSTRAINT users_PK PRIMARY KEY (id)
 
-	,CONSTRAINT users_centers_FK FOREIGN KEY (id_center) REFERENCES centers(id_center)
+    ,CONSTRAINT users_centers_FK FOREIGN KEY (id_center) REFERENCES centers(id)
+
+    ,CONSTRAINT users_financials_FK FOREIGN KEY (id_financial) REFERENCES financials(id)
 )ENGINE=InnoDB;
 
 
@@ -94,16 +106,16 @@ CREATE TABLE users(
 
 DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions(
-        id_session       Int  Auto_increment  NOT NULL ,
-        id_training      Int NOT NULL ,
-        session_code     Varchar (255) NOT NULL ,
-        session_start_at Datetime NOT NULL ,
-        session_end_at   Datetime NOT NULL ,
-        session_entitled Varchar (255) NOT NULL ,
-        session_status   Bool NOT NULL
-	,CONSTRAINT sessions_PK PRIMARY KEY (id_session)
+        id       Int  Auto_increment  NOT NULL ,
+        id_formation      Int NOT NULL ,
+        tag     Varchar (255) NOT NULL ,
+        name Varchar (255) NOT NULL ,
+        start_at DATE NOT NULL ,
+        end_at   DATE NOT NULL ,
+        status   Bool NOT NULL
+	,CONSTRAINT sessions_PK PRIMARY KEY (id)
 
-	,CONSTRAINT sessions_trainings_FK FOREIGN KEY (id_training) REFERENCES trainings(id_training)
+	,CONSTRAINT sessions_formations_FK FOREIGN KEY (id_formation) REFERENCES formations(id)
 )ENGINE=InnoDB;
 
 
@@ -113,9 +125,10 @@ CREATE TABLE sessions(
 
 DROP TABLE IF EXISTS roles;
 CREATE TABLE roles(
-        id_role   Int  Auto_increment  NOT NULL ,
-        role_name Varchar (255) NOT NULL
-	,CONSTRAINT roles_PK PRIMARY KEY (id_role)
+        id   Int  Auto_increment  NOT NULL ,
+        tag     Varchar (255) NOT NULL ,
+        name Varchar (255) NOT NULL
+	,CONSTRAINT roles_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -125,9 +138,10 @@ CREATE TABLE roles(
 
 DROP TABLE IF EXISTS functions;
 CREATE TABLE functions(
-        id_function   Int  Auto_increment  NOT NULL ,
-        function_name Varchar (255) NOT NULL
-	,CONSTRAINT functions_PK PRIMARY KEY (id_function)
+        id   Int  Auto_increment  NOT NULL ,
+        tag     Varchar (255) NOT NULL ,
+        name Varchar (255) NOT NULL
+	,CONSTRAINT functions_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -137,12 +151,12 @@ CREATE TABLE functions(
 
 DROP TABLE IF EXISTS migrations;
 CREATE TABLE migrations(
-        id_migration        Int  Auto_increment  NOT NULL ,
-        migration_datetime Varchar (255) NOT NULL
-	,CONSTRAINT migrations_PK PRIMARY KEY (id_migration)
+        id        Int  Auto_increment  NOT NULL ,
+        datetime Varchar (255) NOT NULL
+	,CONSTRAINT migrations_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
-INSERT INTO `afpaconnect`.`migrations` (`migration_datetime`) VALUES ('1');
+INSERT INTO `afpaconnect`.`migrations` (`datetime`) VALUES ('1');
 
 #------------------------------------------------------------
 # Table: apps__users__roles
@@ -150,14 +164,14 @@ INSERT INTO `afpaconnect`.`migrations` (`migration_datetime`) VALUES ('1');
 
 DROP TABLE IF EXISTS apps__users__roles;
 CREATE TABLE apps__users__roles(
-        id_application Int NOT NULL ,
+        id_app         Int NOT NULL ,
         id_user        Int NOT NULL ,
         id_role        Int NOT NULL
-	,CONSTRAINT apps__users__roles_PK PRIMARY KEY (id_application,id_user,id_role)
+	,CONSTRAINT apps__users__roles_PK PRIMARY KEY (id_app,id_user,id_role)
 
-	,CONSTRAINT apps__users__roles_apps_FK FOREIGN KEY (id_application) REFERENCES apps(id_application)
-	,CONSTRAINT apps__users__roles_users0_FK FOREIGN KEY (id_user) REFERENCES users(id_user)
-	,CONSTRAINT apps__users__roles_roles1_FK FOREIGN KEY (id_role) REFERENCES roles(id_role)
+	,CONSTRAINT apps__users__roles_apps_FK FOREIGN KEY (id_app) REFERENCES apps(id)
+	,CONSTRAINT apps__users__roles_users0_FK FOREIGN KEY (id_user) REFERENCES users(id)
+	,CONSTRAINT apps__users__roles_roles1_FK FOREIGN KEY (id_role) REFERENCES roles(id)
 )ENGINE=InnoDB;
 
 
@@ -171,8 +185,8 @@ CREATE TABLE users__sessions(
         id_session Int NOT NULL
 	,CONSTRAINT users__sessions_PK PRIMARY KEY (id_user,id_session)
 
-	,CONSTRAINT users__sessions_users_FK FOREIGN KEY (id_user) REFERENCES users(id_user)
-	,CONSTRAINT users__sessions_sessions0_FK FOREIGN KEY (id_session) REFERENCES sessions(id_session)
+	,CONSTRAINT users__sessions_users_FK FOREIGN KEY (id_user) REFERENCES users(id)
+	,CONSTRAINT users__sessions_sessions0_FK FOREIGN KEY (id_session) REFERENCES sessions(id)
 )ENGINE=InnoDB;
 
 
@@ -182,12 +196,12 @@ CREATE TABLE users__sessions(
 
 DROP TABLE IF EXISTS centers__trainings;
 CREATE TABLE centers__trainings(
-        id_training Int NOT NULL ,
-        id_center   Int NOT NULL
+        id_center   Int NOT NULL ,
+        id_training Int NOT NULL
 	,CONSTRAINT centers__trainings_PK PRIMARY KEY (id_training,id_center)
 
-	,CONSTRAINT centers__trainings_trainings_FK FOREIGN KEY (id_training) REFERENCES trainings(id_training)
-	,CONSTRAINT centers__trainings_centers0_FK FOREIGN KEY (id_center) REFERENCES centers(id_center)
+	,CONSTRAINT centers__trainings_trainings_FK FOREIGN KEY (id_training) REFERENCES formations(id)
+	,CONSTRAINT centers__trainings_centers0_FK FOREIGN KEY (id_center) REFERENCES centers(id)
 )ENGINE=InnoDB;
 
 
@@ -197,12 +211,12 @@ CREATE TABLE centers__trainings(
 
 DROP TABLE IF EXISTS users__functions;
 CREATE TABLE users__functions(
-        id_function Int NOT NULL ,
         id_user     Int NOT NULL ,
+        id_function Int NOT NULL ,
         start_date  Datetime NOT NULL ,
         end_date    Datetime NOT NULL
 	,CONSTRAINT users__functions_PK PRIMARY KEY (id_function,id_user)
 
-	,CONSTRAINT users__functions_functions_FK FOREIGN KEY (id_function) REFERENCES functions(id_function)
-	,CONSTRAINT users__functions_users0_FK FOREIGN KEY (id_user) REFERENCES users(id_user)
+	,CONSTRAINT users__functions_functions_FK FOREIGN KEY (id_function) REFERENCES functions(id)
+	,CONSTRAINT users__functions_users0_FK FOREIGN KEY (id_user) REFERENCES users(id)
 )ENGINE=InnoDB;
