@@ -12,6 +12,19 @@
 return [
     /*
     |----------------------------------------------------------------
+    | URL BASE PATH
+    |----------------------------------------------------------------
+    | Here you can set the base path.
+    | Useful if you are running your application from a subdirectory.
+    | If you don't need. Leave it to empty string.
+    | Sample:
+    |       If your URL is http://localhost:80/afpaconnect.
+    |       Set base_path to 'base_path' => "afpaconnect/".
+    */
+    'base_path' => "",
+
+    /*
+    |----------------------------------------------------------------
     | Database
     |----------------------------------------------------------------
     | db_host   string

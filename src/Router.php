@@ -53,6 +53,13 @@ class Router
         $this->router = $altoRouter;
 
         $this->container = $container;
+
+        $base_path = Conf::get('base_path');
+
+        if (!empty($base_path)) {
+            $this->router->setBasePath($base_path);
+        }
+
     }
 
     /**
@@ -104,6 +111,10 @@ class Router
     public function run()
     {
         $route =  $this->router->match();
+
+        if (!$route) {
+            throw new Exception("URL dos not match to any routes. Please verify 'base_path' value inside 'config/configuration.php'.");
+        }
 
         if (!$route) {
             return false;
