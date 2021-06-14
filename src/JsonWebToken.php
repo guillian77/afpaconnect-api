@@ -52,7 +52,7 @@ class JsonWebToken
         }
 
         try {
-            JWT::decode($this->bearer, $this->cert->getCertificate('afpanier', Certificate::TYPE_PUBLIC), [
+            JWT::decode($this->bearer, $this->cert->getCertificate($this->issuer, Certificate::TYPE_PUBLIC), [
                 'RS256',
                 'HS256'
             ]);
