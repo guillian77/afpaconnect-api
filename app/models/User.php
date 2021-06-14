@@ -48,8 +48,8 @@ class User extends Model
     public function roles()
     {
         return $this
-            ->belongsToMany(Role::class, 'apps__users__roles', 'id_user', 'id_role')
-            ->withPivot('id_role', 'id_app')
+            ->belongsToMany(Role::class, 'apps__users__roles', 'user_id', 'role_id')
+            ->withPivot('role_id', 'app_id')
         ;
     }
 
