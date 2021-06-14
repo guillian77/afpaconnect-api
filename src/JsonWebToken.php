@@ -5,6 +5,7 @@ namespace App\Core;
 
 
 use App\Utility\Response;
+use App\Utility\StatusCode;
 use Exception;
 use Firebase\JWT\JWT;
 
@@ -34,13 +35,17 @@ class JsonWebToken
      */
     private ?string $issuer = null;
 
-    public function __construct(Certificate $cert, Request $request)
+    private Response $response;
+
+    public function __construct(Certificate $cert, Request $request, Response $response)
     {
         $this->cert = $cert;
 
         $this->request = $request;
 
         $this->bearer = $this->request->getToken();
+
+        $this->response = $response;
 
         $this->issuer = $this->getIssuer();
     }
@@ -57,7 +62,11 @@ class JsonWebToken
                 'HS256'
             ]);
         } catch (Exception $e) {
-            Response::resp($e->getMessage(), 400, true);
+            $this->response
+                ->setStatusCode(StatusCode::TOKEN_FAILURE)
+                ->setStatusMessage($e->getMessage())
+                ->send(400, true)
+            ;
         }
     }
 
@@ -72,11 +81,10 @@ class JsonWebToken
             !$this->request->request()->get('issuer') &&
             !$this->request->query()->get('issuer')
         ) {
-            Response::resp(
-                "Please specify an issuer.",
-                400,
-                true
-            );
+            $this->response
+                ->setStatusCode(StatusCode::REQUEST_MISSING_ISSUER)
+                ->setStatusMessage("Please specify an issuer.")
+                ->send(400, true);
         }
 
         /** Define issuer */

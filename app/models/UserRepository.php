@@ -89,7 +89,7 @@ class UserRepository
      *
      * @return Collection
      */
-    public function findAll(array $filters = [])
+    public function findAllWithout(array $filters = [])
     {
         $qb = $this->db->getConnection()->table('users');
 
@@ -113,6 +113,8 @@ class UserRepository
     public function findOneByUsernames($username)
     {
         $app = App::where('name', '=', $this->request->query()->get('issuer'))->first();
+
+        // TODO: Mettre un LIKE pour les mails
 
         return User::where('identifier', '=', $username)
             ->orWhere('mailPro', '=', $username)
