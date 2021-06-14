@@ -56,7 +56,7 @@ class fix_20210504100543_initialize_apps__users__roles
                 $identifier = rand(100000000, 999999999);
             }
             $query = "INSERT INTO `users` 
-            ( `id_center`,  `id_financial`, `identifier`, `lastName`, `firstName`, `mailPro`, `mailPerso`, `password`, `phone`, `address`, `complementAddress`, `zip`, `city`, `country`, `gender`, `status`, `created_at`, `updated_at`) 
+            ( `center_id`,  `financial_id`, `identifier`, `lastName`, `firstName`, `mailPro`, `mailPerso`, `password`, `phone`, `address`, `complementAddress`, `zip`, `city`, `country`, `gender`, `status`, `created_at`, `updated_at`) 
             VALUES ('1', '1', :identifier, :lastname, :firstname, 'admin@admin.fr', :email, :password, '0102030405', '15 rue de ladmin', 'Bâtiment A', '34000', 'Montpellier', 'France', '1', '1', '2021-02-01', '2021-02-01 13:43:25')";
             $stmt = $this->dbHandle->prepare($query);
             $stmt->bindParam(':password', $password);
@@ -80,7 +80,7 @@ class fix_20210504100543_initialize_apps__users__roles
         /**
          * Create apps__users__roles
          */
-        $query = "INSERT INTO `apps__users__roles` (`id_app`, `id_user`, `id_role`) 
+        $query = "INSERT INTO `apps__users__roles` (`app_id`, `user_id`, `role_id`) 
                     VALUES (1, 1, 1),(1, 1, 2),(1, 1, 3),(2, 2, 2),(3, 3, 3),(1, 4, 3),(2, 5, 2),(3, 6, 1),(1, 2, 2),(2, 3, 3),(3, 4, 1);";
         $this->dbHandle->query($query);
     }

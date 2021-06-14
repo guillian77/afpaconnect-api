@@ -118,7 +118,7 @@ class UserRepository
             ->orWhere('mailPro', '=', $username)
             ->orWhere('mailPerso', '=', $username)
             ->with(['roles' => function ($query) use ($app) {
-                $query->where('id_app', $app->id);
+                $query->where('app_id', $app->id);
             }])
             ->with('career')
             ->with('session')
