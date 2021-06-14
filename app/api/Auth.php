@@ -23,6 +23,13 @@ class Auth
         $private_key = ($certificate->getCertificate($issuer, Certificate::TYPE_PRIVATE));
         $public_key = $request->request()->get('public_key');
 
+        if (!$public_key) {
+            $response
+                ->setStatusCode('000')
+                ->setStatusMessage('Key public_key not found. You should send it under Body:form-data.')
+                ->send(200, true);
+        }
+
         $publicKeyId = \openssl_get_publickey($public_key);
         \openssl_sign("test", $signature, openssl_get_privatekey($private_key));
 
