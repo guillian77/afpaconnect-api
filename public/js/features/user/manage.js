@@ -15,8 +15,8 @@
 let tableFields = [
     { "name": "UID", "orderable": true, "show": true},
     { "name": "ID Centre", "orderable": false, "show": false},
+    { "name": "ID Financeur", "orderable": false, "show": false},
     { "name": "N° de matricule", "orderable": true, "show": true},
-    { "name": "Mot de passe", "orderable": false, "show": false},
     { "name": "Nom", "orderable": true, "show": true},
     { "name": "Prénom", "orderable": true, "show": true},
     { "name": "Mail pro", "orderable": false, "show": false},

@@ -54,7 +54,7 @@ class UserApi
      */
     public function getAll()
     {
-        $user = $this->repository->findAll();
+        $user = $this->repository->findAll(['password']);
         $this->response
             ->setBodyContent($user)
             ->send()
