@@ -19,7 +19,7 @@ return [
     | If you don't need. Leave it to empty string.
     | Sample:
     |       If your URL is http://localhost:80/afpaconnect.
-    |       Set base_path to 'base_path' => "afpaconnect/".
+    |       Set base_path to 'base_path' => "/afpaconnect".
     */
     'base_path' => "",
 
