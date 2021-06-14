@@ -44,24 +44,32 @@ class LoginApi
 
         if (!$username || !$password) {
             $this->response
-                ->setStatusCode('000') // TODO: Replace with good status code
-                ->setStatusMessage('Username or password are missing.') // TODO: Replace with good message
+                ->setStatusCode('005')
+                ->setStatusMessage('Missing information. Password or username is empty.')
                 ->send(200, true);
         }
 
-        $user = $this->userModel->findOneByUsernames($username); // TODO: Hydrate/add jointures on this request.
+        $user = $this->userModel->findOneByUsernames($username);
 
         if (!$user) {
             $this->response
-                ->setStatusCode('000') // TODO: Replace with good status code
-                ->setStatusMessage('User not found.') // TODO: Replace with good message
+                ->setStatusCode('004')
+                ->setStatusMessage('User not found.')
                 ->send(200, true);
         }
 
-        // TODO: Check password is correct with password_verify
+        $check = password_verify($password, $user->password);
+
+        if (!$check) {
+            $this->response
+                ->setStatusCode('003')
+                ->setStatusMessage('Wrong password.')
+                ->send(200, true);
+        }
 
         $this->response
-            ->setStatusCode("000") // TODO: Replace with good status code
+            ->setStatusCode("001")
+            ->setStatusMessage("User logged successfully.")
             ->setBodyContent($user)
             ->send()
         ;
