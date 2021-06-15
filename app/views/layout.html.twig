@@ -47,8 +47,7 @@
                     <i id="menuIcon" class="fa fa-bars"></i>
                 </a>
             </div>
-
-            {% if session('user')['uid'] is defined  %}
+              {% if session('user') %}
                 <nav id="navbar" class="flex navbar">
                     <ul>
                         <li><a href="{{ path('user.manage') }}">Gestion utilisateurs</a></li>
