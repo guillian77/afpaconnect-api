@@ -220,3 +220,12 @@ CREATE TABLE users__functions(
 	,CONSTRAINT users__functions_functions_FK FOREIGN KEY (function_id) REFERENCES functions(id)
 	,CONSTRAINT users__functions_users0_FK FOREIGN KEY (user_id) REFERENCES users(id)
 )ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS apps__roles;
+CREATE TABLE apps__roles(
+    `app_id` INT NOT NULL ,
+     `role_id` INT NOT NULL ,
+     CONSTRAINT apps__roles_PK PRIMARY KEY (app_id,role_id),
+     CONSTRAINT apps__roles_apps_FK FOREIGN KEY (app_id) REFERENCES apps(id),
+     CONSTRAINT apps__roles_roles_FK FOREIGN KEY (role_id) REFERENCES roles(id)
+) ENGINE = InnoDB;

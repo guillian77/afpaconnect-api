@@ -16,5 +16,23 @@ use Illuminate\Database\Eloquent\Model;
  */
 class App extends Model
 {
+    protected $table = 'apps';
+
     protected $primaryKey = 'id';
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'apps__users__roles');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'apps__users__roles');
+    }
+
+    public function appRoles()
+    {
+        return $this->belongsToMany(Role::class, 'apps__roles');
+    }
 }
+
