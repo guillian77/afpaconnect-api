@@ -3,11 +3,11 @@ let data = []
 $(document).ready( async ()=> {
     await get("api/centers",false)
         .then( (centers)=> {
-
+            centers = centers.content;
             centers.forEach(center => {
                 let el = document.createElement("option");
-                el.textContent = center.center_name;
-                el.value = center.id_center;
+                el.textContent = center.name;
+                el.value = center.id;
                 el.selected = $("#id_user_center").val() === el.value
                 $('#center').append(el);
             });
@@ -22,6 +22,7 @@ $(document).ready( async ()=> {
 $('#upload_file').change( (e) => {
     e.preventDefault();
     let fileobj = $('#upload_file')[0].files[0]
+    console.log(fileobj)
     ajax_file_upload(fileobj);
 });
 
@@ -40,7 +41,7 @@ let insert_user_bdd = async () => {
     fd.append('uploaded_user', JSON.stringify(data))
     fd.append('center' , $('#center').val())
 
-    await post("api/user/add",fd,false)
+    await post("user-add",fd,false)
         .then((response) => {
             $('#alert')
                 .addClass('alert-success')
@@ -64,11 +65,12 @@ let insert_user_bdd = async () => {
 let ajax_file_upload = async (fileobj) => {
     let fd = new FormData();
     fd.append("fileToUpload", fileobj)
-
-    await post("api/user/upload",fd,false)
+    
+    await post("users-uploaded",fd,false)
     .then( (resp)=> {
         
         let parsedData = JSON.parse(resp)
+        
         let dataHTML = "<table class='table-upload'>"
 
         $.each(parsedData,(index,row) => {
@@ -83,15 +85,21 @@ let ajax_file_upload = async (fileobj) => {
             dataHTML += "</tr>"
             index !== 0 && JSON.stringify(data[index-1])
         });
-        console.log(data)
         dataHTML += "</table>"
             
-        $('#upload_confirm').html(dataHTML).append("<button id='btn-upload' class='btn-upload btn btn-secondary'>Valider</button>")
-    
+        $('#upload_confirm').html(dataHTML).append("<button id='btn-upload' class='btn-upload btn btn-secondary'>Valider</button>")       
+        
+        $('#alert').hide()
+
     })
-    .catch((err) => {
-        console.log(err)
-        $('#error').html("Un problème est survenu lors de l'upload du fichier").show()
+    .catch((error) => {
+        $('#alert')
+            .addClass('alert-danger')
+            .removeClass('alert-success')
+            .html(error.responseJSON)
+            .show();
+
+        $('html,body').animate({scrollTop: 0}, 'slow');
     })
 
 }
