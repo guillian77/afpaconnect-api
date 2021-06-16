@@ -55,9 +55,17 @@ return [
     |----------------------------------------------------------------
     | API
     |----------------------------------------------------------------
-    | token_duration = default to 600 seconds (10 minutes).
+    | token_duration        =   Default to 600 seconds (10 minutes).
+    | authorized_address    =   List of whitelisted IP address used to
+    |                           filter API request.
     */
     'token_duration' => 1200,
+    'authorized_address' => [
+        '::1',
+        'localhost',
+        '127.0.0.1',
+        '172.18.0.1'
+    ],
 
     /*
     |----------------------------------------------------------------

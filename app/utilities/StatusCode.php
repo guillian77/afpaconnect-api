@@ -17,6 +17,7 @@ class StatusCode
     const REQUEST_MISSING_ISSUER    = "004";
     const TOKEN_FAILURE             = "005";
     const CERTIFICATE_NOT_FOUND     = "006";
+    const ORIGIN_UNAUTHORIZED_HOST  = "007";
 
     /*
     |--------------------------------------------------------------------------

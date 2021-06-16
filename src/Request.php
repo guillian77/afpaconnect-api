@@ -147,4 +147,18 @@ class Request
 
         return trim(str_replace("Bearer", "", $header['Authorization']));
     }
+
+    /**
+     * Return request remote address.
+     *
+     * @return false|mixed
+     */
+    public function getRemoteAdress()
+    {
+        if (!isset($_SERVER['REMOTE_ADDR'])) {
+            return false;
+        }
+
+        return $_SERVER['REMOTE_ADDR'];
+    }
 }
