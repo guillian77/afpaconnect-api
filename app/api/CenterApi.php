@@ -4,26 +4,31 @@
 namespace App\Api;
 
 
-use App\Model\CenterRepository;
+use App\Model\Center;
 use App\Utility\Response;
 
+/**
+ * Class CenterApi
+ * @package App\Api
+ * @author Aufrère Guillian
+ * @version 1.0
+ */
 class CenterApi
 {
     private Response $response;
 
-    private CenterRepository $repository;
-
-    public function __construct(CenterRepository $repository, Response $response)
+    public function __construct(Response $response)
     {
         $this->response = $response;
-        $this->repository = $repository;
     }
 
+    /**
+     * Get all centers from database.
+     */
     public function getAll()
     {
-        $centers = $this->repository->findAll();
         $this->response
-            ->setBodyContent($centers)
+            ->setBodyContent(Center::all())
             ->send();
     }
 }

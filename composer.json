@@ -20,7 +20,8 @@
         "shuchkin/simplexlsx": "^0.8.23",
         "ext-pdo": "*",
         "illuminate/database": "^8.40",
-        "illuminate/events": "^8.40"
+        "illuminate/events": "^8.40",
+        "fzaninotto/faker": "^1.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

@@ -7,10 +7,11 @@ namespace App\Api;
 use App\Core\Request;
 use App\Model\UserRepository;
 use App\Utility\Response;
+use App\Utility\StatusCode;
 use Exception;
 
 /**
- * Class Login
+ * Class LoginApi
  * @package App\Api
  * @author Aufrère Guillian
  * @version 1.0
@@ -44,7 +45,7 @@ class LoginApi
 
         if (!$username || !$password) {
             $this->response
-                ->setStatusCode('005')
+                ->setStatusCode(StatusCode::MISSING_REQUEST_PARAMETER)
                 ->setStatusMessage('Missing information. Password or username is empty.')
                 ->send(200, true);
         }
@@ -53,8 +54,15 @@ class LoginApi
 
         if (!$user) {
             $this->response
-                ->setStatusCode('004')
+                ->setStatusCode(StatusCode::USER_NOT_FOUND)
                 ->setStatusMessage('User not found.')
+                ->send(200, true);
+        }
+
+        if (!$user->password) {
+            $this->response
+                ->setStatusCode(StatusCode::USER_NOT_REGISTERED)
+                ->setStatusMessage('User exist but not registered yet.')
                 ->send(200, true);
         }
 
@@ -62,13 +70,13 @@ class LoginApi
 
         if (!$check) {
             $this->response
-                ->setStatusCode('003')
+                ->setStatusCode(StatusCode::USER_LOGIN_BAD_PASSWORD)
                 ->setStatusMessage('Wrong password.')
                 ->send(200, true);
         }
 
         $this->response
-            ->setStatusCode("001")
+            ->setStatusCode(StatusCode::USER_LOGIN_SUCCESS)
             ->setStatusMessage("User logged successfully.")
             ->setBodyContent($user)
             ->send()

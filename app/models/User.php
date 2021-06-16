@@ -13,17 +13,37 @@ use Illuminate\Database\Eloquent\Model;
  * @version 1.0
  *
  * @method static where(\Closure|string|array  $column, mixed  $operator, mixed  $value)
+ * @property bool|mixed password
  */
 class User extends Model
 {
-    // TODO: Invert foreign key to this format: 'tableName_id'. Better for Eloquent ORM.
-    // TODO: Verify current database structure to be the same of this Model.
-
     protected $table = 'users';
 
     protected $hidden = [
         'id'
     ];
+
+    // Protected columns.
+    protected $guarded = [
+        'id',
+        'identifier'
+    ];
+
+    /**
+     * Password mutator.
+     *
+     * Easy register hashed password inside database.
+     *
+     * @param $password
+     *
+     * @return $this
+     */
+    public function setPasswordAttribute($password) : self
+    {
+        $this->attributes['password'] = password_hash($password, PASSWORD_ARGON2I);
+
+        return $this;
+    }
 
     public function career()
     { // TODO: Add a relation 'career_id' inside 'user' table.

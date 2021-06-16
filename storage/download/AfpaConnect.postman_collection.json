@@ -1,0 +1,959 @@
+{
+	"info": {
+		"_postman_id": "54ab216f-79e4-47a5-9147-d127507a6997",
+		"name": "AfpaConnect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Simulation",
+					"item": [
+						{
+							"name": "Log in - Success",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/success?issuer=afpanier&userId=id&password=pwd",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"success"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "id"
+										},
+										{
+											"key": "password",
+											"value": "pwd"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Success admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/success/admin?issuer=afpanier&userId=id&password=pwd",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"success",
+										"admin"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "id"
+										},
+										{
+											"key": "password",
+											"value": "pwd"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Success employee",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/success/employee?issuer=afpanier&userId=iroepzrepz&password=jrioejroz",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"success",
+										"employee"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroepzrepz"
+										},
+										{
+											"key": "password",
+											"value": "jrioejroz"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Success teacher",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/success/teacher?issuer=afpanier&userId=iroezuroezu&password=iotreuotreuot",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"success",
+										"teacher"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroezuroezu"
+										},
+										{
+											"key": "password",
+											"value": "iotreuotreuot"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Success teacher admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/success/teacher?issuer=afpanier&userId=iroezuroezu&password=iotreuotreuot",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"success",
+										"teacher"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroezuroezu"
+										},
+										{
+											"key": "password",
+											"value": "iotreuotreuot"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Success teacher superadmin",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "Llulu"
+										},
+										{
+											"key": "password",
+											"value": "jezejrzer"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/success/teacher/superadmin?issuer=afpanier&userId=iroezuroezu&password=iotreuotreuot",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"success",
+										"teacher",
+										"superadmin"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroezuroezu"
+										},
+										{
+											"key": "password",
+											"value": "iotreuotreuot"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Blank",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/blank?issuer=afpanier&userId=iroezuroezu&password=iotreuotreuot",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"blank"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroezuroezu"
+										},
+										{
+											"key": "password",
+											"value": "iotreuotreuot"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - Failed",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "jfez"
+										},
+										{
+											"key": "password",
+											"value": "erjzio"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/failed?issuer=afpanier&userId=iroezuroezu&password=iotreuotreuot",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"failed"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroezuroezu"
+										},
+										{
+											"key": "password",
+											"value": "iotreuotreuot"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Log in - User Unfound",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "gfdgfdg"
+										},
+										{
+											"key": "password",
+											"value": "treterte"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/unfound?issuer=afpanier&userId=iroezuroezu&password=iotreuotreuot",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"unfound"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "afpanier"
+										},
+										{
+											"key": "userId",
+											"value": "iroezuroezu"
+										},
+										{
+											"key": "password",
+											"value": "iotreuotreuot"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inscription",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "issuer",
+											"value": "afpanier",
+											"type": "text"
+										},
+										{
+											"key": "userId",
+											"value": "tatat",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Bii1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:8000/api/sim/inscription",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"sim",
+										"inscription"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = JSON.parse(responseBody).content;",
+									"pm.environment.set('token',token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "issuer",
+									"value": "afpanier",
+									"type": "text"
+								},
+								{
+									"key": "public_key",
+									"value": "{{public_key_afpanier}}",
+									"description": "Clé publique",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/api/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"auth"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "afpanier",
+									"disabled": true
+								},
+								{
+									"key": "public_key",
+									"value": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsmmkRhJ6cRuxTLPEyngh\n/QzEMryLIf94W/bV+trUFkz/ssGzLRQGSOZPUQavQBYV+yMDm1sQ2KHhR6tHSijv\ntIj+SY5MM7eoa7cbKMC35r3AC2Ma6mkMS/bqBScOI6kGL0OcZFYQAC7FmgDvA4IP\nzoWTpf3oUnBSAIcdYQgOQnWwj7z0iPl6w0Jl4tS5b8+yon8+WuhSd97FcdKPJLj1\nRsnC2Dxkxzx2AxqIH+YTfF121CFq34h+OUfDipyXS9qUA1g2tZ3qb0XS0QUJ+qJq\nWb5ZACYEH3RFLELH/TApAnY2WaFUer7NeUnzUoEL437Io5yDQefQvrOe0N3yTBPN\n9wIDAQAB\n-----END PUBLIC KEY-----\n",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/api/login?issuer=afpanier&username=123456789&password=test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "afpanier"
+								},
+								{
+									"key": "username",
+									"value": "123456789"
+								},
+								{
+									"key": "password",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/api/user?issuer=afpanier&username=123456789",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "afpanier"
+								},
+								{
+									"key": "username",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/api/users?issuer=afpanier",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "afpanier"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/centers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/api/centers?issuer=afpanier",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"centers"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "afpanier"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "issuer",
+									"value": "afpanier",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.fr",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/api/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Web",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJhZnBhY29ubmVjdCIsImF1ZCI6ImFmcGFuaWVyIiwiZXhwIjoxNjIwMDQ3NDc4fQ.hj3gSHLMYaJSLKmrhnfXQ-VuKHIdhdo_tmXj73d8vev_aXD0ErJRnwQZmh0vrwzgAVVtLj56XQnWuHTU71FKWtPgKgaY6EiZnunIK6qrLb5wBI8oDUMzX_1go3jZbqitmmtqQRfNsaVLRL8_0OrNfDcse76ne36hSR0ojWnlC-386cDiEX_PRQK_4duVTEKLMUUg4cdTm919OHmMKwA5p0IiZOJIJD8ZlqxGWlh3pTDaUu_h649iWQEDlPENQTc2lqke2aLVZZTLF-J9DyuUvb3I7M4R9gbhEVwuMW6S8Kx8AiLIdLFkuUUFD8nOVZY6HH_p3MEXIV6t3eynmW-GZA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"login"
+							]
+						},
+						"description": "Permet de récupérer un utilisateur en fonction de son ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJhZnBhY29ubmVjdCIsImF1ZCI6ImFmcGFuaWVyIiwiZXhwIjoxNjIwMDQ3NDc4fQ.hj3gSHLMYaJSLKmrhnfXQ-VuKHIdhdo_tmXj73d8vev_aXD0ErJRnwQZmh0vrwzgAVVtLj56XQnWuHTU71FKWtPgKgaY6EiZnunIK6qrLb5wBI8oDUMzX_1go3jZbqitmmtqQRfNsaVLRL8_0OrNfDcse76ne36hSR0ojWnlC-386cDiEX_PRQK_4duVTEKLMUUg4cdTm919OHmMKwA5p0IiZOJIJD8ZlqxGWlh3pTDaUu_h649iWQEDlPENQTc2lqke2aLVZZTLF-J9DyuUvb3I7M4R9gbhEVwuMW6S8Kx8AiLIdLFkuUUFD8nOVZY6HH_p3MEXIV6t3eynmW-GZA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/logout",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"logout"
+							]
+						},
+						"description": "Permet de récupérer un utilisateur en fonction de son ID."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
