@@ -5,6 +5,7 @@ namespace App\Api;
 
 
 use App\Model\Center;
+use App\Model\CenterRepository;
 use App\Utility\Response;
 
 /**
@@ -16,10 +17,12 @@ use App\Utility\Response;
 class CenterApi
 {
     private Response $response;
+    private CenterRepository $centerRepository;
 
-    public function __construct(Response $response)
+    public function __construct(Response $response, CenterRepository $centerRepository)
     {
         $this->response = $response;
+        $this->centerRepository = $centerRepository;
     }
 
     /**

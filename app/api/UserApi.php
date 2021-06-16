@@ -83,8 +83,6 @@ class UserApi
                 ->send(200);
         }
 
-        $user = $this->repository->findAll(['password']);
-
         $this->response
             ->setStatusCode(StatusCode::REQUEST_SUCCESS)
             ->setBodyContent($users)

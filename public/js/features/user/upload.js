@@ -3,6 +3,7 @@ let data = []
 $(document).ready( async ()=> {
     await get("api/centers",false)
         .then( (centers)=> {
+            console.log(centers)
             centers = centers.content;
             centers.forEach(center => {
                 let el = document.createElement("option");

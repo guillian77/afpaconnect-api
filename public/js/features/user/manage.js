@@ -38,6 +38,7 @@ let tableFields = [
  */
 axios.get('api/users')
     .then(resp => {
+        console.log(resp)
         $(document).ready(() => {
             let htmlTable = constructTable(tableFields, resp.data.content, $('#user_list'));
 
