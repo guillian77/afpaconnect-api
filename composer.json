@@ -40,5 +40,10 @@
             "App\\Utility\\" : "app/utilities",
             "App\\Command\\" : "app/commands"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\" : "tests"
+        }
     }
 }
