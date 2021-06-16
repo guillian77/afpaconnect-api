@@ -130,4 +130,5 @@ class UserRepository
             ->first()
         ;
     }
+
 }

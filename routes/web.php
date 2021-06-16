@@ -29,3 +29,5 @@ Router::post('/login', [\App\Controller\LoginController::class, 'login'], 'login
 Router::get('/logout', [\App\Controller\LogoutController::class, 'index'], 'logout', 'Authenticate');
 Router::get('/user-manage', [\App\Controller\UserManageController::class, 'index'], 'user.manage', 'Authenticate');
 Router::get('/user-upload', [\App\Controller\UserUploadController::class, 'index'], 'user.upload', 'Authenticate');
+Router::post('/users-uploaded', [\App\Controller\UserUploadController::class, 'upload'], 'users.uploaded', 'Authenticate');
+Router::post('/user-add', [\App\Controller\UserUploadController::class, 'add'], 'user.add', 'Authenticate');

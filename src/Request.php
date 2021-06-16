@@ -51,10 +51,10 @@ class Request
     /**
      * @return $this
      */
-    public function query():Request
+    public function query($escapeHTML = true):Request
     {
         $this->query = $_GET;
-        array_walk_recursive($this->query, '\App\Core\Request::escapeHTML');
+        $escapeHTML && array_walk_recursive($this->query, '\App\Core\Request::escapeHTML');
         $this->lastMethod = self::METH_GET;
         return $this;
     }
@@ -62,10 +62,10 @@ class Request
     /**
      * @return $this
      */
-    public function request():Request
+    public function request($escapeHTML = true):Request
     {
         $this->request = $_POST;
-        array_walk_recursive($this->request, '\App\Core\Request::escapeHTML');
+        $escapeHTML && array_walk_recursive($this->request, '\App\Core\Request::escapeHTML');
         $this->lastMethod = self::METH_POST;
         return $this;
     }

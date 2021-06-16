@@ -3,18 +3,17 @@ let data = []
 $(document).ready( async ()=> {
     await get("api/centers",false)
         .then( (centers)=> {
-
+            centers = centers.content;
             centers.forEach(center => {
                 let el = document.createElement("option");
-                el.textContent = center.center_name;
-                el.value = center.id_center;
+                el.textContent = center.name;
+                el.value = center.id;
                 el.selected = $("#id_user_center").val() === el.value
                 $('#center').append(el);
             });
 
         })
         .catch((err) => {
-            console.log(err)
             $('#error').html("Un problème est survenu lors du chargement des centres").show()
         })
 })
@@ -40,12 +39,12 @@ let insert_user_bdd = async () => {
     fd.append('uploaded_user', JSON.stringify(data))
     fd.append('center' , $('#center').val())
 
-    await post("api/user/add",fd,false)
+    await post("user-add",fd,false)
         .then((response) => {
             $('#alert')
                 .addClass('alert-success')
                 .removeClass('alert-danger')
-                .html(response)
+                .html(response.message)
                 .show();
 
             $('html,body').animate({scrollTop: 0}, 'slow');
@@ -54,7 +53,7 @@ let insert_user_bdd = async () => {
             $('#alert')
                 .addClass('alert-danger')
                 .removeClass('alert-success')
-                .html(error.responseJSON)
+                .html(error.responseJSON.message)
                 .show();
 
             $('html,body').animate({scrollTop: 0}, 'slow');
@@ -64,34 +63,40 @@ let insert_user_bdd = async () => {
 let ajax_file_upload = async (fileobj) => {
     let fd = new FormData();
     fd.append("fileToUpload", fileobj)
-
-    await post("api/user/upload",fd,false)
+    
+    await post("users-uploaded",fd,false)
     .then( (resp)=> {
-        
-        let parsedData = JSON.parse(resp)
+        let content = resp.content
+
         let dataHTML = "<table class='table-upload'>"
 
-        $.each(parsedData,(index,row) => {
+        $.each(content,(index,row) => {
 
             index !== 0 ? data[index-1] = {} : false
             dataHTML += "<tr>"
             
             $.each(row,(i,el) => {
-                index !== 0 ? data[index-1][parsedData[0][i].replaceAll(' ', '_').toLowerCase()] = el : false
+                index !== 0 ? data[index-1][content[0][i].replaceAll(' ', '_').toLowerCase()] = el : false
                 dataHTML += "<td>"+el+"</td>"
             })
             dataHTML += "</tr>"
             index !== 0 && JSON.stringify(data[index-1])
         });
-        console.log(data)
         dataHTML += "</table>"
             
-        $('#upload_confirm').html(dataHTML).append("<button id='btn-upload' class='btn-upload btn btn-secondary'>Valider</button>")
-    
+        $('#upload_confirm').html(dataHTML).append("<button id='btn-upload' class='btn-upload btn btn-secondary'>Valider</button>")       
+        
+        $('#alert').hide()
+
     })
-    .catch((err) => {
-        console.log(err)
-        $('#error').html("Un problème est survenu lors de l'upload du fichier").show()
+    .catch((error) => {
+        $('#alert')
+            .addClass('alert-danger')
+            .removeClass('alert-success')
+            .html(error.responseJSON.message)
+            .show();
+
+        $('html,body').animate({scrollTop: 0}, 'slow');
     })
 
 }
