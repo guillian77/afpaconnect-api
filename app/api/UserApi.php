@@ -5,6 +5,7 @@ namespace App\Api;
 
 
 use App\Core\Request;
+use App\Model\User;
 use App\Model\UserRepository;
 use App\Utility\Response;
 use Exception;
@@ -59,5 +60,37 @@ class UserApi
             ->setBodyContent($user)
             ->send()
         ;
+    }
+
+    /**
+     * Edit user.
+     */
+
+    public function edit() {
+
+        $newUser = $this->request->request();
+    
+        $currentUser = User::whereId($newUser->get('uid'))->first();
+   
+
+        $currentUser->identifier = $newUser->get('beneficiary');
+        $currentUser->lastname = $newUser->get('lastname');
+        $currentUser->firstname = $newUser->get('firstname');
+        $currentUser->mailPerso = $newUser->get('email');
+        $currentUser->phone = $newUser->get('phone');
+        $currentUser->center_id = $newUser->get('center');
+        $currentUser->financial_id = $newUser->get('financial');
+        //TODO : USER ROLE EDIT
+
+        try {
+                $currentUser->saveOrFail();
+            } catch (Exception $e) {
+                
+                Response::resp("Erreur: l'utilisateur ".$currentUser->lastname ." ".$currentUser->lastname." n'a pas pu être mis à jour." , 400);
+                return;
+            }
+//TODO : Error msg
+        Response::resp(".", 200);
+
     }
 }

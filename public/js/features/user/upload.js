@@ -14,7 +14,6 @@ $(document).ready( async ()=> {
 
         })
         .catch((err) => {
-            console.log(err)
             $('#error').html("Un problème est survenu lors du chargement des centres").show()
         })
 })
@@ -22,7 +21,6 @@ $(document).ready( async ()=> {
 $('#upload_file').change( (e) => {
     e.preventDefault();
     let fileobj = $('#upload_file')[0].files[0]
-    console.log(fileobj)
     ajax_file_upload(fileobj);
 });
 

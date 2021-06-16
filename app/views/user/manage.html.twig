@@ -20,7 +20,7 @@
     <aside class="u_managment boxed">
         <h2 class="u_managment__title">Editer utilisateur</h2>
 
-        <form class="u_managment__form">
+        <form action="{{path('user.edit')}}" method="post" class="u_managment__form">
 
             <h3>Informations principales</h3>
 
@@ -30,6 +30,9 @@
             <input class="form__field" type="text" name="firstname" id="firstname" placeholder="Prénom" />
             <input class="form__field" type="email" name="email" id="email" placeholder="Adresse mail" />
             <input class="form__field" type="tel" name="phone" id="phone" placeholder="Numéro de téléphone" />
+            <select class="form__field" name="center" id="center" placeholder="Centre de formation"></select>
+            <select class="form__field" name="financial" id="financial" placeholder="Financeur"></select>
+        
 
             <h3>Droits sur les applications</h3>
             <div class="form__field">
