@@ -66,7 +66,7 @@ class UserApi
      * Edit user.
      */
 
-    public function edit() {
+    public function edit() {/*
 
         $newUser = $this->request->request();
     
@@ -89,8 +89,8 @@ class UserApi
                 Response::resp("Erreur: l'utilisateur ".$currentUser->lastname ." ".$currentUser->lastname." n'a pas pu être mis à jour." , 400);
                 return;
             }
-//TODO : Error msg
-        Response::resp(".", 200);
-
+            //TODO : Error msg
+            Response::resp(".", 200);
+            */
     }
 }

@@ -49,13 +49,11 @@ $(document).ready( async ()=> {
 
         })
         .catch((err) => {
-            console.log(err)
             $('#error').html("Un problème est survenu lors du chargement des centres").show()
         })
 
     await get("api/financials",false)
         .then( (financials)=> {
-            console.log(financials)
             financials = financials.content;
             financials.forEach(financial => {
                 let el = document.createElement("option");
@@ -67,7 +65,6 @@ $(document).ready( async ()=> {
 
         })
         .catch((err) => {
-            console.log(err)
             $('#error').html("Un problème est survenu lors du chargement des centres").show()
         })
 })
@@ -80,7 +77,6 @@ axios.get('api/users')
     .then(resp => {
         $(document).ready(() => {
             users = resp.data.content;
-            console.log(users)
 
             let htmlTable = constructTable(tableFields, resp.data.content, $('#user_list'));
 
@@ -115,7 +111,6 @@ axios.get('api/users')
  * @param user
  */
 let fillUserManager = function (user) {
-    console.log(user);
     let uManagerBox = $('.u_managment');
     let uManagerBoxForm = $('.u_managment__form');
 
