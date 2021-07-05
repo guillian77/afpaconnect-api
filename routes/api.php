@@ -28,6 +28,7 @@ Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 Router::get('/api/login', [\App\Api\LoginApi::class, 'login'], 'api.login');
 Router::get('/api/user', [\App\Api\UserApi::class, 'getOneByUsername'], 'api.user');
 Router::get('/api/users', [\App\Api\UserApi::class, 'getAll'], 'api.users');
+Router::post('/api/user-edit', [\App\Api\UserApi::class, 'edit'], 'api.user.edit', 'Authenticate');
 
 Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.register');
 
@@ -37,6 +38,8 @@ Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.re
 |--------------------------------------------------------------------------
 */
 Router::get('/api/centers', [\App\Api\CenterApi::class, 'getAll'], 'api.centers');
+Router::get('/api/financials', [\App\Api\FinancialApi::class, 'getAll'], 'api.financials');
+Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +55,7 @@ Router::get('/api/sim/success/employee', [\App\Api\Simulation::class, 'success_e
 Router::get('/api/sim/success/teacher', [\App\Api\Simulation::class, 'success_teacher'], 'api.sim.success.teacher');
 Router::get('/api/sim/success/teacher/admin', [\App\Api\Simulation::class, 'success_teacher_admin'], 'api.sim.success.teacher.admin');
 Router::get('/api/sim/success/teacher/superadmin', [\App\Api\Simulation::class, 'success_teacher_superadmin'], 'api.sim.success.teacher.superadmin');
+
 
 Router::get('/api/sim/blank', [\App\Api\Simulation::class, 'blank'], 'api.simulation.blank');
 Router::get('/api/sim/failed', [\App\Api\Simulation::class, 'failed'], 'api.simulation.failed');

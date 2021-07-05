@@ -5,6 +5,8 @@ namespace App\Api;
 
 
 use App\Core\Request;
+use App\Model\AppUserRole;
+use App\Model\User;
 use App\Model\UserRepository;
 use App\Utility\Response;
 use App\Utility\StatusCode;
@@ -76,6 +78,7 @@ class UserApi
     {
         $users = $this->repository->findAllWithout(['password']);
 
+
         if (!$users) {
             $this->response
                 ->setStatusCode(StatusCode::GENERAL_FAILURE)
@@ -88,5 +91,47 @@ class UserApi
             ->setBodyContent($users)
             ->send()
         ;
+    }
+
+    /**
+     * Edit user.
+     */
+
+    public function edit() {
+
+        $newUser = $this->request->request()->all();
+
+        $currentUser = User::whereId($newUser['uid'])->first(); 
+
+        
+        if(isset($newUser['email']) && !empty($newUser['email'])) {
+            $currentUser->mailPerso = $newUser['email'];
+        }
+        
+        if(isset($newUser['phone']) && !empty($newUser['phone'])) {
+            $currentUser->phone = $newUser['phone'];
+        }
+        
+        if(isset($newUser['password']) && !empty($newUser['password'])) {
+            $currentUser->password = $newUser['password'];
+        }
+
+        try {
+                $currentUser->saveOrFail();
+            } catch (Exception $e) {
+                $this->response
+                ->setStatusCode(StatusCode::GENERAL_FAILURE)
+                ->setStatusMessage($e ."Erreur: l'utilisateur ".$currentUser->lastname ." ".$currentUser->lastname." n'a pas pu être mis à jour.")
+                ->send(400);
+               
+                return;
+            }
+
+            $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
+            ->setStatusMessage("User modifications have been successfully registered. ")
+            ->send(200);
+
+            return;
     }
 }

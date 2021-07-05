@@ -91,6 +91,21 @@ class UserRepository
      */
     public function findAllWithout(array $filters = [])
     {
+       
+        $users =  User::with(['roles'])
+            ->get()
+        ;
+        
+        $users = $users
+            ->makeVisible(['id'])
+            ->makeHidden($filters)
+        ;
+            
+        return $users;
+        
+        /* OLD REQUEST WITHOUT ROLES 
+        
+        
         $qb = $this->db->getConnection()->table('users');
 
         if (!empty($filters)) {
@@ -98,7 +113,9 @@ class UserRepository
             $qb->select($columns);
         }
 
-        return $qb->get();
+        return $qb->get();*/
+
+
     }
 
     /**

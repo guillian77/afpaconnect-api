@@ -87,7 +87,7 @@ class Dispatcher
     {
         if (!$this->session->has('user')) {
             $this->container->call([JsonWebToken::class, 'checkToken']);
-            $this->container->call([CrossOrigin::class, 'sameOrigin']);
+//            $this->container->call([CrossOrigin::class, 'sameOrigin']);
         }
 
         try {

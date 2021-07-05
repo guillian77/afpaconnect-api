@@ -73,7 +73,6 @@ let constructTable = function(fields, data, actions = 0) {
      */
     table += '<thead class="thead-white">';
     table += "<tr>";
-
     // Loop fields inside table header
     fields.forEach(function(field) {
         if (field.show) {
@@ -98,7 +97,7 @@ let constructTable = function(fields, data, actions = 0) {
         for(key in row)
         {
             if (fields[i]['show']) {
-                table += "<td>" + row[key] + "</td>"
+                table += "<td>"+ row[key] + "</td>"
             }
             i++;
         }

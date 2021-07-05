@@ -61,16 +61,14 @@ class User extends Model
     }
 
     public function apps()
-    { // TODO: Fix this with belongsToMany
-        return $this->hasMany(App::class, 'id');
+    {
+        return $this->belongsToMany(App::class, 'apps__users__roles');
     }
 
     public function roles()
     {
-        return $this
-            ->belongsToMany(Role::class, 'apps__users__roles', 'user_id', 'role_id')
-            ->withPivot('role_id', 'app_id')
-        ;
+        return $this->belongsToMany(Role::class, 'apps__users__roles')
+            ->withPivot('role_id', 'app_id');
     }
 
     public function financial()

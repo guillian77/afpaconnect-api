@@ -18,10 +18,6 @@ class Center extends Model
 
     protected $primaryKey = 'id';
 
-    protected $hidden = [
-        'id'
-    ];
-
     public function users()
     {
         return $this->hasMany(User::class, 'id');
