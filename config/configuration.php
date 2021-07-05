@@ -33,6 +33,8 @@ return [
     | db_port   int
     | > Database port, default: 3306
     */
+    'driver' => \App\Core\Database\EloquentDriver::class,
+
     'db_host' => "database",
     'db_port' => 3306,
     'db_name' => "afpaconnect",
