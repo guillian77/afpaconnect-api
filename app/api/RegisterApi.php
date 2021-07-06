@@ -7,6 +7,7 @@ namespace App\Api;
 use App\Core\Request;
 use App\Model\User;
 use App\Model\UserRepository;
+use App\Utility\Mailer;
 use App\Utility\Response;
 use App\Utility\StatusCode;
 use Exception;
@@ -27,11 +28,14 @@ class RegisterApi
 
     private Response $response;
 
-    public function __construct(UserRepository $repository, Request $request, Response $response)
+    private Mailer $mailer;
+
+    public function __construct(UserRepository $repository, Request $request, Response $response, Mailer $mailer)
     {
         $this->userModel = $repository;
         $this->request = $request;
         $this->response = $response;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -54,8 +58,31 @@ class RegisterApi
 
         $user->password = $password;
 
+        $userEmail = (empty($user->mailPro)) ? $user->mailPerso : $user->mailPro;
+
+        $activationCode = uniqid();
+
+        $user->activation_code = $activationCode;
+
+        $emailSent = $this->mailer
+            ->setTargetEmail($userEmail)
+            ->setTargetLastName($user->lastname)
+            ->setSubject("Confirmez votre inscription")
+            ->setLayout('email/register.html.twig', [
+                'activationCode' => $activationCode,
+                'user' => $user
+            ])
+            ->send();
+
+        if (!$emailSent) {
+            $this->response
+                ->setStatusCode(StatusCode::USER_REGISTER_FAILURE)
+                ->setStatusMessage('Something went wrong. API is not able to send register email confirmation.')
+                ->send(200, true);
+        }
+
         try { // Try to save user.
-            $user->saveOrFail();
+            $user->update();
         } catch (Exception $exception) { // Show available table columns to user.
             $this->response
                 ->setStatusCode(StatusCode::USER_REGISTER_FAILURE)
@@ -77,7 +104,10 @@ class RegisterApi
      */
     private function checkUserState(User $user):void
     {
-        if (!empty($user->password)) {
+        if (
+            !empty($user->password)
+            && !empty($user->activation_code)
+        ) {
             $this->response
                 ->setStatusCode(StatusCode::USER_REGISTER_ALREADY)
                 ->setStatusMessage('User is already registered. You have to use route /api/login instead.')

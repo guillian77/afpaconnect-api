@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Erreur - AfpaConnect</title>
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header boxed">
+            <div class="flex topheader">
+                <h1>AfpaConnect</h1>
+            </div>
+        </header>
+
+        <div class="boxed">
+            <h2>Erreur</h2>
+
+            {% if error is not null %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
+
+        <footer class=" footer boxed">
+            <p>&copy; {{ copyright }}</p>
+        </footer>
+    </div>
+</body>
+</html>
