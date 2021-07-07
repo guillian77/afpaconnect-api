@@ -36,6 +36,7 @@ class StatusCode
     const USER_LOGIN_SUCCESS        = "200";
     const USER_LOGIN_FAILURE        = "201";
     const USER_LOGIN_BAD_PASSWORD   = "202";
+    const USER_LOGIN_NOT_ACTIVATED   = "203";
 
     /*
     |--------------------------------------------------------------------------

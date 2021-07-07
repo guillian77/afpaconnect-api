@@ -56,6 +56,29 @@ class Controller
     }
 
     /**
+     * Render the error view.
+     *
+     * A message can be set to be displayed.
+     *
+     * @param string $message   An error message.
+     * @param bool $stop        Stop code execution.
+     *
+     * @throws DependencyException
+     * @throws LoaderError
+     * @throws NotFoundException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function renderError(string $message, bool $stop = false)
+    {
+        $this->render('error.html.twig', [
+            'error' => $message
+        ]);
+
+        $stop && die();
+    }
+
+    /**
      * Autoload assets files : javascript | css
      *
      * @param string $viewPath

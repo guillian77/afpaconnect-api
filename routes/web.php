@@ -32,3 +32,10 @@ Router::post('/user-edit', [\App\Controller\UserManageController::class, 'edit']
 Router::get('/user-upload', [\App\Controller\UserUploadController::class, 'index'], 'user.upload', 'Authenticate');
 Router::post('/users-uploaded', [\App\Controller\UserUploadController::class, 'upload'], 'users.uploaded', 'Authenticate');
 Router::post('/user-add', [\App\Controller\UserUploadController::class, 'add'], 'user.add', 'Authenticate');
+
+/*
+|----------------------------
+| EXTERNALS
+|----------------------------
+*/
+Router::get('/register/enable', [\App\Controller\RegisterController::class, 'enable'], 'register.enable');

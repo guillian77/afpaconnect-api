@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Activation - AfpaConnect</title>
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+</head>
+<body>
+<div class="container">
+    <header class="header boxed">
+        <div class="flex topheader">
+            <h1>AfpaConnect</h1>
+        </div>
+    </header>
+
+    <div class="boxed">
+        <h2>Activation de compte</h2>
+
+        <p>Félicitation <b>{{ user.firstname | capitalize }}</b>, votre compte est activé.</p>
+        <p>Vous pouvez maintenant vous connecter.</p>
+    </div>
+
+    <footer class=" footer boxed">
+        <p>&copy; {{ copyright }}</p>
+    </footer>
+</div>
+</body>
+</html>
