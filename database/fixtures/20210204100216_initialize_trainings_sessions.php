@@ -21,7 +21,7 @@ class fix_20210204100216_initialize_trainings_sessions
         /**
          * Create session 
          */
-        $query = "INSERT INTO `sessions` (`id`, `formation_id`, `tag`, `name`, `start_at`, `end_at`,  `status`) VALUES (NULL, '1', 'DWWM', 'Développeur web et web mobile', '2020-04-06 08:15:00', '2020-11-20 17:00:00',  '1')";
+        $query = "INSERT INTO `sessions` (`id`, `formation_id`, `name`, `n_offer`, `label_offer`, `start_at`, `end_at`,  `status`) VALUES (NULL, '1', 'Développeur web et web mobile', 20151, 'OCC_DWWM_CR_2018_ELO', '2020-04-06 08:15:00', '2020-11-20 17:00:00',  '1')";
         $this->dbHandle->query($query);
     }
     

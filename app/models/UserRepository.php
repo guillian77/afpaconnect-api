@@ -134,8 +134,8 @@ class UserRepository
         // TODO: Mettre un LIKE pour les mails
 
         return User::where('identifier', '=', $username)
-            ->orWhere('mailPro', '=', $username)
-            ->orWhere('mailPerso', '=', $username)
+            ->orWhere('mail1', '=', $username)
+            ->orWhere('mail2', '=', $username)
             ->with(['roles' => function ($query) use ($app) {
                 $query->where('app_id', $app->id);
             }])

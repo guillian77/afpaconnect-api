@@ -19,8 +19,8 @@ let tableFields = [
     { "name": "N° de matricule", "orderable": true, "show": true },
     { "name": "Nom", "orderable": true, "show": true },
     { "name": "Prénom", "orderable": true, "show": true },
-    { "name": "Mail pro", "orderable": false, "show": false },
-    { "name": "Mail perso", "orderable": false, "show": false },
+    { "name": "Mail1", "orderable": false, "show": false },
+    { "name": "Mail2", "orderable": false, "show": false },
     { "name": "Portable", "orderable": false, "show": false },
     { "name": "Adresse", "orderable": false, "show": false },
     { "name": "Complément adresse", "orderable": false, "show": false },
@@ -28,11 +28,13 @@ let tableFields = [
     { "name": "Ville", "orderable": false, "show": false },
     { "name": "Pays", "orderable": false, "show": false },
     { "name": "Sexe", "orderable": false, "show": false },
+    { "name": "Mesure", "orderable": false, "show": false },
+    { "name": "Convention", "orderable": false, "show": false },
     { "name": "Status", "orderable": true, "show": true },
     { "name": "Enregistré le", "orderable": false, "show": false },
     { "name": "Modifié le", "orderable": false, "show": false },
-    { "name": "Roles", "orderable": false, "show": false }
-    
+    { "name": "Roles", "orderable": false, "show": false },
+
 ];
 
 let users = [];
@@ -78,7 +80,6 @@ $(document).ready( async ()=> {
         .then( (apps)=> {
 
             apps = apps.content
-            console.log(apps)
             for (const [key, value] of Object.entries(apps)) {
    
                 let app_field = document.createElement("div");
@@ -125,7 +126,7 @@ axios.get('api/users')
     .then(resp => {
         $(document).ready(() => {
             users = resp.data.content;
-            
+
             let htmlTable = constructTable(tableFields, resp.data.content, $('#user_list'));
 
             let configuration = constructConfig(tableFields, [0, "asc"], "utilisateur");
