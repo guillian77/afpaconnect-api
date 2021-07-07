@@ -46,7 +46,7 @@ class UserManageController extends Controller
         $currentUser->identifier = $newUser['beneficiary'];
         $currentUser->lastname = $newUser['lastname'];
         $currentUser->firstname = $newUser['firstname'];
-        $currentUser->mailPerso = $newUser['email'];
+        $currentUser->mail2 = $newUser['email'];
         $currentUser->phone = $newUser['phone'];
 
 

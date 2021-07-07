@@ -31,6 +31,7 @@ let tableFields = [
     { "name": "Mesure", "orderable": false, "show": false },
     { "name": "Convention", "orderable": false, "show": false },
     { "name": "Status", "orderable": true, "show": true },
+    { "name": "Activation Code", "orderable": false, "show": false },
     { "name": "Enregistré le", "orderable": false, "show": false },
     { "name": "Modifié le", "orderable": false, "show": false },
     { "name": "Roles", "orderable": false, "show": false },
@@ -170,7 +171,7 @@ let fillUserManager = function (user) {
     $('.u_managment__form').find('#beneficiary').val(user['identifier'])
     $('.u_managment__form').find('#lastname').val(user['lastname'])
     $('.u_managment__form').find('#firstname').val(user['firstname'])
-    $('.u_managment__form').find('#email').val(user['mailPerso'])
+    $('.u_managment__form').find('#email').val(user['mail2'])
     $('.u_managment__form').find('#phone').val(user['phone'])
     $('.u_managment__form').find('#financial').val(user['financial_id'])
     $('.u_managment__form').find('#center').val(user['center_id'])

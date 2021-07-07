@@ -58,7 +58,7 @@ class RegisterApi
 
         $user->password = $password;
 
-        $userEmail = (empty($user->mailPro)) ? $user->mailPerso : $user->mailPro;
+        $userEmail = (empty($user->mail1)) ? $user->mail2 : $user->mail1;
 
         $activationCode = uniqid();
 
