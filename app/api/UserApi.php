@@ -105,7 +105,7 @@ class UserApi
 
         
         if(isset($newUser['email']) && !empty($newUser['email'])) {
-            $currentUser->mailPerso = $newUser['email'];
+            $currentUser->mail2 = $newUser['email'];
         }
         
         if(isset($newUser['phone']) && !empty($newUser['phone'])) {
