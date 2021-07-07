@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Récapitulatif - {{ parent() }}
+{% endblock %}
+
+
+
+{% block content %}
+    <!-- MAIN: Start -->
+    <main class="main boxed">
+      
+        <h2>Gestion</h2>          
+        
+        <!--Role Creation Form-->
+        <form form action="{{path('role.create')}}" method="post" class="g_managment__form">
+       
+            <h3>Créer un nouveau rôle</h3>
+        
+            <div class="field_area" id="role_create">
+                <div class="single_field">
+                <label for="new_role_name">Nom</label>
+                <input class="form__field" name="new_role_name"></input>
+                </div>
+                <div class="single_field">
+                <label for="new_role_tag">Tag</label>
+                <input class="form__field" name="new_role_tag"></input>
+                </div>
+            </div>
+       
+            <button class="form__submit btn" type="submit">Créer un nouveau rôle</button> 
+       
+        </form>
+        
+        <hr>
+
+        <!--Role Edit Form-->
+        <form form action="{{path('roles.edit')}}" method="post" class="g_managment__form">
+
+            <h3>Editer les rôles</h3>
+       
+                <div class="field_area" id="role_edit">
+                </div>
+        
+            <button class="form__submit btn" type="submit">Éditer les roles</button> 
+        
+        </form>
+        
+        
+        <hr>
+
+        <!--App_Role Edit Form-->
+        <form form action="{{path('apps.roles.edit')}}" method="post" class="g_managment__form">
+        
+            <h3>Editer les rôles par application</h3>
+                
+                <div class="field_area" id="app_role_edit">
+                </div>
+
+            <button class="form__submit btn" type="submit">Éditer les roles par application</button> 
+            
+            </form>
+
+    </main>
+    
+{% endblock %}

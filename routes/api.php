@@ -39,6 +39,8 @@ Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.re
 */
 Router::get('/api/centers', [\App\Api\CenterApi::class, 'getAll'], 'api.centers');
 Router::get('/api/financials', [\App\Api\FinancialApi::class, 'getAll'], 'api.financials');
+Router::get('/api/apps', [\App\Api\AppApi::class, 'index'], 'api.apps');
+Router::get('/api/roles', [\App\Api\RoleApi::class, 'index'], 'api.roles');
 Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');
 
 /*

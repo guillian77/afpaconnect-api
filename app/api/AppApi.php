@@ -29,7 +29,7 @@ class AppApi
     /**
      * Get all apps from database.
      */
-    public function getAll()
+    public function index()
     {
         $this->response
             ->setBodyContent(App::all())
