@@ -34,7 +34,7 @@ class fix_20210504100543_initialize_apps__users__roles
         $query = "INSERT INTO `roles` (`id`, `tag`,`name`) 
                     VALUES 
                     (NULL, 'ROLE_USER', 'Utilisateur'),
-                    (NULL, 'ROLE_ADMIN', 'Utilisateur'),
+                    (NULL, 'ROLE_ADMIN', 'Administrateur'),
                     (NULL, 'ROLE_SUPER_ADMIN', 'Super Admin')";
         $this->dbHandle->query($query);
     }

@@ -19,6 +19,19 @@ use App\Core\Facade\Router;
 */
 Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home', 'Authenticate');
 
+
+/*
+|----------------------------
+| ROLES
+|----------------------------
+*/
+
+Router::post('/apps-roles-edit', [\App\Controller\RoleController::class, 'appsRolesEdit'], 'apps.roles.edit');
+Router::post('/roles-edit', [\App\Controller\RoleController::class, 'edit'], 'roles.edit');
+Router::post('/role-create', [\App\Controller\RoleController::class, 'create'], 'role.create');
+Router::get('/role-manage', [\App\Controller\RoleController::class, 'index'], 'role.manage', 'Authenticate');
+
+
 /*
 |----------------------------
 | USER
