@@ -115,7 +115,7 @@ class MigrationsCommand extends Console
                 // Insert last migration executed
                 $this->orm
                     ->table('migrations')
-                    ->insert(['migration_datetime' => $migDateTime]);
+                    ->insert(['datetime' => $migDateTime]);
             }
         }
 
