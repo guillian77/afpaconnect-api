@@ -21,10 +21,24 @@ class Certificate
         $this->response = $response;
     }
 
+    /**
+     * Get certificate from file.
+     *
+     * @param string $name
+     * @param string $type
+     *
+     * @return false|string
+     */
     public function getCertificate(string $name, string $type)
     {
+        // Format name.
+        $name = str_replace("APP_", "", $name);
+        $name = strtolower($name);
+
+        // Prepare path.
         $certPath = STORAGE.'certs/'.$name.'_'.$type.'.key';
 
+        // Check if file exist.
         if (!file_exists($certPath)) {
             $this->response
                 ->setStatusCode(StatusCode::CERTIFICATE_NOT_FOUND)

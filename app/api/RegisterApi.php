@@ -77,9 +77,9 @@ class RegisterApi
          * Check user states: already registered|not exist.
          */
         $app = App::where(
-            'name',
+            'tag',
             '=',
-            ucfirst(ucfirst($this->jwt->getIssuer()))
+            $this->jwt->getIssuer()
         )->first();
 
         $this->checkUserState($user, $app); // Execution can be break here.

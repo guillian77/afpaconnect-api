@@ -6,6 +6,7 @@ namespace App\Model;
 
 use App\Core\Database\EloquentDriver;
 use App\Core\Request;
+use App\Utility\IssuerFormatter;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -129,7 +130,9 @@ class UserRepository
      */
     public function findOneByUsernames($username)
     {
-        $app = App::where('name', '=', $this->request->query()->get('issuer'))->first();
+        $issuer = $this->request->get('issuer');
+
+        $app = App::where('tag', '=', $issuer)->first();
 
         // TODO: Mettre un LIKE pour les mails
 
