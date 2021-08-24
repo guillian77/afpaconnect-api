@@ -74,7 +74,7 @@ class JsonWebToken
      * @return string
      * @throws Exception
      */
-    private function getIssuer(): string
+    public function getIssuer(): string
     {
         /** Check issuer has been sent */
         if (

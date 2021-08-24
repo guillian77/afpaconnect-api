@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @package App\Model
  * @author Aufrère Guillian
  * @version 1.0
+ *
+ * @method static where(\Closure|string|array  $column, mixed  $operator, mixed  $value)
+ * @method static whereIn(\Closure|string|array  $column, array  $values)
  */
 class Role extends Model
 {

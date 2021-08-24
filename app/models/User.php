@@ -75,4 +75,48 @@ class User extends Model
     { // TODO: Make refactoring on database to correspond with a simple relation (current is many to many).
         return $this->belongsTo(Financial::class, 'id');
     }
+
+    /**
+     * Check if user has role on specific app.
+     *
+     * @param int $app The app ID.
+     *
+     * @return bool
+     */
+    public function hasApp(int $app): bool
+    {
+        $hasApp = $this->apps()
+            ->where('app_id', '=', $app)
+            ->get()
+            ->first();
+
+        if (!is_null($hasApp)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if user has role on specific app.
+     *
+     * @param int $app App ID.
+     * @param int $role Role ID.
+     *
+     * @return bool
+     */
+    public function hasAppRole(int $app, int $role): bool
+    {
+        $hasRole = $this->roles()
+            ->where('app_id', '=', $app)
+            ->where('role_id', '=', $role)
+            ->get()
+            ->first();
+
+        if (!is_null($hasRole)) {
+            return true;
+        }
+
+        return false;
+    }
 }

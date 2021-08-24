@@ -46,4 +46,5 @@ class StatusCode
     const USER_REGISTER_SUCCESS     = "300";
     const USER_REGISTER_FAILURE     = "301";
     const USER_REGISTER_ALREADY     = "302";
+    const USER_REGISTER_NOT_FOUND     = "303";
 }
