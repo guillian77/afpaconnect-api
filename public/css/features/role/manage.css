@@ -1,19 +1,19 @@
     .field_area .single_field  {
     display:flex;
     flex-direction: column;
-    padding: 1em;
+    padding: 1rem;
    }
    
    .field_area label {
-        margin-bottom: 2em;
-     line-height: 2em;
+        margin-bottom: 2rem;
+     line-height: 2rem;
    }
    
    .field_area h4 {
-       padding: 0.5em;
+       padding: 0.5rem;
        text-decoration: underline;
        text-transform: capitalize;
-       font-size: 1.1em;
+       font-size: 1.1rem;
     }
     
     .field_area {
@@ -35,11 +35,11 @@
     
     .g_managment__form h3 {
         text-align: center;
-        padding: 1em 0 0.5em 0;
+        padding: 1rem 0 0.5rem 0;
     }
     
     .form__submit {
-         margin: 1em;
+         margin: 1rem;
     }
    
     .form_field_app {
@@ -48,16 +48,21 @@
    }
    
    .app_field {
-       margin-bottom: 1em;
+       margin-bottom: 1rem;
        font-weight: 600;
    }
    
    .form_field_app {
-       line-height: 1.5em;
+       line-height: 1.5rem;
    }
    
    #app_role_edit .single_field ,#role_edit .single_field {
        border: solid 0.5px #d1d3e2;
        border-radius:10px;
-       margin: 1em;
+       margin: 1rem;
    }
+   #app_role_edit label {
+       margin-left: 0.5rem;
+   }
+
+   
