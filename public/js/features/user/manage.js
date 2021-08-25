@@ -91,8 +91,8 @@ $(document).ready( async ()=> {
 
 
                 let app_field_label = document.createElement("label");
-                app_field_label.innerHTML = value['name']
-                app_field_label.className = "app_field"
+                app_field_label.innerHTML = value['name'];
+                app_field_label.className = "app_field";
                 app_field.append(app_field_label);
 
                 value['app_roles'].forEach(role => {
@@ -100,11 +100,13 @@ $(document).ready( async ()=> {
                     let app_field_option =  document.createElement("div");
 
                     let app_field_option_label = document.createElement("label");
+                    app_field_option_label.setAttribute('for', 'app_field_options' + role.id);
                     app_field_option_label.innerHTML = role.name
 
                     let el = document.createElement("input");
-                    el.setAttribute('type','checkbox');
-                    el.setAttribute('name','app_role_' +value['id'] + '[]')
+                    el.type = 'checkbox';
+                    el.id = 'app_field_options' + role.id;
+                    el.name = 'app_role_' +value['id'] + '[]';
                     el.value = role.id;
 
                     app_field_option.append(el);
