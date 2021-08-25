@@ -13,7 +13,7 @@
         <h2>Gestion</h2>          
         
         <!--Role Creation Form-->
-        <form form action="{{path('role.create')}}" method="post" class="g_managment__form">
+        <form id="new_role_form" class="g_managment__form">
        
             <h3>Créer un nouveau rôle</h3>
         
@@ -35,7 +35,7 @@
         <hr>
 
         <!--Role Edit Form-->
-        <form form action="{{path('roles.edit')}}" method="post" class="g_managment__form">
+        <form id="edit_role_form" class="g_managment__form">
 
             <h3>Editer les rôles</h3>
        
@@ -50,7 +50,7 @@
         <hr>
 
         <!--App_Role Edit Form-->
-        <form form action="{{path('apps.roles.edit')}}" method="post" class="g_managment__form">
+        <form id="edit_app_role_form" class="g_managment__form">
         
             <h3>Editer les rôles par application</h3>
                 

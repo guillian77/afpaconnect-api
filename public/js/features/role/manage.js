@@ -3,7 +3,7 @@
  * Get applications and roles from API and fill table with.
  */
  $(document).ready( async ()=> {
-
+    
     //Get applications
     await get("api/apps",false)
     .then( (apps)=> {
@@ -133,6 +133,43 @@
             console.log(err)
             $('#error').html("Un problème est survenu lors du chargement des roles").show()
     })
+
+
+
+    // CREATE ROLE POST
+    $("#new_role_form").submit(function(event) {
+        event.preventDefault();
+        
+        post("/role-create", $("#new_role_form").serialize(), false).done((resp, statusMessage, code) => {
+            statusCodeToast(code.status, 'Votre nouveau rôle a bien été enregistré.');
+         })
+        
+    });
+
+    // EDIT ROLE POST
+    $("#edit_role_form").submit(function(event) {
+        event.preventDefault();
+            
+        post("/role-edit", $("#edit_role_form").serialize(), false)
+            .done((resp, statusMessage, code) => {
+                statusCodeToast(code.status, 'Vos rôles ont bien été mis à jour.');
+            })
+            
+    });
+
+
+    // APP ROLE EDIT POST
+    $("#edit_app_role_form").submit(function(event) {
+        event.preventDefault();
+            
+        post('/apps-roles-edit', $("#edit_app_role_form").serialize(), false)
+            .done((resp, statusMessage, code) => {
+                statusCodeToast(code.status, 'L\'attribution des rôles par application a bien été mis à jour.');
+            })
+            
+    });
+    
+    
 })
 
 

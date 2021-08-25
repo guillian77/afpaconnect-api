@@ -26,13 +26,26 @@
  * @return {*}
  */
 let post = function (url, parameters, file = false) {
-    return $.ajax({
+
+    if(!parameters) return false;
+
+    request =  
+    file ? 
+    $.ajax({
         url: url,
         data: parameters,
         type: 'POST',
         processData: file,
-        contentType: file,
-    });
+        contentType: file
+    }) 
+        : 
+    $.ajax({
+        url: url,
+        data: parameters,
+        type: 'POST'
+    })
+
+    return request;
 };
 
 /**
@@ -178,6 +191,85 @@ let constructConfig = function(fields, order = [0, "asc"], name = "unknow") {
     return config;
 }
 
+/**
+ * --------------------------------------------------------------
+ * IZZY TOAST
+ * --------------------------------------------------------------
+ */
+
+
+/**
+ * Construct Toast
+ * @param {int} code XHR status Code
+ * @param {string} message Specific success message
+ */
+function statusCodeToast(code, message) {
+    switch (code) {
+        case 204:
+            errorIzyToast('Oups...', 'Veuillez remplir tous les champs du formulaire !');
+            break;
+        case 200:
+            successIzyToast('C\'est noté !', message);
+            break;
+        case 400:
+            errorIzyToast('Oups...', 'Une erreur est survenue, veuillez reéssayer.');
+            break;                 
+        case 500:
+            errorIzyToast('Oups...', 'Une erreur est survenue, veuillez contacter le support technique d\'AfpaConnect.');
+        break;    
+        default:
+            break;
+    }
+}
+
+/**
+ * Error Toast
+ * @param {string} errTitle title
+ * @param {string} errContent message
+ */
+function errorIzyToast(errTitle, errContent) {
+    iziToast.show({
+        backgroundColor: '#FF7F7F ',
+        timeout: 5000,
+        position: 'topRight',
+        title: errTitle,
+        message: errContent,
+        buttons: [
+        ['<button>Fermer</button>', function (instance, toast) {
+            instance.hide({
+                transitionOut: 'fadeOutUp',
+            }, toast, 'buttonName');
+        }]],
+    });
+}
+
+/**
+ * Success Toast
+ * @param {string} succTitle title
+ * @param {string} succContent message
+ */
+function successIzyToast(succTitle, succContent) {
+    iziToast.show({
+        timeout: 4000,
+        backgroundColor: '#90EE90',
+        position: 'topRight',
+        title: succTitle,
+        message: succContent + " Patientez quelques secondes avant le rafraîchissement de la page", 
+        buttons: [
+            
+            ['<button>Rafraichir maintenant</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp',
+                    onClosing: function(instance, toast, closedBy){
+                        location.reload() 
+                    }
+                }, toast, 'buttonName');
+            }]
+        ],
+    });
+
+    setTimeout(function(){ location.reload() }, 4000)
+}
 
 /**
  * --------------------------------------------------------------
@@ -192,3 +284,5 @@ let constructConfig = function(fields, order = [0, "asc"], name = "unknow") {
     $("#menuIcon").toggleClass('fa-times').toggleClass('fa-bars');
 
   }
+
+ 

@@ -45,6 +45,7 @@ let users = [];
  * Get centers, financials and user roles from API and fill table with.
  */
 $(document).ready( async ()=> {
+
     await get("api/centers",false)
         .then( (centers)=> {
             centers = centers.content;
@@ -201,4 +202,16 @@ let fillUserManager = function (user) {
     uManagerBoxForm.on('submit', (event) => {
         $('.u_managment__form').find('#uid').attr('disabled', false);
     })
+
+    // APP ROLE EDIT POST
+    $("#user_edit_form").submit(function(event) {
+        event.preventDefault();
+            
+        post('/user-edit', $("#user_edit_form").serialize(), false)
+            .done((resp, statusMessage, code) => {
+                statusCodeToast(code.status, 'L\'utilisateur a bien été mis à jour.');
+            })
+            
+    });
+    
 }

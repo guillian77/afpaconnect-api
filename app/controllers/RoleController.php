@@ -52,6 +52,10 @@ class RoleController extends Controller
                     ->send(400);
             }
 
+        } else {
+            $this->response
+                    ->setStatusMessage("No content" )
+                    ->send(204);
         }
         $this->redirect('role.manage');
 
@@ -69,7 +73,7 @@ class RoleController extends Controller
             if(str_starts_with($key,'role_')) {
                 $currentRole = Role::whereId( explode('_',$key)[1])->first()->update(['name' => $value[0], 'tag' => $value[1]]);      
             }
-        }
+        } 
         $this->redirect('role.manage');
     }
 
