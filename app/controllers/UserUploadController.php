@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Core\Request;
 use App\Model\Financial;
+use App\Model\Formation;
+use App\Model\Session;
 use App\Model\User;
 use App\Model\UserRepository;
 use App\Utility\Response;
@@ -77,27 +79,82 @@ class UserUploadController extends Controller
     {
 
         $users = json_decode($this->request->request(false)->get('uploaded_user'));
+        try {
 
-        foreach ($users as $user) {
-            // Check if user insertion work
-            $newUser = new User();
-            $newUser->firstname = $user->prenom;
-            $newUser->lastname = $user->nom_usuel;
-            $newUser->identifier = $user->beneficiaire;
-            $newUser->financial_id  = Financial::whereTag($user->financeur)->first()->id;
-            $newUser->center_id = $this->request->request()->get('center');
+            $formation = Formation::whereId($this->request->request()->get('formation'))->first();
 
-            try {
-                $newUser->saveOrFail();
-            } catch (Exception $e) {
-                $response
-                    ->setStatusMessage("Erreur: Impossible d'ajouter l'utilisateur " . $user->prenom . " " . $user->nom_usuel . " dans la base de données. Arrêt de l'import, 
-                    veuillez vérifier le format du tableau XLSX ou que le matricule n'est pas déjà existant.")
-                    ->send('400',true);
+            if (is_null($formation)) {
+                $formation = Formation::create(
+                    [
+                        'name' => $this->request->request()->get('formation'),
+                        'tag'=> $this->request->request()->get('formation_tag'),
+                    ]
+                );
             }
+
+            foreach ($users as $user) {
+                $explodedDateStart = explode('/',$user->date_de_debut_resa);
+                $session = Session::updateOrCreate(
+                    ['n_offer' => $user->n_offre],
+                    [
+                        'name' => "Session-".$explodedDateStart[1]."-".$explodedDateStart[2],
+                        'formation_id'=> $formation->id,
+                        'n_offer'=> $user->n_offre,
+                        'label_offer'=> $user->libelle_de_offre,
+                        'start_at'=> $this->formatDate($user->date_de_debut_resa),
+                        'end_at'=> $this->formatDate($user->date_de_fin_resa)
+                    ]
+                );
+
+                $explodedFinancial = explode('-', $user->remuneration,2);
+
+                $financial = Financial::updateOrCreate(
+                    ['tag' => $explodedFinancial[0]],
+                    [
+                        'tag' => $explodedFinancial[0],
+                        'name' => $explodedFinancial[1],
+                        'public_name'=> $explodedFinancial[1],
+                    ]);
+
+                $actualUser = User::updateOrCreate(
+                    ['identifier' => $user->n_client_stagiaire],
+                    [
+                        'firstname' => $user->prenom,
+                        'lastname' => $user->nom_usuel,
+                        'mail1' => $user->email,
+                        'phone' => $user->telephone_1,
+                        'address' => $user->adresse,
+                        'measure' => $user->mesure,
+                        'convention' => $user->convention,
+                        'center_id' => $this->request->request()->get('center'),
+                        'financial_id' => $financial->id,
+                    ]
+                );
+
+                $actualUserSession = $actualUser->session()->get()->toArray();
+
+                $isNewSession = true;
+                array_walk($actualUserSession,function ($el) use ($session, &$isNewSession) {
+                    if ($el['id'] === $session->id) $isNewSession = false;
+                });
+
+                $isNewSession && $actualUser->session()->attach($session->id);
+                $actualUser->saveOrFail();
+
+            }
+        } catch (Exception $e) {
+            $response
+                ->setStatusMessage("Erreur: Le téléversement a échoué veuillez vérifier le format du fichier XLSX")
+                ->send('400',true);
         }
         $response
             ->setStatusMessage("Tous les utilisateurs ont été ajouté avec succès.")
             ->send('200',true);
+    }
+
+    public function formatDate($date): string
+    {
+        $formattedDateStart = explode('/',$date);
+        return $formattedDateStart[2].'-'.$formattedDateStart[1].'-'.$formattedDateStart[0];
     }
 }

@@ -12,6 +12,13 @@
         <input id="id_user_center" type="hidden" value="<?= $user_center_id ?>"/>
         <form method="post" action="user_upload" method="POST" enctype="multipart/form-data">
             <select class="select" id="center"></select>
+            <select class="select" id="formation"></select>
+            <button id="showAdd" class="btn">+</button>
+            <div id="addForm" class="u_managment">
+                <input class="form__field" type="text" name="newFormationTag" id="tagFormation" placeholder="Tag"/>
+                <input class="form__field" type="text" name="newFormationName" id="nameFormation" placeholder="Nom"/>
+                <button class="btn" id="addFormation">Ajouter formation</button>
+            </div>
             <input hidden id="upload_file" type="file" name="upload_user" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
         </form>
         <div class="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">

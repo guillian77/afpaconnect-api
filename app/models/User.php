@@ -25,8 +25,7 @@ class User extends Model
 
     // Protected columns.
     protected $guarded = [
-        'id',
-        'identifier'
+        'id'
     ];
 
     /**
@@ -52,7 +51,7 @@ class User extends Model
 
     public function session()
     { // TODO: Add a relation 'session_id' inside 'user' table.
-        return $this->belongsTo(Session::class, 'id');
+        return $this->belongsToMany(Session::class, 'users__sessions','user_id','session_id');
     }
 
     public function center()
