@@ -34,16 +34,16 @@ let post = function (url, parameters, file = false) {
     $.ajax({
         url: url,
         data: parameters,
-        type: 'POST',
-        processData: file,
-        contentType: file
-    }) 
-        : 
+        type: 'POST'
+    })
+        :
     $.ajax({
         url: url,
         data: parameters,
-        type: 'POST'
-    })
+        type: 'POST',
+        processData: file,
+        contentType: file
+    })    
 
     return request;
 };
