@@ -100,12 +100,12 @@ $(document).ready( async ()=> {
                     let app_field_option =  document.createElement("div");
 
                     let app_field_option_label = document.createElement("label");
-                    app_field_option_label.setAttribute('for', 'app_field_options' + role.id);
+                    app_field_option_label.setAttribute('for', value['name'] + '_options' + role.id);
                     app_field_option_label.innerHTML = role.name
 
                     let el = document.createElement("input");
                     el.type = 'checkbox';
-                    el.id = 'app_field_options' + role.id;
+                    el.id = value['name'] + 'options' + role.id;
                     el.name = 'app_role_' +value['id'] + '[]';
                     el.value = role.id;
 
@@ -121,7 +121,6 @@ $(document).ready( async ()=> {
             $('#error').html("Un problème est survenu lors du chargement des roles").show()
         })
 })
-
 
 /**
  * Get users from API and fill table with.
