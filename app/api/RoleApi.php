@@ -7,6 +7,7 @@ use App\Core\App;
 use App\Core\Database\EloquentDriver;
 use App\Model\Role;
 use App\Utility\Response;
+use App\Utility\StatusCode;
 
 /**
  * Class RoleApi
@@ -24,12 +25,13 @@ class RoleApi
     }
 
     /**
-     * Get all apps from database.
+     * Get all roles from database.
      */
     public function index()
     {
 
         $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
             ->setBodyContent(Role::all())
             ->send();
     }

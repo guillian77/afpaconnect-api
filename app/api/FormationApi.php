@@ -6,6 +6,7 @@ namespace App\Api;
 use App\Model\Formation;
 use App\Model\FormationRepository;
 use App\Utility\Response;
+use App\Utility\StatusCode;
 
 /**
  * Class FormationApi
@@ -27,9 +28,10 @@ class FormationApi
     /**
      * Get all formation from database.
      */
-    public function getAll()
+    public function index()
     {
         $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
             ->setBodyContent(Formation::all())
             ->send();
     }

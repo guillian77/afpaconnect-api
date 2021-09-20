@@ -37,7 +37,7 @@ class AppApi
     }
 
     /**
-     * Get all apps from database.
+     * Get all roles by apps from database.
      */
     public function getRoles()
     {

@@ -27,19 +27,19 @@ Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 */
 Router::get('/api/login', [\App\Api\LoginApi::class, 'login'], 'api.login');
 Router::get('/api/user', [\App\Api\UserApi::class, 'getOneByUsername'], 'api.user');
-Router::get('/api/users', [\App\Api\UserApi::class, 'getAll'], 'api.users');
+Router::get('/api/users', [\App\Api\UserApi::class, 'index'], 'api.users');
 Router::post('/api/user-edit', [\App\Api\UserApi::class, 'edit'], 'api.user.edit', 'Authenticate');
 
 Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.register');
 
 /*
 |--------------------------------------------------------------------------
-| CENTERS
+| GET ALL
 |--------------------------------------------------------------------------
 */
-Router::get('/api/centers', [\App\Api\CenterApi::class, 'getAll'], 'api.centers');
-Router::get('/api/formations', [\App\Api\FormationApi::class, 'getAll'], 'api.formations');
-Router::get('/api/financials', [\App\Api\FinancialApi::class, 'getAll'], 'api.financials');
+Router::get('/api/centers', [\App\Api\CenterApi::class, 'index'], 'api.centers');
+Router::get('/api/formations', [\App\Api\FormationApi::class, 'index'], 'api.formations');
+Router::get('/api/financials', [\App\Api\FinancialApi::class, 'index'], 'api.financials');
 Router::get('/api/apps', [\App\Api\AppApi::class, 'index'], 'api.apps');
 Router::get('/api/roles', [\App\Api\RoleApi::class, 'index'], 'api.roles');
 Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');

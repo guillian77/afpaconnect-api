@@ -82,7 +82,7 @@ class RegisterApi
             $this->jwt->getIssuer()
         )->first();
 
-        $this->checkUserState($user, $app); // Execution can be break here.
+        $this->checkUserState($user); // Execution can be break here.
 
         $user->password = $password;
 
@@ -150,7 +150,7 @@ class RegisterApi
      *
      * @param User|null $user L'utilisateur trouvé via le pseudonyme.
      */
-    private function checkUserState(?User $user, ?App $app):void
+    private function checkUserState(?User $user):void
     {
         /*
          * User exist in local database ?
@@ -170,7 +170,7 @@ class RegisterApi
         /*
          * User is already on this app ?
          */
-        if ($user->hasApp($app->id)) {
+        if ($user->activation_code) {
             $this->response
                 ->setStatusCode(StatusCode::USER_REGISTER_ALREADY)
                 ->setStatusMessage('User is already registered. You have to use route /api/login instead.')

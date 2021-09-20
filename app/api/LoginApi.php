@@ -51,7 +51,7 @@ class LoginApi
         }
 
         $user = $this->userModel->findOneByUsernames($username);
-
+        
         if (!$user) {
             $this->response
                 ->setStatusCode(StatusCode::USER_NOT_FOUND)
@@ -66,7 +66,7 @@ class LoginApi
                 ->send(200, true);
         }
 
-        if (!is_null($user->activation_code)) {
+        if (is_null($user->activation_code)) {
             $this->response
                 ->setStatusCode(StatusCode::USER_LOGIN_NOT_ACTIVATED)
                 ->setStatusMessage('User not enabled yet. User should be enable with email.')
