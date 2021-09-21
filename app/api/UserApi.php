@@ -74,7 +74,7 @@ class UserApi
     /**
      * Get all users.
      */
-    public function getAll()
+    public function index()
     {
         $users = $this->repository->findAllWithout(['password']);
 
