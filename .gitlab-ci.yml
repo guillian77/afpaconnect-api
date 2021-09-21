@@ -1,34 +1,36 @@
-# This file is a template, and might need editing before it works on your project.
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+# Select image from https://hub.docker.com/_/php/
+image: php:7.4
 
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
+# Select what we should cache
+cache:
+  paths:
+  - vendor/
 
-stages:          # List of stages for jobs, and their order of execution
-  - build
-  - test
-   
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
+before_script:
+# Install git, the php image doesn't have installed
+- apt-get update -yqq
+- apt-get install git -yqq
+
+# Install mysql driver
+- docker-php-ext-install pdo_mysql
+
+# Install composer
+- curl -sS https://getcomposer.org/installer | php
+
+# Install all project dependencies
+- php composer.phar install
+
+services:
+- mysql
+
+variables:
+  # Configure mysql service (https://hub.docker.com/_/mysql/)
+  MYSQL_DATABASE: afpaconnect
+  MYSQL_ROOT_PASSWORD: mysql
+
+# We test PHP7 with MySQL, but we allow it to fail
+test:php7:mysql:
+  image: php:7.4
   script:
-    - echo "Creating database..."
-    - php bin/console d:c --scope=full
-
-phpunit:
-  stage: test
-  script:
-    - composer install
-    - vendor/bin/phpunit 
-    - echo "Fin des tests"
-  artifacts:
-    when: always
-   
+  - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
+  allow_failure: true
