@@ -148,9 +148,9 @@ class Mailer
         $this->setMessage($twig->render($layoutName, array_merge(
            $parameters,
             [
-               'appTitle' => Conf::get('appTitle'),
-               'copyright' => Conf::get('copyright'),
-               'tld' => Conf::get('tld'),
+                'appTitle' => Conf::get('appTitle'),
+                'copyright' => Conf::get('copyright'),
+                'tld' => Conf::get('tld'),
            ]
         )));
 
