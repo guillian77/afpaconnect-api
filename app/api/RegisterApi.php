@@ -118,7 +118,8 @@ class RegisterApi
             ->setSubject("Confirmez votre inscription")
             ->setLayout('email/register.html.twig', [
                 'activationCode' => $activationCode,
-                'user' => $user
+                'user' => $user,
+                'apps' => App::where('tag', '!=', 'APP_AFPACONNECT')->get()
             ])
             ->send();
 
