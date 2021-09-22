@@ -1,0 +1,39 @@
+<style>
+    #auth-form {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        box-sizing: border-box;
+    }
+
+    #auth-form label {
+        display: block;
+    }
+</style>
+
+<form action="" id="auth-form">
+    <label for="auth-form__username">Email ou n° de bénéficiaire</label>
+    <input type="text" name="username" id="auth-form__username" placeholder="Nom d'utilisateur" />
+
+    <p id="auth-form__message"></p>
+
+    <label for="auth-form__lastname">Nom de famille</label>
+    <input type="text" name="lastname" id="auth-form__lastname" disabled="disabled" />
+
+    <label for="auth-form__firstname">Prénom</label>
+    <input type="text" name="firstname" id="auth-form__firstname" disabled="disabled" />
+
+    <label for="auth-form__password">Mot de passe</label>
+    <input type="password" name="password" id="auth-form__password" placeholder="Mot de passe"/>
+
+    <label for="auth-form__password_confirmation">Confirmation mot de passe</label>
+    <input type="password" name="password_confirmation" id="auth-form__password_confirmation" placeholder="Confirmez"/>
+
+    <button type="submit">Envoyer</button>
+</form>
+
+<script>
+    let configuration = {{ configuration|json_encode|raw }};
+</script>
+<script>{{ axios | raw }}</script>
+<script>{{ javascript | raw }}</script>

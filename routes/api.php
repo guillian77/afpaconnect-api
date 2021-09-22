@@ -65,3 +65,12 @@ Router::get('/api/sim/failed', [\App\Api\Simulation::class, 'failed'], 'api.simu
 Router::get('/api/sim/unfound', [\App\Api\Simulation::class, 'unfound'], 'api.simulation.unfound');
 
 Router::post('/api/sim/inscription', [\App\Api\Simulation::class, 'inscription'], 'api.simulation.inscription');
+
+/*
+|--------------------------------------------------------------------------
+| TEMPLATE PROVIDERS
+|--------------------------------------------------------------------------
+| Here are emulated routes for development only.
+| Static data will be provided.
+*/
+Router::get('/api/template/auth', [\App\Api\LoginProvider::class, 'loginFormProvider'], 'api.auth-provider');
