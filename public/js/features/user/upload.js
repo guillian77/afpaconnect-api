@@ -1,3 +1,6 @@
+import {get, post} from "../../ajax";
+import {constructBodyMessage} from "../../message";
+
 let data = []
 let addFormationForm = $('#showAdd')
 let selectFormation = $('#formation')

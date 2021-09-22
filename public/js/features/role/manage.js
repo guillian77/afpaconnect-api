@@ -1,4 +1,9 @@
 
+import {get, post} from "../../ajax";
+import {constructBodyMessage} from "../../message";
+
+
+
 /**
  * Get applications and roles from API and fill table with.
  */
@@ -38,7 +43,7 @@
         // Generate app role edit Fields
         $('#app_role_edit').find('.single_field').each( (i, app) => {
             
-            app_id = app.getAttribute('id');
+            let app_id = app.getAttribute('id');
 
             roles.forEach(role => {
                 
@@ -148,20 +153,34 @@
     $("#new_role_form").submit(function(event) {
         event.preventDefault();
         
-        post("/role-create", $("#new_role_form").serialize(), false).done((resp, statusMessage, code) => {
-            statusCodeToast(code.status, 'Votre nouveau rôle a bien été enregistré.');
-         })
+        post("/role-create", $("#new_role_form").serialize(), false)
+        .then((resp, statusMessage, header) => {
+            constructBodyMessage(header.status, "Le role " + $('#new_role_name').val()+ " a bien été ajouté." );
+        })
+        .catch((e)=> {
+            constructBodyMessage(header.status,"" );
+        })
+        .done(()=> {
+            location.reload()
+        });           
+     });
         
-    });
+
 
     // EDIT ROLE POST
     $("#edit_role_form").submit(function(event) {
         event.preventDefault();
             
         post("/role-edit", $("#edit_role_form").serialize(), false)
-            .done((resp, statusMessage, code) => {
-                statusCodeToast(code.status, 'Vos rôles ont bien été mis à jour.');
-            })
+        .then((resp, statusMessage, header) => {
+            constructBodyMessage(header.status,"Les rôles ont bien été mis à jour." );
+        })
+        .catch((e)=> {
+            constructBodyMessage(header.status,"" );
+        })
+        .done(()=> {
+            location.reload()
+        });   
             
     });
 
@@ -171,15 +190,22 @@
         event.preventDefault();
             
         post('/apps-roles-edit', $("#edit_app_role_form").serialize(), false)
-            .done((resp, statusMessage, code) => {
-                statusCodeToast(code.status, 'L\'attribution des rôles par application a bien été mis à jour.');
+            .then((resp, statusMessage, header) => {
+                constructBodyMessage(header.status,"L\'attribution des rôles par application a bien été mis à jour." );
             })
+            .catch((e)=> {
+                constructBodyMessage(header.status,"" );
+            })
+            .done(()=> {
+                location.reload()
+            });   
             
     });
     
     
-})
 
 
 
 
+
+});

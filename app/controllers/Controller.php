@@ -98,7 +98,7 @@ class Controller
 
         $cssPath        = 'css/features/'.$viewPath.'.css';
 
-        $assets['js'] = (file_exists($javascriptPath)) ? "<script src=\"$javascriptPath\"></script>" : null;
+        $assets['js'] = (file_exists($javascriptPath)) ? "<script src=\"$javascriptPath\" type='module'></script>" : null;
 
         $assets['css'] = (file_exists($cssPath)) ? "<link rel=\"stylesheet\" href=\"$cssPath\" />" : null;
 

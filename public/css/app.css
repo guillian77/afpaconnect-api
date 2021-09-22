@@ -240,14 +240,15 @@ header .topheader {
 
 }
 
-
 .navbar > ul > li > a:hover {
 
     color: var(--purple-light);
 
 }
 
-
+#responsiveMenu:hover {
+    cursor: pointer;
+}
 /**
 * --------------------------------------------------------------
 * USERS LIST

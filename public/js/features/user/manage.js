@@ -8,6 +8,10 @@
  * @version v1.0
  */
 
+import {get, post} from "../../ajax";
+import {constructTable, constructConfig} from "../../table";
+import {constructBodyMessage} from "../../message";
+
 /**
  * Define table header fields.
  * @type {({orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean})[]}
@@ -100,12 +104,12 @@ $(document).ready( async ()=> {
                     let app_field_option =  document.createElement("div");
 
                     let app_field_option_label = document.createElement("label");
-                    app_field_option_label.setAttribute('for', value['name'] + '_options' + role.id);
+                    app_field_option_label.setAttribute('for', 'app' + value['id'] +'_field_options' + role.id);
                     app_field_option_label.innerHTML = role.name
 
                     let el = document.createElement("input");
                     el.type = 'checkbox';
-                    el.id = value['name'] + 'options' + role.id;
+                    el.id = 'app_'+ value['id'] +'field_options' + role.id;
                     el.name = 'app_role_' +value['id'] + '[]';
                     el.value = role.id;
 
@@ -139,9 +143,9 @@ axios.get('api/users')
                 .DataTable(configuration);
 
             $('#user_list tr').on('click', (e) => {
-                userUpdated = users.find(user => user.id === parseInt(e.currentTarget.firstChild.innerHTML));
+                let userUpdated = users.find(user => user.id === parseInt(e.currentTarget.firstChild.innerHTML));
                 
-                fillUserManager(userUpdated);            
+                fillUserManager(userUpdated);
             });
 
         })
@@ -192,8 +196,6 @@ let fillUserManager = function (user) {
 
         for (const [key, role] of Object.entries(user['roles'])) {
             if(role['pivot']['app_id'] == app.id) {
-                console.log(role)
-                console.log(app.id)
                 $('#' + app.id ).find('input[value="' + role.id + '"]').prop('checked',true);
              }
         };
@@ -204,15 +206,20 @@ let fillUserManager = function (user) {
         $('.u_managment__form').find('#uid').attr('disabled', false);
     })
 
-    // APP ROLE EDIT POST
+    // USER EDIT POST
     $("#user_edit_form").submit(function(event) {
         event.preventDefault();
-            
+        
         post('/user-edit', $("#user_edit_form").serialize(), false)
-            .done((resp, statusMessage, code) => {
-                statusCodeToast(code.status, 'L\'utilisateur a bien été mis à jour.');
-            })
-            
+        .then((resp, statusMessage, header) => {
+            constructBodyMessage(header.status,"L\'utilisateur " + $("#firstname").val()+ " " + $("#lastname").val()+ " a bien été mis à jour." );
+        })
+        .catch((e)=> {
+            constructBodyMessage(500,"" );
+        })
+        .done(()=> {
+            location.reload()
+        });
     });
     
 }
