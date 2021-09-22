@@ -22,8 +22,8 @@ export let post = function (url, parameters, file = false) {
                 url: url,
                 data: parameters,
                 type: 'POST',
-                processData: file,
-                contentType: file
+                processData: false,
+                contentType: false
             })
             :
             $.ajax({

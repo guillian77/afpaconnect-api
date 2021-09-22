@@ -112,7 +112,7 @@ let ajax_file_upload = async (fileobj) => {
     let fd = new FormData();
     fd.append("fileToUpload", fileobj)
     
-    await post("users-uploaded",fd,false)
+    await post("users-uploaded",fd,true)
     .then( (resp)=> {
         let content = resp.content
 

@@ -52,53 +52,6 @@ class ApiTest extends TestCase
         $this->assertEquals("afpaconnect", $jwt->iss);
     }
 
-
-    /**
-     * @group api
-     * @group register
-     */
-    public function testRegister()
-    {
-        $client = new Client();
-
-        $response=  $client->request("POST", "http://127.0.0.1:8000/api/register", [
-            'form_params' => [
-                'issuer' => 'APP_AFPANIER',
-                'username' => 'pro_admin@mail.fr',
-                'password' => 'test',
-                'role_id' => '1,2,3'
-            ],
-            'headers' => [
-                'Authorization' => "Bearer " . $this->jwt
-            ]
-        ]);
-
-        $response = json_decode($response->getBody()->getContents());
-        $this->assertEquals(StatusCode::USER_REGISTER_ALREADY, $response->code);
-    }
-
-    /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function tokenDataProvider(): array
-    {
-        $response = $this->client->request("POST", "http://127.0.0.1:8000/api/auth", [
-            'form_params' => [
-                'issuer' => 'afpanier',
-                'public_key' => $this->publicKey
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-
-        return [
-            [
-                'jwt' => json_decode($response)->content,
-                'public-key' => $this->publicKey
-            ]
-        ];
-    }
-
     /**
      * @group api
      * @dataProvider apiPostDataProvider
@@ -148,39 +101,6 @@ class ApiTest extends TestCase
                 'gender' => '1',
             ],
             StatusCode::REQUEST_SUCCESS,
-        ];
-    }
-
-
-    /**
-     * @group api
-     * @group login
-     * @dataProvider apiDataProvider
-     */
-    public function testLogin($url, $params, $expected)
-    {
-        $response=  $this->client->request("GET", "http://127.0.0.1:8000/api/". $url, [
-            'query' => $params,
-            'headers' => [
-                'Authorization' => "Bearer " . $this->jwt
-            ]
-        ]);
-
-        $response = json_decode($response->getBody()->getContents());
-        $this->assertEquals($expected, $response->code);
-
-    }
-    public function apiDataProvider(): \Generator
-    {
-        yield [
-            'login',
-            'params' => [
-                'issuer' => 'APP_AFPANIER',
-                'username' => '123456789',
-                'password' => 'iojarire',
-                'role_id' => '1,2,3'
-            ],
-            StatusCode::USER_LOGIN_BAD_PASSWORD
         ];
     }
 }

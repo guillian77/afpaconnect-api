@@ -41,6 +41,19 @@ class UserManageController extends Controller
     {
         $newUser = $this->request->request()->all();
 
+        $currentUser = $this->updateUser($newUser);
+
+        if (!$currentUser->update()) {
+            $response
+                ->setStatusCode('400')
+                ->setStatusMessage("Erreur: l'utilisateur " . $currentUser->lastname . " " . $currentUser->lastname . " n'a pas pu être mis à jour.")
+                ->send(400, true);
+        }
+
+        $this->redirect('user.manage');
+    }
+
+    public function updateUser($newUser) {
         $currentUser = User::whereId($newUser['uid'])->first();
 
         $currentUser->identifier = $newUser['beneficiary'];
@@ -58,38 +71,24 @@ class UserManageController extends Controller
         $currentUser->city = $newUser['city'];
         $currentUser->country = $newUser['country'];
         $currentUser->gender = $newUser['gender'];
-
         // Clean all user roles before.
-        
+        $currentUser->saveOrFail();
+
         $currentUser->roles()->sync([]);
         $user_roles = [];
 
         // Assign roles to this user.
         foreach($newUser as $key => $value) {
-          
-            if(str_starts_with($key,'app_role')) {
-        
-                
-                foreach($value as $role_id) {
-                    
-                    array_push($user_roles,['app_id' => explode('_',$key)[2] , 'user_id' => $newUser['uid'], 'role_id' => $role_id ]);
-                    
-                } 
-                
-            }
- 
-            
-        } 
 
-        $currentUser->roles()->sync($user_roles);
-        
-        if (!$currentUser->update()) {
-            $response
-                ->setStatusCode('400')
-                ->setStatusMessage("Erreur: l'utilisateur " . $currentUser->lastname . " " . $currentUser->lastname . " n'a pas pu être mis à jour.")
-                ->send(400, true);
+            if(str_starts_with($key,'app_role')) {
+                foreach($value as $role_id) {
+                    array_push($user_roles,['app_id' => explode('_',$key)[2] , 'user_id' => $newUser['uid'], 'role_id' => $role_id ]);
+                }
+            }
         }
 
-        $this->redirect('user.manage');
+        $currentUser->roles()->sync($user_roles);
+
+        return $currentUser;
     }
 }
