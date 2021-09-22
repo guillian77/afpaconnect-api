@@ -40,7 +40,8 @@
             "App\\Model\\" : "app/models",
             "App\\Api\\" : "app/api",
             "App\\Utility\\" : "app/utilities",
-            "App\\Command\\" : "app/commands"
+            "App\\Command\\" : "app/commands",
+            "App\\Service\\" : "app/services"
         }
     },
     "autoload-dev": {
