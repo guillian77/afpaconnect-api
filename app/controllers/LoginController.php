@@ -89,8 +89,7 @@ class LoginController extends Controller
             return false;
         }
 
-        $this->updateSession($user);
-
+        $this->updateSession($user->toArray());
         return true;
     }
 

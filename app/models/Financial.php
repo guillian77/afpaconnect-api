@@ -17,4 +17,8 @@ use Illuminate\Database\Eloquent\Model;
 class Financial extends Model
 {
     protected $table = 'financials';
+
+    public $timestamps = false;
+
+    protected $guarded = [];
 }

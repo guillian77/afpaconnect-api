@@ -1,0 +1,68 @@
+    .field_area .single_field  {
+    display:flex;
+    flex-direction: column;
+    padding: 1rem;
+   }
+   
+   .field_area label {
+        margin-bottom: 2rem;
+     line-height: 2rem;
+   }
+   
+   .field_area h4 {
+       padding: 0.5rem;
+       text-decoration: underline;
+       text-transform: capitalize;
+       font-size: 1.1rem;
+    }
+    
+    .field_area {
+        display: flex;
+        flex-direction:row;
+        justify-content: space-around;
+        flex-wrap: wrap; 
+    }
+    
+    #role_edit .form__field {
+        width: 100% !important;
+    }
+    .g_managment__form {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .g_managment__form h3 {
+        text-align: center;
+        padding: 1rem 0 0.5rem 0;
+    }
+    
+    .form__submit {
+         margin: 1rem;
+    }
+   
+    .form_field_app {
+       display: flex;
+       flex-direction:column;
+   }
+   
+   .app_field {
+       margin-bottom: 1rem;
+       font-weight: 600;
+   }
+   
+   .form_field_app {
+       line-height: 1.5rem;
+   }
+   
+   #app_role_edit .single_field ,#role_edit .single_field {
+       border: solid 0.5px #d1d3e2;
+       border-radius:10px;
+       margin: 1rem;
+   }
+   #app_role_edit label {
+       margin-left: 0.5rem;
+   }
+
+   

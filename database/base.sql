@@ -74,8 +74,8 @@ CREATE TABLE financials(
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
         id                Int  Auto_increment  NOT NULL ,
-        id_center              Int NOT NULL ,
-        id_financial              Int NOT NULL ,
+        center_id              Int NOT NULL ,
+        financial_id              Int NOT NULL ,
         identifier        Varchar (20) NOT NULL UNIQUE ,
         lastname              Varchar (255) NOT NULL ,
         firstname         Varchar (255) NOT NULL ,
@@ -94,9 +94,9 @@ CREATE TABLE users(
         updated_at        Datetime
 	,CONSTRAINT users_PK PRIMARY KEY (id)
 
-    ,CONSTRAINT users_centers_FK FOREIGN KEY (id_center) REFERENCES centers(id)
+    ,CONSTRAINT users_centers_FK FOREIGN KEY (center_id) REFERENCES centers(id)
 
-    ,CONSTRAINT users_financials_FK FOREIGN KEY (id_financial) REFERENCES financials(id)
+    ,CONSTRAINT users_financials_FK FOREIGN KEY (financial_id) REFERENCES financials(id)
 )ENGINE=InnoDB;
 
 
@@ -107,7 +107,7 @@ CREATE TABLE users(
 DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions(
         id       Int  Auto_increment  NOT NULL ,
-        id_formation      Int NOT NULL ,
+        formation_id      Int NOT NULL ,
         tag     Varchar (255) NOT NULL ,
         name Varchar (255) NOT NULL ,
         start_at DATE NOT NULL ,
@@ -115,7 +115,7 @@ CREATE TABLE sessions(
         status   Bool NOT NULL
 	,CONSTRAINT sessions_PK PRIMARY KEY (id)
 
-	,CONSTRAINT sessions_formations_FK FOREIGN KEY (id_formation) REFERENCES formations(id)
+	,CONSTRAINT sessions_formations_FK FOREIGN KEY (formation_id) REFERENCES formations(id)
 )ENGINE=InnoDB;
 
 
@@ -164,14 +164,14 @@ INSERT INTO `afpaconnect`.`migrations` (`datetime`) VALUES ('1');
 
 DROP TABLE IF EXISTS apps__users__roles;
 CREATE TABLE apps__users__roles(
-        id_app         Int NOT NULL ,
-        id_user        Int NOT NULL ,
-        id_role        Int NOT NULL
-	,CONSTRAINT apps__users__roles_PK PRIMARY KEY (id_app,id_user,id_role)
+        app_id         Int NOT NULL ,
+        user_id        Int NOT NULL ,
+        role_id        Int NOT NULL
+	,CONSTRAINT apps__users__roles_PK PRIMARY KEY (app_id,user_id,role_id)
 
-	,CONSTRAINT apps__users__roles_apps_FK FOREIGN KEY (id_app) REFERENCES apps(id)
-	,CONSTRAINT apps__users__roles_users0_FK FOREIGN KEY (id_user) REFERENCES users(id)
-	,CONSTRAINT apps__users__roles_roles1_FK FOREIGN KEY (id_role) REFERENCES roles(id)
+	,CONSTRAINT apps__users__roles_apps_FK FOREIGN KEY (app_id) REFERENCES apps(id)
+	,CONSTRAINT apps__users__roles_users0_FK FOREIGN KEY (user_id) REFERENCES users(id)
+	,CONSTRAINT apps__users__roles_roles1_FK FOREIGN KEY (role_id) REFERENCES roles(id)
 )ENGINE=InnoDB;
 
 
@@ -181,12 +181,12 @@ CREATE TABLE apps__users__roles(
 
 DROP TABLE IF EXISTS users__sessions;
 CREATE TABLE users__sessions(
-        id_user    Int NOT NULL ,
-        id_session Int NOT NULL
-	,CONSTRAINT users__sessions_PK PRIMARY KEY (id_user,id_session)
+        user_id    Int NOT NULL ,
+        session_id Int NOT NULL
+	,CONSTRAINT users__sessions_PK PRIMARY KEY (user_id,session_id)
 
-	,CONSTRAINT users__sessions_users_FK FOREIGN KEY (id_user) REFERENCES users(id)
-	,CONSTRAINT users__sessions_sessions0_FK FOREIGN KEY (id_session) REFERENCES sessions(id)
+	,CONSTRAINT users__sessions_users_FK FOREIGN KEY (user_id) REFERENCES users(id)
+	,CONSTRAINT users__sessions_sessions0_FK FOREIGN KEY (session_id) REFERENCES sessions(id)
 )ENGINE=InnoDB;
 
 
@@ -196,12 +196,12 @@ CREATE TABLE users__sessions(
 
 DROP TABLE IF EXISTS centers__trainings;
 CREATE TABLE centers__trainings(
-        id_center   Int NOT NULL ,
-        id_training Int NOT NULL
-	,CONSTRAINT centers__trainings_PK PRIMARY KEY (id_training,id_center)
+        center_id   Int NOT NULL ,
+        training_id Int NOT NULL
+	,CONSTRAINT centers__trainings_PK PRIMARY KEY (training_id,center_id)
 
-	,CONSTRAINT centers__trainings_trainings_FK FOREIGN KEY (id_training) REFERENCES formations(id)
-	,CONSTRAINT centers__trainings_centers0_FK FOREIGN KEY (id_center) REFERENCES centers(id)
+	,CONSTRAINT centers__trainings_trainings_FK FOREIGN KEY (training_id) REFERENCES formations(id)
+	,CONSTRAINT centers__trainings_centers0_FK FOREIGN KEY (center_id) REFERENCES centers(id)
 )ENGINE=InnoDB;
 
 
@@ -211,12 +211,21 @@ CREATE TABLE centers__trainings(
 
 DROP TABLE IF EXISTS users__functions;
 CREATE TABLE users__functions(
-        id_user     Int NOT NULL ,
-        id_function Int NOT NULL ,
+        user_id     Int NOT NULL ,
+        function_id Int NOT NULL ,
         start_date  Datetime NOT NULL ,
         end_date    Datetime NOT NULL
-	,CONSTRAINT users__functions_PK PRIMARY KEY (id_function,id_user)
+	,CONSTRAINT users__functions_PK PRIMARY KEY (function_id,user_id)
 
-	,CONSTRAINT users__functions_functions_FK FOREIGN KEY (id_function) REFERENCES functions(id)
-	,CONSTRAINT users__functions_users0_FK FOREIGN KEY (id_user) REFERENCES users(id)
+	,CONSTRAINT users__functions_functions_FK FOREIGN KEY (function_id) REFERENCES functions(id)
+	,CONSTRAINT users__functions_users0_FK FOREIGN KEY (user_id) REFERENCES users(id)
 )ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS apps__roles;
+CREATE TABLE apps__roles(
+    `app_id` INT NOT NULL ,
+     `role_id` INT NOT NULL ,
+     CONSTRAINT apps__roles_PK PRIMARY KEY (app_id,role_id),
+     CONSTRAINT apps__roles_apps_FK FOREIGN KEY (app_id) REFERENCES apps(id),
+     CONSTRAINT apps__roles_roles_FK FOREIGN KEY (role_id) REFERENCES roles(id)
+) ENGINE = InnoDB;
