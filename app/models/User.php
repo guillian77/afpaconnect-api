@@ -19,9 +19,7 @@ class User extends Model
 {
     protected $table = 'users';
 
-    protected $hidden = [
-        'id'
-    ];
+    protected $hidden = [];
 
     // Protected columns.
     protected $guarded = [
