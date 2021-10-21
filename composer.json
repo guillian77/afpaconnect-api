@@ -20,11 +20,14 @@
         "shuchkin/simplexlsx": "^0.8.23",
         "ext-pdo": "*",
         "illuminate/database": "^8.40",
-        "illuminate/events": "^8.40"
+        "illuminate/events": "^8.40",
+        "fzaninotto/faker": "^1.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "symfony/var-dumper": "^5.2"
+        "symfony/var-dumper": "^5.2",
+        "guzzlehttp/guzzle": "^7.3",
+        "ext-http": "*"
     },
     "autoload": {
         "psr-4": {
@@ -37,7 +40,13 @@
             "App\\Model\\" : "app/models",
             "App\\Api\\" : "app/api",
             "App\\Utility\\" : "app/utilities",
-            "App\\Command\\" : "app/commands"
+            "App\\Command\\" : "app/commands",
+            "App\\Service\\" : "app/services"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\" : "tests"
         }
     }
 }

@@ -99,6 +99,8 @@ class App
             error_reporting(E_ALL);
         }
 
+        $this->container->get(Conf::get('driver'));
+
         session_start();
 
         $this->loadTemplateExtensions();

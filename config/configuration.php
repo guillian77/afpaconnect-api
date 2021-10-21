@@ -19,7 +19,7 @@ return [
     | If you don't need. Leave it to empty string.
     | Sample:
     |       If your URL is http://localhost:80/afpaconnect.
-    |       Set base_path to 'base_path' => "afpaconnect/".
+    |       Set base_path to 'base_path' => "/afpaconnect".
     */
     'base_path' => "",
 
@@ -33,6 +33,8 @@ return [
     | db_port   int
     | > Database port, default: 3306
     */
+    'driver' => \App\Core\Database\EloquentDriver::class,
+
     'db_host' => "database",
     'db_port' => 3306,
     'db_name' => "afpaconnect",
@@ -55,21 +57,33 @@ return [
     |----------------------------------------------------------------
     | API
     |----------------------------------------------------------------
-    | token_duration = default to 600 seconds (10 minutes).
+    | token_duration        =   Default to 600 seconds (10 minutes).
+    | authorized_address    =   List of whitelisted IP address used to
+    |                           filter API request.
     */
-    'token_duration' => 600,
+    'token_duration' => 1200,
+    'authorized_address' => [
+        '::1',
+        'localhost',
+        '127.0.0.1',
+        '172.18.0.1',
+        '172.23.0.1',
+        '172.21.0.1'
+    ],
 
     /*
     |----------------------------------------------------------------
-    | Application title
+    | Application
     |----------------------------------------------------------------
+    | appTitle              =   AfpaConnect
+    | tld                   =   afpaconnect.eloce-formation-afpa.com
+    | copyright             =   App copyright
     */
     'appTitle' => 'AfpaConnect',
 
-    /*
-    |----------------------------------------------------------------
-    | Application copyright
-    |----------------------------------------------------------------
-    */
-    'copyright' => '2021 - Developped by Aufrère Guillian & Campillo Lucas for AFPA'
+    'contactEmail' => 'contact@afpaconnect.fr',
+
+    'tld' => 'http://127.0.0.1:8000',
+
+    'copyright' => '2021 - Developped by Aufrère Guillian, Moreau Eloïse and Campillo Lucas for AFPA'
 ];

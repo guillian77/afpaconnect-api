@@ -56,6 +56,29 @@ class Controller
     }
 
     /**
+     * Render the error view.
+     *
+     * A message can be set to be displayed.
+     *
+     * @param string $message   An error message.
+     * @param bool $stop        Stop code execution.
+     *
+     * @throws DependencyException
+     * @throws LoaderError
+     * @throws NotFoundException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function renderError(string $message, bool $stop = false)
+    {
+        $this->render('error.html.twig', [
+            'error' => $message
+        ]);
+
+        $stop && die();
+    }
+
+    /**
      * Autoload assets files : javascript | css
      *
      * @param string $viewPath
@@ -75,7 +98,7 @@ class Controller
 
         $cssPath        = 'css/features/'.$viewPath.'.css';
 
-        $assets['js'] = (file_exists($javascriptPath)) ? "<script src=\"$javascriptPath\"></script>" : null;
+        $assets['js'] = (file_exists($javascriptPath)) ? "<script src=\"$javascriptPath\" type='module'></script>" : null;
 
         $assets['css'] = (file_exists($cssPath)) ? "<link rel=\"stylesheet\" href=\"$cssPath\" />" : null;
 

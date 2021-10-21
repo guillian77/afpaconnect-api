@@ -1,0 +1,23 @@
+{% extends 'email/layout.html.twig' %}
+
+{% block content %}
+    <h1>Confirmez votre inscription sur {{ appTitle }}</h1>
+
+    <p>Bonjour {{ user.firstname | capitalize }}</p>
+    <p>Vous devez confirmer votre identité en cliquant sur ce lien ci-dessous avant de pouvoir vous connecter sur les services de l'AFPA.</p>
+    <p><a class="btn" href="{{ tld }}{{ path('register.enable') }}?activation_code={{ activationCode }}">Activer mon compte</a></p>
+
+    <hr>
+
+    <div class="preview">
+        <h2>Découvrez la liste complète de nos services</h2>
+
+        {% for app in apps %}
+            <div class="preview__app">
+                <p class="title">{{ app.name }}</p>
+                <p>{{ app.description }}</p>
+                <a href="{{ app.url }}" class="btn secondary">Visiter {{ app.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

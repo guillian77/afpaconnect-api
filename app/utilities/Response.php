@@ -10,12 +10,7 @@ class Response {
 
     private $bodyContent;
 
-    public function __construct()
-    {
-        header('Content-type: application/json');
-
-        header('charset: utf-8');
-    }
+    private int $jsonFlags = 0;
 
     /**
      * Output JSON encoded data.
@@ -27,6 +22,8 @@ class Response {
     public static function json($data)
     {
         header('Content-type: application/json');
+        header('charset: utf-8');
+
         echo json_encode($data);
     }
 
@@ -50,6 +47,22 @@ class Response {
         self::json($message);
 
         if ($stop) { die(); }
+    }
+
+    /**
+     * Define JSON constants
+     *
+     * @link https://www.php.net/manual/en/json.constants.php
+     *
+     * @param $flags
+     *
+     * @return Response
+     */
+    public function setJsonFlags($flags): self
+    {
+        $this->jsonFlags = $flags;
+
+        return $this;
     }
 
     /**
@@ -111,6 +124,9 @@ class Response {
 
     public function send(int $httpResponseCode = 200, bool $stop = false)
     {
+        header('Content-type: application/json');
+        header('charset: utf-8');
+
         http_response_code($httpResponseCode);
 
         header('HTTP/1.0 '.$httpResponseCode);
@@ -119,7 +135,7 @@ class Response {
             'code' => $this->getStatusCode(),
             'message' => $this->getStatusMessage(),
             'content' => $this->bodyContent,
-        ]);
+        ], $this->jsonFlags);
 
         if ($stop) { die(); }
     }

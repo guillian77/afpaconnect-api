@@ -22,32 +22,37 @@ Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 
 /*
 |--------------------------------------------------------------------------
-| GENERAL
+| USERS
 |--------------------------------------------------------------------------
 */
 Router::get('/api/login', [\App\Api\LoginApi::class, 'login'], 'api.login');
 Router::get('/api/user', [\App\Api\UserApi::class, 'getOneByUsername'], 'api.user');
-Router::get('/api/users', [\App\Api\UserApi::class, 'getAll'], 'api.users');
+Router::get('/api/users', [\App\Api\UserApi::class, 'index'], 'api.users');
+Router::post('/api/user-edit', [\App\Api\UserApi::class, 'edit'], 'api.user.edit', 'Authenticate');
 
-Router::get('/api/centers', [\App\Api\CenterApi::class, 'getAll'], 'api.centers');
+Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.register');
 
 /*
 |--------------------------------------------------------------------------
-| SIMULATION
+| GET ALL
 |--------------------------------------------------------------------------
-| Here are emulated routes for development only.
-| Static data will be provided.
 */
+Router::get('/api/centers', [\App\Api\CenterApi::class, 'index'], 'api.centers');
+Router::get('/api/formations', [\App\Api\FormationApi::class, 'index'], 'api.formations');
+Router::get('/api/financials', [\App\Api\FinancialApi::class, 'index'], 'api.financials');
+Router::get('/api/apps', [\App\Api\AppApi::class, 'index'], 'api.apps');
+Router::get('/api/roles', [\App\Api\RoleApi::class, 'index'], 'api.roles');
+Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');
 
-Router::get('/api/sim/success', [\App\Api\Simulation::class, 'success'], 'api.sim.success');
-Router::get('/api/sim/success/admin', [\App\Api\Simulation::class, 'success_admin'], 'api.sim.success.admin');
-Router::get('/api/sim/success/employee', [\App\Api\Simulation::class, 'success_employee'], 'api.sim.success.employee');
-Router::get('/api/sim/success/teacher', [\App\Api\Simulation::class, 'success_teacher'], 'api.sim.success.teacher');
-Router::get('/api/sim/success/teacher/admin', [\App\Api\Simulation::class, 'success_teacher_admin'], 'api.sim.success.teacher.admin');
-Router::get('/api/sim/success/teacher/superadmin', [\App\Api\Simulation::class, 'success_teacher_superadmin'], 'api.sim.success.teacher.superadmin');
-
-Router::get('/api/sim/blank', [\App\Api\Simulation::class, 'blank'], 'api.simulation.blank');
-Router::get('/api/sim/failed', [\App\Api\Simulation::class, 'failed'], 'api.simulation.failed');
-Router::get('/api/sim/unfound', [\App\Api\Simulation::class, 'unfound'], 'api.simulation.unfound');
-
-Router::post('/api/sim/inscription', [\App\Api\Simulation::class, 'inscription'], 'api.simulation.inscription');
+/*
+|--------------------------------------------------------------------------
+| MESSAGES
+|--------------------------------------------------------------------------
+*/
+Router::get('/api/messages', [\App\Api\MessagesApi::class, 'read'], 'api.messages', 'Authenticate');
+Router::post(
+    '/api/message/create',
+    [\App\Api\MessagesApi::class, 'create'],
+    'api.messages.create',
+    'Authenticate'
+);

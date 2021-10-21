@@ -15,13 +15,13 @@ class fix_20210204100216_initialize_trainings_sessions
         /**
          * Create training first
          */
-        $query = "INSERT INTO `formations` (`id`, `tag`, `name`, `degree`, `status`) VALUES (NULL, '2EZA58EAZ6', 'training_nmae', 'degree', '1')";
+        $query = "INSERT INTO `formations` (`id`, `tag`, `name`, `degree`, `status`) VALUES (NULL, 'DWWM', 'Developpeur web', 'degree', '1')";
         $this->dbHandle->query($query);
 
         /**
          * Create session 
          */
-        $query = "INSERT INTO `sessions` (`id`, `id_formation`, `tag`, `name`, `start_at`, `end_at`,  `status`) VALUES (NULL, '1', 'DWWM', 'Développeur web et web mobile', '2020-04-06 08:15:00', '2020-11-20 17:00:00',  '1')";
+        $query = "INSERT INTO `sessions` (`id`, `formation_id`, `name`, `n_offer`, `label_offer`, `start_at`, `end_at`,  `status`) VALUES (NULL, '1', 'Session-04-2020', 20150, 'OCC_DWWM_CR_2018_ELO', '2020-04-06 08:15:00', '2020-11-20 17:00:00',  '1')";
         $this->dbHandle->query($query);
     }
     

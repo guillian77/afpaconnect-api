@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
     const TABLE = 'sessions';
+    public $timestamps = false;
+    protected $guarded = [];
 
     protected $table = self::TABLE;
 }

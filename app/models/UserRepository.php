@@ -6,6 +6,7 @@ namespace App\Model;
 
 use App\Core\Database\EloquentDriver;
 use App\Core\Request;
+use App\Utility\IssuerFormatter;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -89,8 +90,23 @@ class UserRepository
      *
      * @return Collection
      */
-    public function findAll(array $filters = [])
+    public function findAllWithout(array $filters = [])
     {
+       
+        $users =  User::with(['roles'])
+            ->get()
+        ;
+        
+        $users = $users
+            ->makeVisible(['id'])
+            ->makeHidden($filters)
+        ;
+            
+        return $users;
+        
+        /* OLD REQUEST WITHOUT ROLES 
+        
+        
         $qb = $this->db->getConnection()->table('users');
 
         if (!empty($filters)) {
@@ -98,7 +114,9 @@ class UserRepository
             $qb->select($columns);
         }
 
-        return $qb->get();
+        return $qb->get();*/
+
+
     }
 
     /**
@@ -112,13 +130,17 @@ class UserRepository
      */
     public function findOneByUsernames($username)
     {
-        $app = App::where('name', '=', $this->request->query()->get('issuer'))->first();
+        $issuer = $this->request->get('issuer');
+
+        $app = App::where('tag', '=', $issuer)->first();
+
+        // TODO: Mettre un LIKE pour les mails
 
         return User::where('identifier', '=', $username)
-            ->orWhere('mailPro', '=', $username)
-            ->orWhere('mailPerso', '=', $username)
+            ->orWhere('mail1', '=', $username)
+            ->orWhere('mail2', '=', $username)
             ->with(['roles' => function ($query) use ($app) {
-                $query->where('id_app', $app->id);
+                $query->where('app_id', $app->id);
             }])
             ->with('career')
             ->with('session')
@@ -128,4 +150,5 @@ class UserRepository
             ->first()
         ;
     }
+
 }
