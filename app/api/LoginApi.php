@@ -66,12 +66,12 @@ class LoginApi
                 ->send(200, true);
         }
 
-        if (is_null($user->activation_code)) {
-            $this->response
-                ->setStatusCode(StatusCode::USER_LOGIN_NOT_ACTIVATED)
-                ->setStatusMessage('User not enabled yet. User should be enable with email.')
-                ->send(200, true);
-        }
+//        if (is_null($user->activation_code)) {
+//            $this->response
+//                ->setStatusCode(StatusCode::USER_LOGIN_NOT_ACTIVATED)
+//                ->setStatusMessage('User not enabled yet. User should be enable with email.')
+//                ->send(200, true);
+//        }
 
         $check = password_verify($password, $user->password);
 

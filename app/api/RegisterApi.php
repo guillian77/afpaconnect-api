@@ -13,6 +13,7 @@ use App\Model\UserRepository;
 use App\Utility\Mailer;
 use App\Utility\Response;
 use App\Utility\StatusCode;
+use App\Utility\Valid;
 use Exception;
 use Throwable;
 
@@ -25,21 +26,19 @@ use Throwable;
 class RegisterApi
 {
     private UserRepository $userModel;
-
     private Request $request;
-
     private Response $response;
-
     private Mailer $mailer;
-
     private JsonWebToken $jwt;
+    private Valid $valid;
 
     public function __construct(
         UserRepository $repository,
         Request $request,
         Response $response,
         Mailer $mailer,
-        JsonWebToken $jwt
+        JsonWebToken $jwt,
+        Valid $valid
     )
     {
         $this->userModel = $repository;
@@ -47,10 +46,15 @@ class RegisterApi
         $this->response = $response;
         $this->mailer = $mailer;
         $this->jwt = $jwt;
+        $this->valid = $valid;
     }
 
     /**
      * Register a user.
+     *
+     * - Check request parameters.
+     * - Check if user is find.
+     *
      *
      * @throws Throwable
      */
@@ -61,11 +65,9 @@ class RegisterApi
          */
         $username = $this->request->get('username');
         $password = $this->request->get('password');
-        $roleIds = $this->request->get('role_id');
 
-        $this->checkParameter($username, "<username>");
-        $this->checkParameter($password, "<password>");
-        $this->checkParameter($roleIds, "<role> (value: 1,2,3)");
+        $this->valid->has($username, "<username>");
+        $this->valid->has($password, "<password>");
 
         /*
          * Try to find user by usernames.
@@ -82,23 +84,11 @@ class RegisterApi
             $this->jwt->getIssuer()
         )->first();
 
+        // User not exist ?
         $this->checkUserState($user); // Execution can be break here.
 
-        $user->password = $password;
+        $user->password_temp = $password;
 
-        /*
-         * Synchronize user with app and roles.
-         */
-        $roles = Role::whereIn('id', explode(",", $roleIds))->get();
-
-        $newRoles = [];
-        foreach ($roles as $index => $role) {
-            $newRoles[$index]['app_id'] = $app->id;
-            $newRoles[$index]['user_id'] = $user->id;
-            $newRoles[$index]['role_id'] = $role->id;
-        }
-
-        $user->roles()->attach($newRoles);
 
         $userEmail = (empty($user->mail1)) ? $user->mail2 : $user->mail1;
 
@@ -119,7 +109,8 @@ class RegisterApi
             ->setLayout('email/register.html.twig', [
                 'activationCode' => $activationCode,
                 'user' => $user,
-                'apps' => App::where('tag', '!=', 'APP_AFPACONNECT')->get()
+                'apps' => App::where('tag', '!=', $app->tag)->get(),
+                'registerApp' => $app->name
             ])
             ->send();
 
@@ -167,36 +158,5 @@ class RegisterApi
                 ->setBodyContent($user)
                 ->send(200, true);
         }
-
-        /*
-         * User is already on this app ?
-         */
-        if ($user->activation_code) {
-            $this->response
-                ->setStatusCode(StatusCode::USER_REGISTER_ALREADY)
-                ->setStatusMessage('User is already registered. You have to use route /api/login instead.')
-                ->setBodyContent($user)
-                ->send(200, true);
-        }
-    }
-
-    /**
-     * Check request parameter presence.
-     *
-     * @param string $key
-     * @param string $name
-     * @param string $code
-     * @return void
-     */
-    private function checkParameter(string $key, string $name, string $code = "000"):void
-    {
-        if ($key) {
-            return;
-        }
-
-        $this->response
-            ->setStatusCode(StatusCode::MISSING_REQUEST_PARAMETER)
-            ->setStatusMessage("Key $name should be specified.")
-            ->send(200, true);
     }
 }

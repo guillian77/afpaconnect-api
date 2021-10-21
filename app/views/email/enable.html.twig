@@ -1,11 +1,13 @@
 {% extends 'email/layout.html.twig' %}
 
 {% block content %}
-    <h1>Confirmez votre inscription sur {{ registerApp }}</h1>
+    <h1>Inscription à {{ registerApp }} réussi !</h1>
 
     <p>Bonjour {{ user.firstname | capitalize }}</p>
-    <p>Vous devez confirmer votre identité en saisissant ce code sur {{ registerApp }}.</p>
-    <pre><code>{{ activationCode }}</code></pre>
+    <p>
+        Votre inscription à {{ registerApp }} est maintenant terminée.
+        Vous pouvez maintenant vous connecter avec les identifiants saisies lors de votre phase d'inscription.
+    </p>
 
     <hr>
 

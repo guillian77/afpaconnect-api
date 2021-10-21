@@ -31,6 +31,7 @@ Router::get('/api/users', [\App\Api\UserApi::class, 'index'], 'api.users');
 Router::post('/api/user-edit', [\App\Api\UserApi::class, 'edit'], 'api.user.edit', 'Authenticate');
 
 Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.register');
+Router::post('/api/enable', [\App\Api\EnableApi::class, 'enable'], 'api.enable');
 
 /*
 |--------------------------------------------------------------------------

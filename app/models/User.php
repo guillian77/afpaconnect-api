@@ -13,13 +13,19 @@ use Illuminate\Database\Eloquent\Model;
  * @version 1.0
  *
  * @method static where(\Closure|string|array  $column, mixed  $operator, mixed  $value)
- * @property bool|mixed password
+ * @property string|mixed password User password.
+ * @property string|mixed password_temp Temp password for user app registering phase.
+ * @property string|mixed $mail1
+ * @property string|mixed $mail2
  */
 class User extends Model
 {
     protected $table = 'users';
 
-    protected $hidden = [];
+    protected $hidden = [
+        'password',
+        'password_temp'
+    ];
 
     // Protected columns.
     protected $guarded = [
@@ -115,5 +121,10 @@ class User extends Model
         }
 
         return false;
+    }
+
+    public function getUsername()
+    {
+        return (empty($user->mail1)) ? $this->mail2 : $this->mail1;
     }
 }

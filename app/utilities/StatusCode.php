@@ -47,4 +47,15 @@ class StatusCode
     const USER_REGISTER_FAILURE     = "301";
     const USER_REGISTER_ALREADY     = "302";
     const USER_REGISTER_NOT_FOUND     = "303";
+
+    /*
+    |--------------------------------------------------------------------------
+    | USERS ENABLE
+    |--------------------------------------------------------------------------
+    */
+    const USER_ENABLE_SUCCESS     = "400";
+    const USER_ENABLE_FAILURE     = "401";
+    const USER_ENABLE_NO_TEMP_PASSWORD     = "402";
+    const USER_ENABLE_CODE_INVALID     = "403";
+    const USER_ENABLE_CODE_NOT_FOUND     = "404";
 }
