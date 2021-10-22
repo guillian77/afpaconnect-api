@@ -31,11 +31,11 @@ class fix_20210504100543_initialize_apps__users__roles
         /**
          * Create roles
          */
-        $query = "INSERT INTO `roles` (`id`, `tag`,`name`) 
+        $query = "INSERT INTO `roles` (`id`, `tag`,`name`,`level`) 
                     VALUES 
-                    (NULL, 'ROLE_USER', 'Utilisateur'),
-                    (NULL, 'ROLE_ADMIN', 'Administrateur'),
-                    (NULL, 'ROLE_SUPER_ADMIN', 'Super Admin')";
+                    (NULL, 'ROLE_USER', 'Utilisateur', 1000),
+                    (NULL, 'ROLE_ADMIN', 'Administrateur', 200),
+                    (NULL, 'ROLE_SUPER_ADMIN', 'Super Admin', 100)";
         $this->dbHandle->query($query);
     }
     
