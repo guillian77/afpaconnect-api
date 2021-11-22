@@ -112,6 +112,7 @@ class RegisterApi
                 'apps' => App::where('tag', '!=', $app->tag)->get(),
                 'registerApp' => $app->name
             ])
+            ->setToErrorLog("Activation code is: $activationCode")
             ->send();
 
         if (!$emailSent) {

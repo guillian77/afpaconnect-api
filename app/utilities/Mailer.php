@@ -23,6 +23,8 @@ class Mailer
 
     private ?string $message = null;
 
+    private ?string $toDebugValue = null;
+
     /**
      * @return bool
      */
@@ -32,7 +34,15 @@ class Mailer
             return false;
         }
 
-        return mail($this->getTargetEmail(), $this->getSubject(), $this->getMessage(), self::getHeaders());
+        $ret =  mail($this->getTargetEmail(), $this->getSubject(), $this->getMessage(), self::getHeaders());
+
+        // TODO: Replace it by trowing an exception.
+        if (false === $ret && Conf::get('env') === 'dev') {
+            error_log('[DEV - MAIL] '.$this->toDebugValue);
+            return true;
+        }
+
+        return $ret;
     }
 
     private function getHeaders(): string
@@ -176,5 +186,19 @@ class Mailer
         }
 
         return true;
+    }
+
+    /**
+     * Allow to set a value to display in Apache2 error.log
+     *
+     * @param string $toDebug
+     *
+     * @return $this
+     */
+    public function setToErrorLog(string $toDebug): self
+    {
+        $this->toDebugValue = $toDebug;
+
+        return $this;
     }
 }

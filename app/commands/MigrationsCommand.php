@@ -101,7 +101,7 @@ class MigrationsCommand extends Console
         $migCount = 0;
         foreach ($migDateTimes as $k => $migDateTime)
         {
-            if ($migDateTime > $lastMigDateTime->migration_datetime)
+            if ($migDateTime > $lastMigDateTime->datetime)
             {
                 $migCount++;
 
