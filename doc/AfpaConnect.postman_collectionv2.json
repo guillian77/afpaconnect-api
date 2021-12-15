@@ -1,0 +1,1403 @@
+{
+	"info": {
+		"_postman_id": "54ab216f-79e4-47a5-9147-d127507a6997",
+		"name": "AfpaConnect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "/api/user-edit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uid",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "beneficiary",
+											"value": "174029305",
+											"type": "text"
+										},
+										{
+											"key": "lastname",
+											"value": "AUfrr",
+											"type": "text"
+										},
+										{
+											"key": "firstname",
+											"value": "Guil",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "gui@wanadoo.es",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "01010102",
+											"type": "text"
+										},
+										{
+											"key": "center",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "financial",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/user-edit?issuer=APP_AFPANIER",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"user-edit"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/edit",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "uid",
+													"value": "3",
+													"type": "text"
+												},
+												{
+													"key": "beneficiary",
+													"value": "174029305",
+													"type": "text"
+												},
+												{
+													"key": "lastname",
+													"value": "AUfrr",
+													"type": "text"
+												},
+												{
+													"key": "firstname",
+													"value": "Guil",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "gui@wanadoo.es",
+													"type": "text"
+												},
+												{
+													"key": "phone",
+													"value": "01010102",
+													"type": "text"
+												},
+												{
+													"key": "center",
+													"value": "1",
+													"type": "text"
+												},
+												{
+													"key": "financial",
+													"value": "1",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseURL}}:{{port}}{{basePath}}/api/edit",
+											"host": [
+												"{{baseURL}}"
+											],
+											"port": "{{port}}{{basePath}}",
+											"path": [
+												"api",
+												"edit"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "/api/users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/users?issuer=APP_AFPANIER",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/user?issuer=APP_AFPANIER&username=123456789",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"user"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										},
+										{
+											"key": "username",
+											"value": "123456789"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/login?issuer=APP_AFPANIER&username=123456789&password=test",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"login"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										},
+										{
+											"key": "username",
+											"value": "123456789"
+										},
+										{
+											"key": "password",
+											"value": "test"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "/api/register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "pro_admin@mail.fr",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "role_id",
+											"value": "1,2,3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/register",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/enable",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "pro_admin@mail.fr",
+											"type": "text"
+										},
+										{
+											"key": "activation_code",
+											"value": "61717d842a4b1",
+											"type": "text"
+										},
+										{
+											"key": "role_id",
+											"value": "1,2,3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/enable",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"enable"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sessions",
+					"item": [
+						{
+							"name": "/api/sessions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/sessions?issuer=APP_AFPANIER",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"sessions"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/sessions/formation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/sessions/formation?issuer=APP_AFPANIER&formationId=1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"sessions",
+										"formation"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										},
+										{
+											"key": "formationId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/sessions/formations/date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/sessions/formations/date?issuer=APP_AFPANIER&formationsIds[0]=1&dateBefore=2020-04-05&dateAfter=2022-04-05",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"sessions",
+										"formations",
+										"date"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										},
+										{
+											"key": "formationsIds[0]",
+											"value": "1"
+										},
+										{
+											"key": "dateBefore",
+											"value": "2020-04-05"
+										},
+										{
+											"key": "dateAfter",
+											"value": "2022-04-05"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Formations",
+					"item": [
+						{
+							"name": "/api/formations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/formations?issuer=APP_AFPANIER",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"formations"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/formations/user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/formations?issuer=APP_AFPANIER",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"formations"
+									],
+									"query": [
+										{
+											"key": "issuer",
+											"value": "APP_AFPANIER"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = JSON.parse(responseBody).content;",
+									"pm.environment.set('token',token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER",
+									"type": "text"
+								},
+								{
+									"key": "public_key",
+									"value": "{{public_key_afpanier}}",
+									"description": "Clé publique",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"auth"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "afpanier",
+									"disabled": true
+								},
+								{
+									"key": "public_key",
+									"value": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsmmkRhJ6cRuxTLPEyngh\n/QzEMryLIf94W/bV+trUFkz/ssGzLRQGSOZPUQavQBYV+yMDm1sQ2KHhR6tHSijv\ntIj+SY5MM7eoa7cbKMC35r3AC2Ma6mkMS/bqBScOI6kGL0OcZFYQAC7FmgDvA4IP\nzoWTpf3oUnBSAIcdYQgOQnWwj7z0iPl6w0Jl4tS5b8+yon8+WuhSd97FcdKPJLj1\nRsnC2Dxkxzx2AxqIH+YTfF121CFq34h+OUfDipyXS9qUA1g2tZ3qb0XS0QUJ+qJq\nWb5ZACYEH3RFLELH/TApAnY2WaFUer7NeUnzUoEL437Io5yDQefQvrOe0N3yTBPN\n9wIDAQAB\n-----END PUBLIC KEY-----\n",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/template/auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/login?issuer=APP_AFPANIER&username=123456789&password=test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER"
+								},
+								{
+									"key": "username",
+									"value": "123456789"
+								},
+								{
+									"key": "password",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/centers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/centers?issuer=APP_AFPANIER",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"centers"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/financials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/financials?issuer=APP_AFPANIER",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"financials"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/roles?issuer=APP_AFPANIER",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/apps/roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/apps/roles?issuer=APP_AFPANIER",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"apps",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/edit",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uid",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "beneficiary",
+											"value": "174029305",
+											"type": "text"
+										},
+										{
+											"key": "lastname",
+											"value": "AUfrr",
+											"type": "text"
+										},
+										{
+											"key": "firstname",
+											"value": "Guil",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "gui@wanadoo.es",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "01010102",
+											"type": "text"
+										},
+										{
+											"key": "center",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "financial",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{port}}{{basePath}}/api/edit",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{port}}{{basePath}}",
+									"path": [
+										"api",
+										"edit"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "/api/users/sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/api/users/sessions?issuer=APP_AFPANIER&sessionsIds[0]=1&sessionsIds[1]=3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"api",
+								"users",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "issuer",
+									"value": "APP_AFPANIER"
+								},
+								{
+									"key": "sessionsIds",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sessionsIds[0]",
+									"value": "1"
+								},
+								{
+									"key": "sessionsIds[1]",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Web",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJhZnBhY29ubmVjdCIsImF1ZCI6ImFmcGFuaWVyIiwiZXhwIjoxNjIwMDQ3NDc4fQ.hj3gSHLMYaJSLKmrhnfXQ-VuKHIdhdo_tmXj73d8vev_aXD0ErJRnwQZmh0vrwzgAVVtLj56XQnWuHTU71FKWtPgKgaY6EiZnunIK6qrLb5wBI8oDUMzX_1go3jZbqitmmtqQRfNsaVLRL8_0OrNfDcse76ne36hSR0ojWnlC-386cDiEX_PRQK_4duVTEKLMUUg4cdTm919OHmMKwA5p0IiZOJIJD8ZlqxGWlh3pTDaUu_h649iWQEDlPENQTc2lqke2aLVZZTLF-J9DyuUvb3I7M4R9gbhEVwuMW6S8Kx8AiLIdLFkuUUFD8nOVZY6HH_p3MEXIV6t3eynmW-GZA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"login"
+							]
+						},
+						"description": "Permet de récupérer un utilisateur en fonction de son ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJhZnBhY29ubmVjdCIsImF1ZCI6ImFmcGFuaWVyIiwiZXhwIjoxNjIwMDQ3NDc4fQ.hj3gSHLMYaJSLKmrhnfXQ-VuKHIdhdo_tmXj73d8vev_aXD0ErJRnwQZmh0vrwzgAVVtLj56XQnWuHTU71FKWtPgKgaY6EiZnunIK6qrLb5wBI8oDUMzX_1go3jZbqitmmtqQRfNsaVLRL8_0OrNfDcse76ne36hSR0ojWnlC-386cDiEX_PRQK_4duVTEKLMUUg4cdTm919OHmMKwA5p0IiZOJIJD8ZlqxGWlh3pTDaUu_h649iWQEDlPENQTc2lqke2aLVZZTLF-J9DyuUvb3I7M4R9gbhEVwuMW6S8Kx8AiLIdLFkuUUFD8nOVZY6HH_p3MEXIV6t3eynmW-GZA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/logout",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"logout"
+							]
+						},
+						"description": "Permet de récupérer un utilisateur en fonction de son ID."
+					},
+					"response": []
+				},
+				{
+					"name": "/api/register/enable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "issuer",
+									"value": "afpanier",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "key",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "callback_success_uri",
+									"value": "https://afpanier.eloce-formation-afpa.com/",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}{{basePath}}/register/enable?verification_key=60e4635668796",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}{{basePath}}",
+							"path": [
+								"register",
+								"enable"
+							],
+							"query": [
+								{
+									"key": "verification_key",
+									"value": "60e4635668796"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

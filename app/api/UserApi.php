@@ -134,4 +134,32 @@ class UserApi
 
             return;
     }
+
+    /**
+     * @throws Exception
+     */
+    public function getUsersBySessions() {
+        $sessionsIds = $this->request->query()->get('sessionsIds');
+
+        if (!$sessionsIds) {
+            $this->response
+                ->setStatusCode(StatusCode::MISSING_REQUEST_PARAMETER)
+                ->setStatusMessage('At least one session id should be specified.')
+                ->send(200, true);
+        }
+
+        if (!is_array($sessionsIds)) {
+            $this->response
+                    ->setStatusCode(StatusCode::MISSING_REQUEST_PARAMETER)
+                    ->setStatusMessage('sessionsIds must be of type array')
+                    ->send(200, true);
+        }
+
+        $usersInSessions = $this->repository->findBySessions($sessionsIds);
+
+        $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
+            ->setBodyContent($usersInSessions)
+            ->send();
+    }
 }

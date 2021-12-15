@@ -6,7 +6,6 @@ namespace App\Model;
 
 use App\Core\Database\EloquentDriver;
 use App\Core\Request;
-use App\Utility\IssuerFormatter;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -149,6 +148,27 @@ class UserRepository
             ->with('financial')
             ->first()
         ;
+    }
+
+    /**
+     * Find users in sessions and return without password.
+     *
+     * @param array $sessions
+     * @return Model|Builder|object|null
+     *
+     */
+    public function findBySessions(array $sessions): Collection
+    {
+        $qb = $this->db->getConnection()->table('users__sessions');
+
+        $columns = $this->getReferencesWithoutColumns('users', ['password']);
+        $qb->select($columns);
+
+        return $qb
+            ->addSelect('session_id')
+            ->join('users','users.id', '=', 'users__sessions.user_id')
+            ->whereIn('session_id', $sessions)
+            ->get();
     }
 
 }

@@ -3,6 +3,7 @@
 
 namespace App\Api;
 
+use App\Core\Request;
 use App\Model\Formation;
 use App\Model\FormationRepository;
 use App\Utility\Response;
@@ -18,11 +19,13 @@ class FormationApi
 {
     private Response $response;
     private FormationRepository $formationRepository;
+    private Request $request;
 
-    public function __construct(Response $response, FormationRepository $formationRepository)
+    public function __construct(Response $response, FormationRepository $formationRepository, Request $request)
     {
         $this->response = $response;
         $this->formationRepository = $formationRepository;
+        $this->request = $request;
     }
 
     /**
@@ -33,6 +36,20 @@ class FormationApi
         $this->response
             ->setStatusCode(StatusCode::REQUEST_SUCCESS)
             ->setBodyContent(Formation::all())
+            ->send();
+    }
+
+    /**
+     * Get all formation from database.
+     * @throws \Exception
+     */
+    public function getByUser()
+    {
+        $userId = $this->request->query()->get('userId');
+
+        $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
+            ->setBodyContent($this->formationRepository->getFormationsByUser($userId))
             ->send();
     }
 }
