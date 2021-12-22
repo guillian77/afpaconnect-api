@@ -23,7 +23,7 @@ class User extends Model
 
     // Protected columns.
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     /**

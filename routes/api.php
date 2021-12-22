@@ -39,10 +39,22 @@ Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.re
 */
 Router::get('/api/centers', [\App\Api\CenterApi::class, 'index'], 'api.centers');
 Router::get('/api/formations', [\App\Api\FormationApi::class, 'index'], 'api.formations');
+Router::get('/api/sessions', [\App\Api\SessionApi::class, 'index'], 'api.sessions');
 Router::get('/api/financials', [\App\Api\FinancialApi::class, 'index'], 'api.financials');
 Router::get('/api/apps', [\App\Api\AppApi::class, 'index'], 'api.apps');
 Router::get('/api/roles', [\App\Api\RoleApi::class, 'index'], 'api.roles');
 Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');
+
+/*
+|--------------------------------------------------------------------------
+| GET BY
+|--------------------------------------------------------------------------
+*/
+Router::get('/api/users/sessions', [\App\Api\UserApi::class, 'getUsersBySessions'], 'api.users.sessions');
+Router::get('/api/formations/user', [\App\Api\FormationApi::class, 'getByUser'], 'api.formation.user');
+Router::get('/api/sessions/formation', [\App\Api\SessionApi::class, 'getByFormation'], 'api.sessions.formation');
+Router::get('/api/sessions/formations/date', [\App\Api\SessionApi::class, 'getByFormationsAndDate'], 'api.sessions.formation.date');
+
 
 /*
 |--------------------------------------------------------------------------
