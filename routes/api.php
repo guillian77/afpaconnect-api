@@ -28,8 +28,9 @@ Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
 Router::get('/api/login', [\App\Api\LoginApi::class, 'login'], 'api.login');
 Router::get('/api/user', [\App\Api\UserApi::class, 'getOneByUsername'], 'api.user');
 Router::get('/api/users', [\App\Api\UserApi::class, 'index'], 'api.users');
-Router::post('/api/user-edit', [\App\Api\UserApi::class, 'edit'], 'api.user.edit', 'Authenticate');
+Router::get('/api/user/table', [\App\Api\UserTableApi::class, 'table'], 'api.user.table', 'Authenticate');
 
+Router::post('/api/user/edit', [\App\Api\UserEditApi::class, 'edit'], 'api.user.edit', 'Authenticate');
 Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.register');
 Router::post('/api/enable', [\App\Api\EnableApi::class, 'enable'], 'api.enable');
 
