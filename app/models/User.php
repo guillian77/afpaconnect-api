@@ -32,6 +32,13 @@ class User extends Model
         'id'
     ];
 
+    // Fields allow to identify a user on the app.
+    public const INDEX_FIELDS = [
+        'identifier',
+        'mail1',
+        'mail2',
+    ];
+
     /**
      * Password mutator.
      *

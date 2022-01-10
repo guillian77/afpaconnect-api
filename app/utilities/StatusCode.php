@@ -58,4 +58,13 @@ class StatusCode
     const USER_ENABLE_NO_TEMP_PASSWORD     = "402";
     const USER_ENABLE_CODE_INVALID     = "403";
     const USER_ENABLE_CODE_NOT_FOUND     = "404";
+
+    /*
+    |--------------------------------------------------------------------------
+    | USERS EDIT
+    |--------------------------------------------------------------------------
+    */
+    const USER_EDIT_SUCCESS = 500;
+    const USER_EDIT_COLUMN_FAILURE = 501;
+    const USER_EDIT_FAILURE = 502;
 }
