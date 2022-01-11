@@ -7,32 +7,28 @@
 /**
  * XHR POST Request
  *
- * @param url
- * @param parameters
- * @param file
+ * @param {String} url Path to call.
+ * @param {Array, Object} parameters Data request parameters.
+ * @param {boolean} isUpload Specify if request will be a file upload.
  * @return {*}
  */
-export let post = function (url, parameters, file = false) {
-
+export let post = function (url, parameters, isUpload = false) {
     if(!parameters) return false;
 
-    let request =
-        file ?
-            $.ajax({
-                url: url,
-                data: parameters,
-                type: 'POST',
-                processData: file,
-                contentType: file
-            })
-            :
-            $.ajax({
-                url: url,
-                data: parameters,
-                type: 'POST'
-            })
+    let configuration = {
+        url: url,
+        data: parameters,
+        type: 'POST',
+        processData: true,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
 
-    return request;
+    if (isUpload) {
+        configuration.processData = false;
+        configuration.contentType = false;
+    }
+
+    return $.ajax(configuration);
 };
 
 /**

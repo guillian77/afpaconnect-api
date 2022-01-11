@@ -106,7 +106,8 @@ export let constructConfig = function(fields, order = [0, "asc"], name = "unknow
         "columns": [],
         'retrieve': true,
         "responsive": true,
-        "autoWidth": false
+        "autoWidth": false,
+        "initComplete": null,
     }
 
     // Edit fields settings

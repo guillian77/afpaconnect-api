@@ -6,6 +6,9 @@ let addFormationForm = $('#showAdd')
 let selectFormation = $('#formation')
 
 $(document).ready( async ()=> {
+    /*
+     * Get centers.
+     */
     await get("api/centers",false)
         .then( (centers)=> {
             centers = centers.content;
@@ -22,6 +25,9 @@ $(document).ready( async ()=> {
             $('#error').html("Un problème est survenu lors du chargement des centres").show()
         })
 
+    /*
+     * Get formations.
+     */
     await get("api/formations",false)
         .then( (formations)=> {
             formations = formations.content;
@@ -39,14 +45,19 @@ $(document).ready( async ()=> {
         })
 })
 
+/*
+ * ---------------------------------------------------------------
+ * LISTENERS
+ * ---------------------------------------------------------------
+ */
 $('#upload_file').change( (e) => {
     e.preventDefault();
     let fileobj = $('#upload_file')[0].files[0]
-    ajax_file_upload(fileobj);
+    ajaxFileUpload(fileobj);
 });
 
 $('body').on('click', '#btn-upload', (e) => {
-    insert_user_bdd()
+    insertUserInBdd()
 });
 
 $('body').on('click', '#showAdd', (e) => {
@@ -67,13 +78,33 @@ $('body').on('click', '#addFormation', (e) => {
     selectFormation.val(nameFormation.val())
 });
 
-let upload_file = (e)=>  {
-    e.preventDefault();
-    fileobj = e.dataTransfer.files[0];
-    ajax_file_upload(fileobj);
+$('.drop_file_zone').on('drop', event => {
+    event.preventDefault();
+    uploadFile(event.originalEvent);
+});
+
+/*
+ * ---------------------------------------------------------------
+ * FUNCTIONS
+ * ---------------------------------------------------------------
+ */
+/**
+ * Upload a file.
+ *
+ * @param {Event} event Drop event.
+ */
+let uploadFile = (event)=>  {
+    event.preventDefault();
+    let fileObject = event.dataTransfer.files[0];
+    ajaxFileUpload(fileObject);
 }
 
-let insert_user_bdd = async () => {
+/**
+ * Send user to app to be saved inside DB.
+ *
+ * @returns {Promise<void>}
+ */
+let insertUserInBdd = async () => {
 
     let fd = new FormData();
     let formation = $('#formation option:selected')
@@ -86,7 +117,7 @@ let insert_user_bdd = async () => {
         fd.append('formation_tag' , formation.data().tag)
     }
 
-    await post("user-add",fd,false)
+    await post("user-add",fd,true)
         .then((response) => {
             $('#alert')
                 .addClass('alert-success')
@@ -107,12 +138,18 @@ let insert_user_bdd = async () => {
         })
 }
 
-let ajax_file_upload = async (fileobj) => {
-    console.log(    )
+/**
+ * Upload file with POST AJAX method.
+ *
+ * @param {File} fileObject File contain user list.
+ *
+ * @returns {Promise<void>}
+ */
+let ajaxFileUpload = async (fileObject) => {
     let fd = new FormData();
-    fd.append("fileToUpload", fileobj)
+    fd.append("fileToUpload", fileObject)
     
-    await post("users-uploaded",fd,false)
+    await post("users-uploaded",fd,true)
     .then( (resp)=> {
         let content = resp.content
 

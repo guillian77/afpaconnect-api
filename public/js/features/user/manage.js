@@ -44,12 +44,10 @@ let tableFields = [
 
 let users = [];
 
-
 /**
  * Get centers, financials and user roles from API and fill table with.
  */
-$(document).ready( async ()=> {
-
+$(document).ready( async () => {
     await get("api/centers",false)
         .then( (centers)=> {
             centers = centers.content;
@@ -87,7 +85,7 @@ $(document).ready( async ()=> {
 
             apps = apps.content
             for (const [key, value] of Object.entries(apps)) {
-   
+
                 let app_field = document.createElement("div");
                     app_field.setAttribute('class','form__field form_field_app' )
                     app_field.id = value['id']
@@ -127,27 +125,31 @@ $(document).ready( async ()=> {
 })
 
 /**
- * Get users from API and fill table with.
+ * Get users from API and fill HTML table with.
  */
 axios.get('api/users')
     .then(resp => {
         $(document).ready(() => {
             users = resp.data.content;
 
-            let htmlTable = constructTable(tableFields, resp.data.content, $('#user_list'));
+            let userListElement = $('#user_list');
 
-            let configuration = constructConfig(tableFields, [0, "asc"], "utilisateur");
+            let htmlTable = constructTable(tableFields, users, userListElement);
 
-            $('#user_list')
+            let configuration = constructConfig(
+                tableFields,
+                [0, "asc"],
+                "utilisateur"
+            );
+
+            configuration.initComplete = () => { listenUserRows() };
+
+            userListElement
                 .html(htmlTable)
-                .DataTable(configuration);
-
-            $('#user_list tr').on('click', (e) => {
-                let userUpdated = users.find(user => user.id === parseInt(e.currentTarget.firstChild.innerHTML));
-                
-                fillUserManager(userUpdated);
-            });
-
+                .DataTable(configuration)
+                .on('draw', () => {
+                    listenUserRows();
+                });
         })
 
 
@@ -160,6 +162,28 @@ axios.get('api/users')
         $('.action-buttons').before(alert)
     })
 
+/**
+ * Select every table rows to add listeners.
+ * Listeners are used to open edit form.
+ */
+let listenUserRows = function () {
+    let rows = document.querySelectorAll('#user_list tr');
+
+    rows.forEach((row, key) => {
+        // Get row listener.
+        let rowListener = row.getAttribute('listener');
+
+        // Check if there is not a listener yet.
+        if (!rowListener) {
+            row.addEventListener('click', event => {
+                let userId = +event.currentTarget.firstChild.innerHTML;
+                let userUpdated = users.find(user => user.id === userId);
+
+                fillUserManager(userUpdated);
+            });
+        }
+    });
+}
 
 /**
  * Fill user edition section.
