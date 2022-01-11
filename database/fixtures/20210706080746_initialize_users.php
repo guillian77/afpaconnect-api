@@ -21,7 +21,7 @@ class fix_20210706080746_initialize_users
             "younes",
             "damien",
             "benoit",
-            "unregistered_user"
+            "unregistered"
         ];
 
         foreach ($users as $user)

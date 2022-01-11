@@ -18,6 +18,12 @@ class fix_20210204100216_initialize_trainings_sessions
         $query = "INSERT INTO `formations` (`id`, `tag`, `name`, `degree`, `status`) VALUES (NULL, 'DWWM', 'Developpeur web', 'degree', '1')";
         $this->dbHandle->query($query);
 
+        $query = "INSERT INTO `formations` (`id`, `tag`, `name`, `degree`, `status`) VALUES (NULL, 'CDA', 'Concepteur Développeur d\'Application', 'degree', '1')";
+        $this->dbHandle->query($query);
+
+        $query = "INSERT INTO `formations` (`id`, `tag`, `name`, `degree`, `status`) VALUES (NULL, 'J/P', 'Développeur Java Python', 'degree', '1')";
+        $this->dbHandle->query($query);
+
         /**
          * Create session 
          */
