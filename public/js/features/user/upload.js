@@ -1,49 +1,25 @@
 import {get, post} from "../../ajax";
-import {constructBodyMessage} from "../../message";
+import {Api} from "../../Api";
+
+let api = new Api();
 
 let data = []
 let addFormationForm = $('#showAdd')
 let selectFormation = $('#formation')
 
-$(document).ready( async ()=> {
+$(document).ready( async () => {
     /*
-     * Get centers.
+     * Fill select with options came from API.
      */
-    await get("api/centers",false)
-        .then( (centers)=> {
-            centers = centers.content;
-            centers.forEach(center => {
-                let el = document.createElement("option");
-                el.textContent = center.name;
-                el.value = center.id;
-                el.selected = $("#id_user_center").val() === el.value
-                $('#center').append(el);
-            });
-
-        })
-        .catch((err) => {
-            $('#error').html("Un problème est survenu lors du chargement des centres").show()
-        })
-
-    /*
-     * Get formations.
-     */
-    await get("api/formations",false)
-        .then( (formations)=> {
-            formations = formations.content;
-            formations.forEach(formation => {
-                let el = document.createElement("option");
-                el.textContent = formation.name;
-                el.value = formation.id;
-                el.selected = $("#id_user_formation").val() === el.value
-                selectFormation.append(el);
-            });
-
-        })
-        .catch((err) => {
-            $('#error').html("Un problème est survenu lors du chargement des formations").show()
-        })
-})
+    await api.getCenters()
+        .then(centers => {
+            fillSelectOptions('center', centers);
+        });
+    await api.getFormations()
+        .then(formations => {
+            fillSelectOptions('formation', formations);
+        });
+});
 
 /*
  * ---------------------------------------------------------------
@@ -89,6 +65,64 @@ $('.drop_file_zone').on('drop', event => {
  * ---------------------------------------------------------------
  */
 /**
+ * Fill HTML select element with options.
+ *
+ * @param {String} target Target HTML select element.
+ * @param {Array, Object} items Data to fill with.
+ */
+let fillSelectOptions = function (target, items)
+{
+    items.map((value, index) => {
+        let selectToFill = $('#'+target);
+        let selected = $('#id_user_'+target);
+
+        let option = document.createElement("option");
+        option.textContent = value.name;
+        option.value = value.id;
+        option.selected = selected.val() === option.value;
+        selectToFill.append(option);
+    });
+}
+
+/**
+ * Create HTML select element from teacher list.
+ */
+let getOwnerSelect = function ()
+{
+    // Initialize HTML select element.
+    let ownerSelect = document.createElement('select');
+        ownerSelect.setAttribute('id', 'owner');
+
+    // Create a function to make any options.
+    let createOption = function (value, content) {
+        let option = document.createElement("option");
+            option.textContent = content;
+            option.setAttribute('class', 'select')
+            // option.classList.add('select')
+            option.value = value;
+
+        return option;
+    }
+
+    // Create an empty option.
+    ownerSelect.append(createOption('-1', 'Aucun'));
+
+    // Create HTML option element for any teachers.
+    api.getTeachers()
+        .then(teachers => {
+            teachers.map(teacher => {
+                let option = createOption(
+                    teacher.id,
+                    teacher.lastname + " " + teacher.firstname
+                );
+                ownerSelect.append(option);
+            })
+        });
+
+    return ownerSelect;
+}
+
+/**
  * Upload a file.
  *
  * @param {Event} event Drop event.
@@ -112,6 +146,7 @@ let insertUserInBdd = async () => {
     fd.append('uploaded_user', JSON.stringify(data))
     fd.append('center' , $('#center').val())
     fd.append('formation' , formation.val())
+    fd.append('owner' , $('#owner').val())
 
     if (formation.data().length !== 0) {
         fd.append('formation_tag' , formation.data().tag)
@@ -175,7 +210,10 @@ let ajaxFileUpload = async (fileObject) => {
         });
         dataHTML += "</table>"
             
-        $('#upload_confirm').html(dataHTML).after("<button id='btn-upload' class='btn-upload btn btn-secondary'>Valider</button>")
+        $('#upload_confirm')
+            .html(dataHTML)
+            .after(getOwnerSelect())
+            .after("<button id='btn-upload' class='btn-upload btn btn-secondary'>Valider</button>")
         
         $('#alert').hide()
 

@@ -117,4 +117,19 @@ export let constructBodyMessage = function (code, successBody = null)
     }
 }
 
+/**
+ * Display an iziToast lib message directly from JS.
+ *
+ * @param {String} title Message title.
+ * @param {String} body Message body content.
+ * @param {String} type Type: type-success, type-error.
+ */
+export let display = function (title, body, type = "type-success")
+{
+    let config = getMessageConfig({type: type});
+        config.message = body;
+        config.title = title;
+
+    iziToast.show(config);
+}
 

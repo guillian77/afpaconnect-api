@@ -151,4 +151,13 @@ class UserRepository
         ;
     }
 
+    public function getTeachers()
+    {
+        return User::where('teacher', '=', true)
+            ->get()
+            ->makeHidden(['password'])
+            ->toArray()
+        ;
+    }
+
 }
