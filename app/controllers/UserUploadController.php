@@ -79,6 +79,8 @@ class UserUploadController extends Controller
     {
 
         $users = json_decode($this->request->request(false)->get('uploaded_user'));
+        $owner = ($this->request->request(false)->get('owner'));
+
         try {
 
             $formation = Formation::whereId($this->request->request()->get('formation'))->first();
@@ -102,7 +104,8 @@ class UserUploadController extends Controller
                         'n_offer'=> $user->n_offre,
                         'label_offer'=> $user->libelle_de_offre,
                         'start_at'=> $this->formatDate($user->date_de_debut_resa),
-                        'end_at'=> $this->formatDate($user->date_de_fin_resa)
+                        'end_at'=> $this->formatDate($user->date_de_fin_resa),
+                        'owner' => ($owner !== "-1") ?? $owner,
                     ]
                 );
 
