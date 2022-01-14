@@ -67,4 +67,13 @@ class StatusCode
     const USER_EDIT_SUCCESS = 500;
     const USER_EDIT_COLUMN_FAILURE = 501;
     const USER_EDIT_FAILURE = 502;
+
+    /*
+    |--------------------------------------------------------------------------
+    | SESSIONS
+    |--------------------------------------------------------------------------
+    */
+//    const USER_EDIT_SUCCESS = 500;
+//    const USER_EDIT_COLUMN_FAILURE = 501;
+//    const USER_EDIT_FAILURE = 502;
 }

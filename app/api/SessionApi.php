@@ -3,41 +3,62 @@
 namespace App\Api;
 
 use App\Core\Request;
-use App\Model\Session;
+use App\Model\SessionRepository;
 use App\Utility\Response;
 use App\Utility\StatusCode;
 use Exception;
 
 class SessionApi
 {
+    private Response $response;
+    private SessionRepository $sessionRepository;
+
+    public function __construct(SessionRepository $sessionRepository, Response $response)
+    {
+        $this->sessionRepository = $sessionRepository;
+        $this->response = $response;
+    }
+
     /**
-     * Get one session from parameters.
+     * Get one session by ID.
+     *
+     * @param Request $request
+     *
+     * @return void
      *
      * @throws Exception
      */
-    public function session(Request $request, Response $response)
+    public function session(Request $request)
     {
-        $queryParameters = $request->query()->all();
+        $sessionId = $request->query()->get('session', null);
 
-        if ($request->query()->get('owner')) {
-            $session = Session::where('owner', '=', $queryParameters['owner'])
-                ->get()
-                ->first()
-                ->toArray()
-            ;
-
-            return $response
-                ->setStatusCode(StatusCode::REQUEST_SUCCESS)
-                ->setStatusMessage('Get session with owner ID.')
-                ->setBodyContent($session)
+        if (!$sessionId) {
+            $this->response
+                ->setStatusCode(StatusCode::MISSING_REQUEST_PARAMETER)
+                ->setStatusMessage('Missing session ID.')
                 ->send();
         }
 
-        dd($queryParameters);
+        $session = $this->sessionRepository->findOneById($sessionId);
+
+        $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
+            ->setBodyContent($session)
+            ->send();
     }
 
-    public function sessions(Response $response)
+    /**
+     * List all sessions.
+     *
+     * @return void
+     */
+    public function sessions()
     {
+        $sessions = $this->sessionRepository->findAll();
 
+        $this->response
+            ->setStatusCode(StatusCode::REQUEST_SUCCESS)
+            ->setBodyContent($sessions)
+            ->send();
     }
 }

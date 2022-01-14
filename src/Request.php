@@ -72,10 +72,11 @@ class Request
 
     /**
      * @param $param
+     * @param null $default
      * @return bool|mixed
      * @throws Exception
      */
-    public function get($param)
+    public function get($param, $default = null)
     {
         if (!isset($this->lastMethod)) {
             throw new Exception('Expect query or request before.');
@@ -83,10 +84,10 @@ class Request
 
         switch ($this->lastMethod) {
             case self::METH_GET:
-                return (isset($this->query[$param])) ? $this->query[$param] : false;
+                return (isset($this->query[$param])) ? $this->query[$param] : $default;
                 break;
             case self::METH_POST:
-                return (isset($this->request[$param])) ? $this->request[$param] : false;
+                return (isset($this->request[$param])) ? $this->request[$param] : $default;
                 break;
         }
     }

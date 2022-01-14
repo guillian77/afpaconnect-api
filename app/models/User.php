@@ -62,6 +62,7 @@ class User extends Model
 
     public function session()
     { // TODO: Add a relation 'session_id' inside 'user' table.
+        // TODO: Fix this relation.
         return $this->belongsToMany(Session::class, 'users__sessions','user_id','session_id');
     }
 
