@@ -22,5 +22,27 @@
 
             <button class="btn" type="submit">Se connecter</button>
         </form>
+
+
     </div>
+
+    {% if getConfig('env') is same as 'dev' %}
+        <div class="boxed">
+            <h2>Développement</h2>
+
+            <p>
+                Bonjour développeur, bienvenue dans AfpaConnect.<br/>
+                Voici quelques astuces pratiques durant la phase de développement.
+            </p>
+            <br/>
+
+            <p><a class="btn" href="https://gitlab.com/afpaconnect/AfpaConnect/-/wikis/home" target="_blank">Documentation</a></p>
+            <br/>
+
+            <p>
+                Nom d'utilisateur: 123456789<br/>
+                Mot de passe: test
+            </p>
+        </div>
+    {% endif %}
 {% endblock %}

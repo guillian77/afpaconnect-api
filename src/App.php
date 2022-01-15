@@ -4,10 +4,13 @@
 namespace App\Core;
 
 
+use App\Core\TwigExtension\ConfigExtension;
 use App\Core\TwigExtension\RouterExtension;
 use App\Core\TwigExtension\SessionExtension;
 use DI\Container;
 use DI\ContainerBuilder;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -91,6 +94,12 @@ class App
         $this->twig = $this->container->get(Environment::class);
     }
 
+    /**
+     * Boot the application.
+     *
+     * @throws NotFoundException
+     * @throws DependencyException
+     */
     public function boot()
     {
         if (Conf::get('env') == 'dev') { // Show PHP errors.
@@ -132,12 +141,21 @@ class App
         return $this->router;
     }
 
+    /**
+     * Load Twig Extensions.
+     *
+     * @throws NotFoundException
+     * @throws DependencyException
+     */
     private function loadTemplateExtensions()
     {
-        $this->twig->addExtension($this->container->get(DebugExtension::class));
+        // Get file reference all twig extensions to load.
+        $twigExtensions = require ROOT . 'config/twigExtensions.php';
 
-        $this->twig->addExtension($this->container->get(RouterExtension::class));
+        // Add any extensions.
+        foreach ($twigExtensions as $extension) {
+            $this->twig->addExtension($this->container->get($extension));
 
-        $this->twig->addExtension($this->container->get(SessionExtension::class));
+        }
     }
 }
