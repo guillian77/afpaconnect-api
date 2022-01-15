@@ -71,12 +71,16 @@ class Request
     }
 
     /**
-     * @param $param
-     * @param null $default
+     * Return query parameter or request data.
+     *
+     * @param string $param Query parameter or request data.
+     * @param mixed $default Default value if parameter does not exist.
+     *
      * @return bool|mixed
+     *
      * @throws Exception
      */
-    public function get($param, $default = null)
+    public function get(string $param, $default = false)
     {
         if (!isset($this->lastMethod)) {
             throw new Exception('Expect query or request before.');
