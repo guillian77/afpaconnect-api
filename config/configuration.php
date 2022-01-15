@@ -85,5 +85,5 @@ return [
 
     'tld' => 'http://127.0.0.1:8000',
 
-    'copyright' => '2021 - Developped by Aufrère Guillian, Moreau Eloïse and Campillo Lucas for AFPA'
+    'copyright' => '2021-2022 - Développé par Aufrère Guillian, Moreau Eloïse et Campillo Lucas pour l\'AFPA'
 ];

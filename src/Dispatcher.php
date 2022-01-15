@@ -9,6 +9,8 @@ use App\Middleware\CrossOrigin;
 use App\Utility\Response;
 use Closure;
 use DI\Container;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Exception;
 use phpDocumentor\Reflection\Types\Callable_;
 
@@ -34,6 +36,10 @@ class Dispatcher
      */
     private Session $session;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function __construct(Router $router, Request $request, Container $container, Session $session)
     {
         $this->router = $router;
@@ -58,6 +64,13 @@ class Dispatcher
         $this->dispatch();
     }
 
+    /**
+     * Dispatch between WEB or API request.
+     *
+     * @throws DependencyException
+     * @throws NotFoundException
+     * @throws Exception
+     */
     private function dispatch()
     {
         switch ($this->request->type) {
@@ -73,16 +86,26 @@ class Dispatcher
         }
     }
 
+    /**
+     * Load method of a controller.
+     *
+     * @throws Exception
+     */
     private function loadController()
     {
         try {
             $this->container->call([$this->router->className, $this->router->methodName]);
         } catch (Exception $exception) {
-            $this->showExeption($exception);
+            $this->showException($exception);
             require VIEWS . '404.html';
         }
     }
 
+    /**
+     * Load an API class.
+     *
+     * @throws Exception
+     */
     private function loadAPI()
     {
         if (!$this->session->has('user')) {
@@ -93,15 +116,20 @@ class Dispatcher
         try {
             $this->container->call([$this->router->className, $this->router->methodName]);
         } catch (Exception $exception) {
-            $this->showExeption($exception);
-            Response::resp('Class not found', 404, true);
+            $this->showException($exception);
         }
     }
 
-    private function loadMiddleware()
+    /**
+     * Load a middleware.
+     *
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    private function loadMiddleware(): void
     {
         if (!array_key_exists($this->router->routeName, $this->router->middlewares)) {
-            return false;
+            return;
         }
 
         $middleware = $this->router->middlewares[$this->router->routeName];
@@ -109,10 +137,13 @@ class Dispatcher
         $this->container->get('\App\Middleware\\'.ucfirst($middleware));
     }
 
-    private function showExeption($exception)
+    /**
+     * @throws Exception
+     */
+    private function showException($exception)
     {
         if (Conf::get('env') == 'dev') { // Show PHP errors.
-            dump($exception);
+            throw new \Exception($exception);
         }
     }
 }

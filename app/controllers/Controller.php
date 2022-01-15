@@ -6,11 +6,10 @@ namespace App\Controller;
 
 use App\Core\App;
 use App\Core\Conf;
-use App\Core\Router;
+use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Exception;
-use http\Client;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -37,6 +36,11 @@ class Controller
      */
     public function render(string $view, array $parameters = []): void
     {
+        $container = App::get()->getContainer();
+        $env = $container->get(Environment::class);
+
+        $this->loadTemplateExtensions($env, $container);
+
         $assets = $this->autoloadAssets($view);
 
         $params = array_merge(
@@ -71,6 +75,11 @@ class Controller
      */
     public function renderError(string $message, bool $stop = false)
     {
+        $container = App::get()->getContainer();
+        $env = $container->get(Environment::class);
+
+        $this->loadTemplateExtensions($env, $container);
+
         $this->render('error.html.twig', [
             'error' => $message
         ]);
@@ -119,5 +128,22 @@ class Controller
         $route = $router->generate($target);
 
         header('Location: '.$route);
+    }
+
+    /**
+     * Load Twig Extensions.
+     *
+     * @throws NotFoundException
+     * @throws DependencyException
+     */
+    private function loadTemplateExtensions(Environment $environment, Container $container)
+    {
+        // Get file reference all twig extensions to load.
+        $twigExtensions = require ROOT . 'config/twigExtensions.php';
+
+        // Add any extensions.
+        foreach ($twigExtensions as $extension) {
+            $environment->addExtension($container->get($extension));
+        }
     }
 }

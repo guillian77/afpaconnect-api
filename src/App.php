@@ -4,15 +4,11 @@
 namespace App\Core;
 
 
-use App\Core\TwigExtension\ConfigExtension;
-use App\Core\TwigExtension\RouterExtension;
-use App\Core\TwigExtension\SessionExtension;
 use DI\Container;
 use DI\ContainerBuilder;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 define('ROOT', dirname(__DIR__) . '/');
@@ -54,16 +50,6 @@ class App
     private Router $router;
 
     /**
-     * @var FilesystemLoader
-     */
-    private FilesystemLoader $twigLoader;
-
-    /**
-     * @var Environment
-     */
-    private Environment $twig;
-
-    /**
      * Always get the same instance of App.
      *
      * @return self
@@ -88,10 +74,6 @@ class App
         $this->container = $this->containerBuilder->build();
 
         $this->router = $this->container->get(Router::class);
-
-        $this->twigLoader = $this->container->get(FilesystemLoader::class);
-
-        $this->twig = $this->container->get(Environment::class);
     }
 
     /**
@@ -111,8 +93,6 @@ class App
         $this->container->get(Conf::get('driver'));
 
         session_start();
-
-        $this->loadTemplateExtensions();
 
         $this->container->get(Dispatcher::class);
     }
@@ -139,23 +119,5 @@ class App
     public function getRouter(): Router
     {
         return $this->router;
-    }
-
-    /**
-     * Load Twig Extensions.
-     *
-     * @throws NotFoundException
-     * @throws DependencyException
-     */
-    private function loadTemplateExtensions()
-    {
-        // Get file reference all twig extensions to load.
-        $twigExtensions = require ROOT . 'config/twigExtensions.php';
-
-        // Add any extensions.
-        foreach ($twigExtensions as $extension) {
-            $this->twig->addExtension($this->container->get($extension));
-
-        }
     }
 }
