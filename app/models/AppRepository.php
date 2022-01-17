@@ -16,10 +16,23 @@ class AppRepository
 {
     private EloquentDriver $db;
 
-    public function __construct(EloquentDriver $db, App $app)
+    public function __construct(EloquentDriver $db)
     {
         $this->db = $db;
-        $this->app = $app;
+    }
 
+    /**
+     * Get one App from tag.
+     *
+     * @param string $tag
+     *
+     * @return mixed
+     */
+    public function findOneByTag(string $tag)
+    {
+        return App::where('tag', '=', $tag)
+            ->with('appRoles')
+            ->get()
+            ->first();
     }
 }

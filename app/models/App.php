@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class App extends Model
 {
+    const APP_AFPACONNECT = "APP_AFPACONNECT";
+
     protected $table = 'apps';
 
     protected $primaryKey = 'id';

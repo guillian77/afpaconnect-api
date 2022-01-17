@@ -6,6 +6,11 @@ namespace App\Controller;
 
 use App\Core\Request;
 use App\Core\Session;
+use App\Model\App;
+use App\Model\AppRepository;
+use App\Model\Role;
+use App\Model\RoleRepository;
+use App\Model\User;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Exception;
@@ -22,16 +27,25 @@ class LoginController extends Controller
    
     private $identifier;
     private $password;
+    private AppRepository $appRepository;
+    private RoleRepository $roleRepository;
 
 
-
-    public function __construct(Session $session, Request $request, UserRepository $userModel)
+    public function __construct(
+        Session $session,
+        Request $request,
+        UserRepository $userModel,
+        AppRepository $appRepository,
+        RoleRepository $roleRepository
+    )
     {
         $this->session = $session;
         $this->request = $request;
         $this->userModel = $userModel;
         $this->identifier = $this->request->request()->get("identifier");
         $this->password = $this->request->request()->get("password");
+        $this->appRepository = $appRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -78,10 +92,20 @@ class LoginController extends Controller
             return false;
         } 
 
+        /** @var User $user */
         $user = $this->userModel->findOneByUsernames($this->identifier);
-        
+
         if(!$user) {
             $this->session->set('error.login', ['Numéro de matricule inexistant']);
+            return false;
+        }
+
+        $thisApp = $this->appRepository->findOneByTag(App::APP_AFPACONNECT);
+        $superAdminRole = $this->roleRepository->findOneByTag(Role::ROLE_SUPER_ADMIN_TAG);
+
+        // User has not super admin role on AfpaConnect (this).
+        if (!$user->hasAppRole($thisApp->id, $superAdminRole->id)) {
+            $this->session->set('error.login', ["L'utilisateur n'a pas le rôle " . $superAdminRole->name . " sur " . $thisApp->name]);
             return false;
         }
 

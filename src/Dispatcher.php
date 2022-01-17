@@ -142,6 +142,7 @@ class Dispatcher
      */
     private function showException($exception)
     {
+        dd($exception);
         if (Conf::get('env') == 'dev') { // Show PHP errors.
             throw new \Exception($exception);
         }

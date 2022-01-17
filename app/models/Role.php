@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Role extends Model
 {
+    const ROLE_SUPER_ADMIN_TAG = 'ROLE_SUPER_ADMIN';
+
     protected $table = 'roles';
 
     protected $guarded = [];
