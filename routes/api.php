@@ -48,6 +48,7 @@ Router::get('/api/roles', [\App\Api\RoleApi::class, 'index'], 'api.roles');
 Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');
 Router::get('/api/session', [\App\Api\SessionApi::class, 'session'], 'api.session');
 Router::get('/api/sessions', [\App\Api\SessionApi::class, 'sessions'], 'api.sessions');
+Router::get('/api/sessions', [\App\Api\SessionApi::class, 'sessions'], 'api.sessions');
 
 /*
 |--------------------------------------------------------------------------
