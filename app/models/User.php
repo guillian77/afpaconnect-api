@@ -5,6 +5,7 @@ namespace App\Model;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class User
@@ -20,15 +21,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class User extends Model
 {
-    protected $table = 'users';
+    protected $table = 'users'; // Specify entity table to Eloquent.
 
-    protected $hidden = [
+    protected $hidden = [ // Columns will not be shown.
         'password',
         'password_temp'
     ];
 
-    // Protected columns.
-    protected $guarded = [
+    protected $guarded = [ // Protected columns.
         'id'
     ];
 
@@ -55,6 +55,30 @@ class User extends Model
         return $this;
     }
 
+    /**
+     * User can have many app.
+     * User 0,N App.
+     *
+     * @return BelongsToMany
+     */
+    public function apps()
+    {
+        return $this->belongsToMany(App::class, 'apps__users__roles');
+    }
+
+    /**
+     * User can have many role.
+     * User 0,N Role
+     *
+     * @return BelongsToMany
+     */
+    public function roles()
+    {
+        return $this
+            ->belongsToMany(Role::class, 'apps__users__roles')
+            ->withPivot('role_id', 'app_id');
+    }
+
     public function career()
     { // TODO: Add a relation 'career_id' inside 'user' table.
         return $this->belongsTo(Career::class, 'id');
@@ -69,17 +93,6 @@ class User extends Model
     public function center()
     {
         return $this->belongsTo(Center::class, 'id');
-    }
-
-    public function apps()
-    {
-        return $this->belongsToMany(App::class, 'apps__users__roles');
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'apps__users__roles')
-            ->withPivot('role_id', 'app_id');
     }
 
     public function financial()

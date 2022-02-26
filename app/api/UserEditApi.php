@@ -18,13 +18,19 @@ use Exception;
  * under User model.
  *
  * @UserEditApi
- *
+ * @package API\User
  * @author Aufrère Guillian
+ * @version 1.0.0
  */
 class UserEditApi
 {
     /**
      * Update user information.
+     *
+     * @param Request $request (DI) Request object.
+     * @param Response $response (DI) Response helper object.
+     * @param UserRepository $userRepository (DI) UserRepository object.
+     * @param Router $router (DI) Router object.
      *
      * @throws Exception
      */

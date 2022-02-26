@@ -8,6 +8,14 @@ use App\Service\MessageService;
 use App\Utility\Response;
 use Exception;
 
+/**
+ * API to create or read messages.
+ *
+ * @MessagesApi
+ * @package API
+ * @author Aufrère Guillian
+ * @version 1.0.0
+ */
 class MessagesApi
 {
     private Request $request;

@@ -18,10 +18,11 @@ use Exception;
 use Throwable;
 
 /**
- * Class RegisterApi
- * @package App\Api
+ * API to register a user from an external app.
+ * @RegisterApi
+ * @package API\User
  * @author Aufrère Guillian
- * @version 1.0
+ * @version 1.0.0
  */
 class RegisterApi
 {
@@ -86,6 +87,14 @@ class RegisterApi
 
         // User not exist ?
         $this->checkUserState($user); // Execution can be break here.
+
+//        if ($user && !empty($user->password)) {
+//            $this->response
+//                ->setStatusCode(StatusCode::USER_REGISTER_ALREADY)
+//                ->setStatusMessage('User already registered.')
+//                ->setBodyContent($user)
+//                ->send(200);
+//        }
 
         $user->password_temp = $password;
 

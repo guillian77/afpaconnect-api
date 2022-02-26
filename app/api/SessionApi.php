@@ -8,6 +8,13 @@ use App\Utility\Response;
 use App\Utility\StatusCode;
 use Exception;
 
+/**
+ * API for session.
+ * @SessionApi
+ * @package API
+ * @author Aufrère Guillian
+ * @version 1.0.0
+ */
 class SessionApi
 {
     private Response $response;

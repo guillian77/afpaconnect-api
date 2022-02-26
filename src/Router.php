@@ -90,11 +90,15 @@ class Router
     }
 
     /**
+     * Map a POST route.
+     *
      * @param string $url
      * @param $target
      * @param string $name
      * @param null $middleware
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function post(string $url, $target, string $name, $middleware = null): self
@@ -108,6 +112,13 @@ class Router
         return $this;
     }
 
+    /**
+     * Get matching routes and store route parameters.
+     *
+     * @return Closure|false
+     *
+     * @throws Exception
+     */
     public function run()
     {
         $route =  $this->router->match();

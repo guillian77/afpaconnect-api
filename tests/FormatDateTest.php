@@ -18,9 +18,11 @@ class FormatDateTest extends TestCase
     private $uuc;
 
     protected function setUp():void {
-        
-        $this->uuc = new UserUploadController($this->createMock(Request::class), $this->createMock(UserRepository::class), $this->createMock(User::class));
-
+        $this->uuc = new UserUploadController(
+            $this->createMock(Request::class),
+            $this->createMock(UserRepository::class),
+            $this->createMock(User::class)
+        );
     }
 
     /**
@@ -53,5 +55,4 @@ class FormatDateTest extends TestCase
             ]
         ];
     }
-
 }

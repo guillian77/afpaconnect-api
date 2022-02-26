@@ -6,7 +6,6 @@ namespace App\Core;
 
 use App\Utility\Response;
 use App\Utility\StatusCode;
-use Exception;
 
 class Certificate
 {

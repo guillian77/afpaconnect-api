@@ -14,10 +14,11 @@ use App\Utility\Valid;
 use Exception;
 
 /**
+ * API to enable a user account from external app.
  * @EnableApi
- * @package App\Api
+ * @package API\User
  * @author Aufrère Guillian
- * @version 1.0
+ * @version 1.0.0
  */
 class EnableApi
 {

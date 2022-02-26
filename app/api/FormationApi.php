@@ -9,10 +9,11 @@ use App\Utility\Response;
 use App\Utility\StatusCode;
 
 /**
- * Class FormationApi
- * @package App\Api
+ * API for formations.
+ * @FormationApi
+ * @package API
  * @author Lucas Campillo
- * @version 1.0
+ * @version 1.0.0
  */
 class FormationApi
 {

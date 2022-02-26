@@ -8,7 +8,7 @@
 
 import {post} from "../../ajax";
 import {constructTable, constructConfig} from "../../table";
-import {constructBodyMessage, display} from "../../message";
+import {display} from "../../message";
 import {Api} from "../../Api";
 import {Select} from "../../Select";
 import {User} from "../../User";
@@ -21,7 +21,7 @@ const select = new Select();
  * @type {({orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean}|{orderable: boolean, name: string, show: boolean})[]}
  */
 let tableFields = [
-    { "name": "UID", "orderable": true, "show": true },
+    { "name": "ID", "orderable": true, "show": true },
     { "name": "ID Centre", "orderable": false, "show": false },
     { "name": "ID Financeur", "orderable": false, "show": false },
     { "name": "N° de matricule", "orderable": true, "show": true },
@@ -47,6 +47,8 @@ let tableFields = [
 ];
 
 let users = [];
+let centers = null;
+let financials = null;
 
 /**
  * Get centers, financials and user roles from API and fill table with.
@@ -100,25 +102,50 @@ let buildTable = function ()
  */
 let loadEditFormData = async function ()
 {
-    // Create select for centers.
-    await api.getCenters()
-        .then(centers => {
-            select
-                .setTarget($('#center'))
-                .setSelected($("#id_user_center").val())
-                .addOptions(centers);
-        });
+    /*
+     * Load centers.
+     */
+    select
+        .setTarget($('#center'))
+        .setSelected($("#id_user_center").val());
 
-    // Create select for financials.
-    await api.getFinancials()
-        .then(financials => {
-            select
-                .setTarget($('#financial'))
-                .setSelected($("#id_user_financial").val())
-                .addOptions(financials);
-        });
+    if (!centers) {
+        centers = await api.getCenters()
+            .then(centers => {
+                select.addOptions(centers);
+                return centers;
+            })
+            .catch((err) => {
+                console.log(err)
+                $('#error')
+                    .html("Un problème est survenu lors du chargement des centrers.")
+                    .show()
+            });
+    }
 
-    // Get roles available for any apps.
+    /*
+     * Load financials.
+     */
+    select
+        .setTarget($('#financial'))
+        .setSelected($("#id_user_financial").val());
+
+    if (!financials) {
+        financials = await api.getFinancials()
+            .then(financials => {
+                select.addOptions(financials);
+                return financials;
+
+            })
+            .catch((err) => {
+                console.log(err)
+                $('#error').html("Un problème est survenu lors du chargement des financeurs").show()
+            });
+    }
+
+    /*
+     * Get Roles availables for any apps.
+     */
     await api.getAppsRoles()
         .then(apps => {
             let appsRolesElement = $('#app_roles');
@@ -163,17 +190,18 @@ let loadEditFormData = async function ()
         })
         .catch((err) => {
             console.log(err)
-            $('#error').html("Un problème est survenu lors du chargement des roles").show()
+            $('#error').html("Un problème est survenu lors du chargement des roles.").show()
         });
 }
 
 /**
  * Add listener on every user row.
  */
-let listenUserRows = function () {
+let listenUserRows = function ()
+{
     let rows = document.querySelectorAll('#user_list tr');
 
-    rows.forEach((row, key) => {
+    rows.forEach(row => {
         // Get row listener.
         let rowListener = row.getAttribute('listener');
 
@@ -193,7 +221,7 @@ let listenUserRows = function () {
 }
 
 /**
- * Fill user edition section.
+ * Fill user edition section and await form submission.
  *
  * @param userToUpdate
  */
@@ -201,27 +229,52 @@ let fillUserManager = function (userToUpdate) {
     let user = new User(userToUpdate);
     let userAppsRoles = user.getRoles();
 
-    let userManageBox = $('.u_managment');
-    let editForm = $('#user_edit_form');
+    let userManageElement = $('.u_managment');
+    let editFormElement = $('#user_edit_form');
+    let submitElement = editFormElement.find('.form__submit');
 
     // Show user managment form
-    userManageBox.show(150);
+    userManageElement.show(150);
 
-    // Fill user basic informations
-    editForm.find('#uid').val(user.getId());
-    editForm.find('#beneficiary').val(user.getIdentifier());
-    editForm.find('#lastname').val(user.getLastname());
-    editForm.find('#firstname').val(user.getFirstname());
-    editForm.find('#email').val(user.getMail2());
-    editForm.find('#phone').val(user.getPhone());
-    editForm.find('#financial').val(user.getFinancial_id());
-    editForm.find('#center').val(user.getCenter_id());
-    editForm.find('#address').val(user.getAddress());
-    editForm.find('#complementAddress').val(user.getComplementAddress());
-    editForm.find('#zip').val(user.getZip());
-    editForm.find('#city').val(user.getCity());
-    editForm.find('#country').val(user.getCountry());
-    editForm.find('#gender').val(user.getGender());
+    let idElement = editFormElement.find('#id');
+    let beneficiaryElement = editFormElement.find('#beneficiary');
+    let lastnameElement = editFormElement.find('#lastname');
+    let firstnameElement = editFormElement.find('#firstname');
+    let emailElement = editFormElement.find('#email');
+    let phoneElement = editFormElement.find('#phone');
+    let centerElement = editFormElement.find('#center');
+    let addressElement = editFormElement.find('#address');
+    let complementAddressElement = editFormElement.find('#complementAddress');
+    let zipElement = editFormElement.find('#zip');
+    let cityElement = editFormElement.find('#city');
+    let countryElement = editFormElement.find('#country');
+    let genderElement = editFormElement.find('#gender');
+
+    idElement.val(user.getId());
+    beneficiaryElement.val(user.getIdentifier());
+    lastnameElement.val(user.getLastname());
+    firstnameElement.val(user.getFirstname());
+    emailElement.val(user.getMail2());
+    phoneElement.val(user.getPhone());
+    centerElement.val(user.getCenter_id());
+    addressElement.val(user.getAddress());
+    complementAddressElement.val(user.getComplementAddress());
+    zipElement.val(user.getZip());
+    cityElement.val(user.getCity());
+    countryElement.val(user.getCountry());
+    genderElement.val(user.getGender());
+
+    firstnameElement.focusout(() => {
+        if (firstnameElement.val().length < 2 || firstnameElement.val().length > 255) {
+            firstnameElement
+                .addClass('error')
+                .prop('title', 'Le prénom doit-être compris entre 2 et 255 caractères.')
+            submitElement.attr('disabled', true);
+        } else {
+            firstnameElement.removeClass('error');
+            submitElement.attr('disabled', false);
+        }
+    });
 
     // Fill user roles on any apps.
     userAppsRoles.forEach(role => {
@@ -234,15 +287,15 @@ let fillUserManager = function (userToUpdate) {
     });
 
     // Listen for form submitting.
-    editForm.submit(event => {
+    editFormElement.submit(event => {
         event.preventDefault();
 
-        // Enable user uid.
-        editForm
-            .find('#uid')
+        // Enable user ID.
+        editFormElement
+            .find('#id')
             .attr('disabled', false);
 
-        postUser(editForm, userManageBox)
+        postUser(editFormElement, userManageElement)
             .then(() => {
                 buildTable();
             })
@@ -253,7 +306,7 @@ let fillUserManager = function (userToUpdate) {
  * Send updated user to API.
  *
  * @param {Object, jQuery} form The user form.
- * @param manageBox
+ * @param {jQuery} manageBox The edit section.
  */
 let postUser = async function (form, manageBox)
 {

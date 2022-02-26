@@ -1,5 +1,9 @@
 <?php
 
+use App\Controller\LoginController;
+use App\Controller\LogoutController;
+use App\Controller\UserManageController;
+use App\Controller\UserUploadController;
 use App\Core\Facade\Router;
 
 /*
@@ -17,7 +21,7 @@ use App\Core\Facade\Router;
 | MAIN
 |----------------------------
 */
-Router::get('/', [\App\Controller\UserManageController::class, 'index'], 'home', 'Authenticate');
+Router::get('/', [UserManageController::class, 'index'], 'home', 'Authenticate');
 
 
 /*
@@ -37,14 +41,14 @@ Router::get('/role-manage', [\App\Controller\RoleController::class, 'index'], 'r
 | USER
 |----------------------------
 */
-Router::get('/login', [\App\Controller\LoginController::class, 'index'], 'login');
-Router::post('/login', [\App\Controller\LoginController::class, 'login'], 'login.post');
-Router::get('/logout', [\App\Controller\LogoutController::class, 'index'], 'logout', 'Authenticate');
-Router::get('/user-manage', [\App\Controller\UserManageController::class, 'index'], 'user.manage', 'Authenticate');
-Router::post('/user-edit', [\App\Controller\UserManageController::class, 'edit'], 'user.edit', 'Authenticate');
-Router::get('/user-upload', [\App\Controller\UserUploadController::class, 'index'], 'user.upload', 'Authenticate');
-Router::post('/users-uploaded', [\App\Controller\UserUploadController::class, 'upload'], 'users.uploaded', 'Authenticate');
-Router::post('/user-add', [\App\Controller\UserUploadController::class, 'add'], 'user.add', 'Authenticate');
+Router::get('/login', [LoginController::class, 'index'], 'login');
+Router::post('/login', [LoginController::class, 'login'], 'login.post');
+Router::get('/logout', [LogoutController::class, 'index'], 'logout', 'Authenticate');
+Router::get('/user-manage', [UserManageController::class, 'index'], 'user.manage', 'Authenticate');
+Router::post('/user-edit', [UserManageController::class, 'edit'], 'user.edit', 'Authenticate');
+Router::get('/user-upload', [UserUploadController::class, 'index'], 'user.upload', 'Authenticate');
+Router::post('/users-uploaded', [UserUploadController::class, 'upload'], 'users.uploaded', 'Authenticate');
+Router::post('/user-add', [UserUploadController::class, 'add'], 'user.add', 'Authenticate');
 
 /*
 |----------------------------

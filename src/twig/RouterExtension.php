@@ -15,9 +15,6 @@ use Twig\TwigFunction;
  */
 class RouterExtension extends AbstractExtension
 {
-    /**
-     * @var Router
-     */
     private Router $router;
 
     /**
@@ -37,13 +34,17 @@ class RouterExtension extends AbstractExtension
     }
 
     /**
-     * @param string $url
-     * @param array $params
+     * Generate URL strings from route.
+     *
+     * @param string $routeName Route name to get URL string.
+     * @param array $params Additional optional parameters to transmit.
+     *
      * @return string|null
+     *
      * @throws Exception
      */
-    public function generatePath(string $url, array $params = [])
+    public function generatePath(string $routeName, array $params = [])
     {
-        return $this->router->generate($url, $params);
+        return $this->router->generate($routeName, $params);
     }
 }

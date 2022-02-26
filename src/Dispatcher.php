@@ -109,7 +109,10 @@ class Dispatcher
     private function loadAPI()
     {
         if (!$this->session->has('user')) {
+            // Check JWT
             $this->container->call([JsonWebToken::class, 'checkToken']);
+
+            // Check client origin. Client should be whitelisted.
             $this->container->call([CrossOrigin::class, 'sameOrigin']);
         }
 

@@ -49,6 +49,8 @@ class Request
     }
 
     /**
+     * Store query parameters and secure them.
+     *
      * @return $this
      */
     public function query($escapeHTML = true):Request

@@ -6,6 +6,14 @@ use App\Model\UserRepository;
 use App\Utility\Response;
 use App\Utility\StatusCode;
 
+/**
+ * API to get users are Teacher.
+ *
+ * @UserTeacherApi
+ * @package API\User
+ * @author Aufrère Guillian
+ * @version 1.0.0
+ */
 class UserTeacherApi
 {
     /**
@@ -14,7 +22,7 @@ class UserTeacherApi
      * @param UserRepository $userRepository
      * @param Response $response
      */
-    public function getTeachers(UserRepository $userRepository, Response $response)
+    public function teachers(UserRepository $userRepository, Response $response)
     {
         $teachers = $userRepository->getTeachers();
         $response

@@ -6,7 +6,6 @@ namespace App\Model;
 
 use App\Core\Database\EloquentDriver;
 use App\Core\Request;
-use App\Utility\IssuerFormatter;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -103,38 +102,22 @@ class UserRepository
         ;
             
         return $users;
-        
-        /* OLD REQUEST WITHOUT ROLES 
-        
-        
-        $qb = $this->db->getConnection()->table('users');
-
-        if (!empty($filters)) {
-            $columns = $this->getReferencesWithoutColumns('users', $filters);
-            $qb->select($columns);
-        }
-
-        return $qb->get();*/
-
-
     }
 
     /**
-     * Find one user by usernames: identifier, mail pro, mail self.
+     * Find one user by usernames.
      *
-     * @param $username
+     * @param string $username identifier, mail pro, mail self
      *
      * @return Model|Builder|object|null
      *
      * @throws Exception
      */
-    public function findOneByUsernames($username)
+    public function findOneByUsernames(string $username)
     {
         $issuer = $this->request->get('issuer');
 
         $app = App::where('tag', '=', $issuer)->first();
-
-        // TODO: Mettre un LIKE pour les mails
 
         return User::where('identifier', '=', $username)
             ->orWhere('mail1', '=', $username)
@@ -151,6 +134,24 @@ class UserRepository
         ;
     }
 
+    /**
+     * Find one user by ID.
+     *
+     * @param int $id The user ID.
+     *
+     * @return mixed
+     */
+    public function findOneById(int $id): ?User
+    {
+        // SELECT * FROM users WHERE users.id = ?;
+        return User::whereId($id)->first();
+    }
+
+    /**
+     * Return a list of teacher users.
+     *
+     * @return mixed
+     */
     public function getTeachers()
     {
         return User::where('teacher', '=', true)

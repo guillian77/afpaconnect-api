@@ -7,15 +7,22 @@ use App\Utility\Response;
 use App\Utility\StatusCode;
 
 /**
- * @UsersApi
+ * API to get all users.
  *
+ * @UsersApi
+ * @package API\User
  * @author Aufrère Guillian
+ * @version 1.0.0
+ * @example test
  */
 class UsersApi
 {
     /**
      * Get all users from database.
-     * Passwords are hidden.
+     * Passwords will not be shown in results.
+     *
+     * @param UserRepository $userRepository (DI) UserRepository object.
+     * @param Response $response (DI) Response object.
      *
      * @return void
      */

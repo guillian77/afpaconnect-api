@@ -11,7 +11,7 @@ use App\Utility\StatusCode;
 
 /**
  * Class CenterApi
- * @package App\Api
+ * @package API
  * @author Aufrère Guillian
  * @version 1.0
  */

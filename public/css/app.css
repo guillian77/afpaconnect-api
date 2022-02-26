@@ -1,7 +1,7 @@
 /**
 * Cascade Style Sheet
 * @copyright 2020 - Project AfpaConnect
-* @author Aufrère Guillian && Campillo Lucas
+* @author Aufrère Guillian, Campillo Lucas && Eloïse Moreaux
 * 
 * INDEX
 * - General
@@ -117,6 +117,7 @@ input {
     outline: none;
     border: 1px solid transparent;
 }
+
 input:active, input:focus {
     border: 1px solid var(--purple-light);
     outline: none;
@@ -128,6 +129,9 @@ input:disabled {
     cursor: not-allowed;
 }
 
+input.error {
+    border: 1px solid red;
+}
 
 /**
  * Alert

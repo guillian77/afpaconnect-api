@@ -5,21 +5,22 @@
  */
 
 /**
- * Construct Table
- * @param {Array} fields Fieldsnames
- * @param {Array} data Data for fieldnames
- * @param {Array} actions Actions buttons
+ * Construct Table HTMLElement.
+ *
+ * @param {Array} fields Fields names.
+ * @param {Array} data Data for any fields names.
+ * @param {Array} actions Actions buttons.
  */
 export let constructTable = function(fields, data, actions = 0) {
     let table = "";
 
-    /**
-     * Construct table header
+    /*
+     * Construct table header.
      */
     table += '<thead class="thead-white">';
     table += "<tr>";
-    // Loop fields inside table header
-    fields.forEach(function(field) {
+    // Loop fields inside table header.
+    fields.forEach(field => {
         if (field.show) {
             table += '<th> ' + field.name + '</th>';
         }
@@ -28,11 +29,11 @@ export let constructTable = function(fields, data, actions = 0) {
     table += "</tr>";
     table += "</thead>";
 
-    /**
-     * Construct table body
+    /*
+     * Construct table body.
      */
     table += "<tbody>";
-    data.forEach(function(row) {
+    data.forEach(row => {
         table += "<tr>";
 
         /**

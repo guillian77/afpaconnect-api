@@ -10,8 +10,9 @@ use App\Model\CenterRepository;
 use App\Utility\Response;
 
 /**
- * Class AppApi
- * @package App\Api
+ * API for App.
+ * @AppApi
+ * @package API
  * @author Aufrère Guillian
  * @version 1.0
  */

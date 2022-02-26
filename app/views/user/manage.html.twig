@@ -9,71 +9,78 @@
     <main class="main boxed">
         <h2>Récapitulatif des utilisateurs</h2>
 
-        <!-- BUTTONS: End -->
-
         <!-- TABLE: Start -->
         <table id="user_list" class="display"></table>
         <!-- TABLE: End -->
     </main>
     <!-- MAIN: End -->
 
+    <!-- USER MANAGEMENT: Start -->
     <aside class="u_managment boxed">
         <h2 class="u_managment__title">Editer utilisateur</h2>
 
         <form id="user_edit_form" class="u_managment__form">
-
             <h3>Informations principales</h3>
-            
-            
-            <div class="field_area"> 
 
-                <div class="single_field"> 
-                <label for="uid"> ID </label>
-                <input class="form__field" type="text" name="uid" id="uid" placeholder="ID AC" disabled="true" />
+            <!-- MAIN: Start -->
+            <div class="field_area">
+                <!-- EDIT FORM: ID -->
+                <div class="single_field">
+                    <label for="id">ID</label>
+                    <input class="form__field" type="text" name="id" id="id" placeholder="ID AC" disabled="true" />
                 </div>
 
+                <!-- EDIT FORM: identifier -->
                 <div class="single_field"> 
-                <label for="beneficiary"> N° de bénéficiaire </label>
-                <input class="form__field" type="text" name="beneficiary" id="beneficiary" placeholder="Numéro de bénéficiaire" />
+                    <label for="beneficiary"> N° de bénéficiaire </label>
+                    <input class="form__field" type="text" name="beneficiary" id="beneficiary" placeholder="Numéro de bénéficiaire" />
                 </div>
 
+                <!-- EDIT FORM: lastname -->
                 <div class="single_field"> 
-                <label for="lastname"> Nom </label>
-                <input class="form__field" type="text" name="lastname" id="lastname" placeholder="Nom" />
+                    <label for="lastname"> Nom </label>
+                    <input class="form__field" type="text" name="lastname" id="lastname" placeholder="Nom" />
                 </div>
 
+                <!-- EDIT FORM: firstname -->
                 <div class="single_field"> 
-                <label for="firstname"> Prénom </label>
-                <input class="form__field" type="text" name="firstname" id="firstname" placeholder="Prénom" />
+                    <label for="firstname"> Prénom </label>
+                    <input class="form__field" type="text" name="firstname" id="firstname" placeholder="Prénom" />
                 </div>
 
+                <!-- EDIT FORM: address -->
                 <div class="single_field"> 
-                <label for="adress"> Adresse </label>
-                <input class="form__field" name="address" id="address" placeholder="Adresse"/>
+                    <label for="adress"> Adresse </label>
+                    <input class="form__field" name="address" id="address" placeholder="Adresse"/>
                 </div>
 
+                <!-- EDIT FORM: comp. address -->
                 <div class="single_field"> 
-                <label for="complementAddress"> Complément d'adresse </label>
-                <input class="form__field" name="complementAddress" id="complementAddress" placeholder="Complément d'adresse"/>
+                    <label for="complementAddress"> Complément d'adresse </label>
+                    <input class="form__field" name="complementAddress" id="complementAddress" placeholder="Complément d'adresse"/>
                 </div>
 
+                <!-- EDIT FORM: zip -->
                 <div class="single_field"> 
-                <label for="zip"> Code Postal </label>
-                <input class="form__field" name="zip" id="zip" placeholder="Code Postal"/>
+                    <label for="zip"> Code Postal </label>
+                    <input class="form__field" name="zip" id="zip" placeholder="Code Postal"/>
                 </div>
 
+                <!-- EDIT FORM: city -->
                 <div class="single_field"> 
-                <label for="city"> Ville </label>
-                <input class="form__field" name="city" id="city" placeholder="Ville"/>
+                    <label for="city"> Ville </label>
+                    <input class="form__field" name="city" id="city" placeholder="Ville"/>
                 </div>
 
+                <!-- EDIT FORM: country -->
                 <div class="single_field"> 
-                <label for="country"> Pays </label>
-                <input class="form__field" name="country" id="country" placeholder="Pays"/>
+                    <label for="country"> Pays </label>
+                    <input class="form__field" name="country" id="country" placeholder="Pays"/>
                 </div>
 
+                <!-- EDIT FORM: gender -->
                 <div class="single_field"> 
-                <label for="gender"> Genre </label>           
+                    <label for="gender"> Genre </label>
                     <select class="form__field" name="gender" id="gender" placeholder="Genre">
                         <option value="1">Homme</option>
                         <option value="2">Femme</option>
@@ -81,36 +88,42 @@
                     </select>
                 </div>
 
+                <!-- EDIT FORM: mail1 -->
                 <div class="single_field"> 
-                <label for="email"> Adresse e-mail </label>
+                    <label for="email"> Adresse e-mail </label>
                     <input class="form__field" type="email" name="email" id="email" placeholder="Adresse mail" />
                 </div>
 
+                <!-- EDIT FORM: phone -->
                 <div class="single_field"> 
-                <label for="phone"> Téléphone </label>
+                    <label for="phone"> Téléphone </label>
                     <input class="form__field" type="tel" name="phone" id="phone" placeholder="Numéro de téléphone" />
                 </div>
 
+                <!-- EDIT FORM: center -->
                 <div class="single_field"> 
-                <label for="center"> Centre de formation </label>
+                    <label for="center"> Centre de formation </label>
                     <select class="form__field" name="center" id="center" placeholder="Centre de formation"></select>
                 </div>
 
+                <!-- EDIT FORM: financial -->
                 <div class="single_field"> 
-                <label for="financial"> Financeur </label>
-                    <select class="form__field" name="financial" id="financial" placeholder="Financeur"></select>
+                    <label for="financial">Financeur</label>
+                    <select class="form__field" name="financial" id="financial"></select>
                 </div> 
-
           </div>
 
             <hr>
             
-                <h3>Droits sur les applications</h3>
+            <h3>Droits sur les applications</h3>
 
+            <!-- EDIT FORM: app_roles -->
            <div id="app_roles" class="field_area">
             </div>
 
+            <!-- EDIT FORM: submit -->
             <button class="form__submit btn" type="submit">Éditer l'utilisateur</button>
         </form>
     </aside>
+    <!-- USER MANAGEMENT: END -->
 {% endblock %}

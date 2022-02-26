@@ -2,22 +2,21 @@
 
 namespace Tests;
 
+use App\Core\Conf;
 use App\Utility\StatusCode;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\TestCase;
 
 class ApiTest extends TestCase
 {
-    // TODO: Create seeds for tests.
-    // TODO: Make multiple test case.
-
     private $publicKey;
     private $jwt;
     private Client $client;
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function setUp(): void
     {
@@ -25,7 +24,7 @@ class ApiTest extends TestCase
 
         $this->client = new Client();
 
-        $response = $this->client->request("POST", "http://127.0.0.1:8000/api/auth", [
+        $response = $this->client->request("POST", Conf::get('tld') . "/api/auth", [
             'form_params' => [
                 'issuer' => 'APP_AFPANIER',
                 'public_key' => $publicKey
@@ -61,7 +60,7 @@ class ApiTest extends TestCase
     {
         $client = new Client();
 
-        $response=  $client->request("POST", "http://127.0.0.1:8000/api/register", [
+        $response=  $client->request("POST", Conf::get('tld') . "/api/register", [
             'form_params' => [
                 'issuer' => 'APP_AFPANIER',
                 'username' => 'pro_admin@mail.fr',
@@ -78,11 +77,11 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function tokenDataProvider(): array
     {
-        $response = $this->client->request("POST", "http://127.0.0.1:8000/api/auth", [
+        $response = $this->client->request("POST", Conf::get('tld') . "/api/auth", [
             'form_params' => [
                 'issuer' => 'afpanier',
                 'public_key' => $this->publicKey
@@ -104,7 +103,7 @@ class ApiTest extends TestCase
      * @dataProvider apiPostDataProvider
      */
     public function testPostApiRoutes($url, $params, $expected) {
-        $response=  $this->client->request("POST", "http://127.0.0.1:8000/api/".$url, [
+        $response=  $this->client->request("POST", Conf::get('tld') . "/api/".$url, [
             'form_params' => $params,
             'headers' => [
                 'Authorization' => "Bearer " . $this->jwt
@@ -159,7 +158,7 @@ class ApiTest extends TestCase
      */
     public function testLogin($url, $params, $expected)
     {
-        $response=  $this->client->request("GET", "http://127.0.0.1:8000/api/". $url, [
+        $response=  $this->client->request("GET", Conf::get('tld') . "/api/". $url, [
             'query' => $params,
             'headers' => [
                 'Authorization' => "Bearer " . $this->jwt

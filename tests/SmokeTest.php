@@ -4,8 +4,9 @@
 namespace Tests;
 
 
+use App\Core\App;
+use App\Core\Conf;
 use App\Utility\StatusCode;
-use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,10 @@ class SmokeTest extends TestCase
     public function testSmoke($url, $expected) {
         $client = new Client();
 
-        $response=  $client->request("GET", "http://127.0.0.1:8000/".$url);
+        App::get();
+
+        $tld = Conf::get('tld');
+        $response=  $client->request("GET", "$tld/".$url);
 
         $this->assertEquals($expected, $response->getStatusCode());
     }

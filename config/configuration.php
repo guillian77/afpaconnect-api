@@ -35,7 +35,7 @@ return [
     */
     'driver' => \App\Core\Database\EloquentDriver::class,
 
-    'db_host' => "database",
+    'db_host' => "db",
     'db_port' => 3306,
     'db_name' => "afpaconnect",
     'db_username' => "afpaconnect",
@@ -83,7 +83,7 @@ return [
 
     'contactEmail' => 'contact@afpaconnect.fr',
 
-    'tld' => 'http://127.0.0.1:8000',
+    'tld' => 'http://127.0.0.1',
 
     'copyright' => '2021-2022 - Développé par Aufrère Guillian, Moreau Eloïse et Campillo Lucas pour l\'AFPA'
 ];

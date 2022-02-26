@@ -17,13 +17,13 @@ class SessionRepository
     }
 
     /**
-     * Get all sessions.
+     * Get one session from ID.
      *
-     * @param $sessionId
+     * @param int $sessionId Session ID to get.
      *
      * @return array
      */
-    public function findOneById($sessionId): array
+    public function findOneById(int $sessionId): array
     {
         return Session::with('owner')
             ->with('students')
@@ -34,7 +34,7 @@ class SessionRepository
     }
 
     /**
-     * Find one session by owner.
+     * Find all sessions.
      *
      * @return mixed
      */

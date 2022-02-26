@@ -10,8 +10,9 @@ use App\Utility\Response;
 use App\Utility\StatusCode;
 
 /**
+ * API for roles.
  * Class RoleApi
- * @package App\Api
+ * @package API
  * @author Moreau Eloïse
  * @version 1.0
  */
@@ -27,9 +28,8 @@ class RoleApi
     /**
      * Get all roles from database.
      */
-    public function index()
+    public function roles()
     {
-
         $this->response
             ->setStatusCode(StatusCode::REQUEST_SUCCESS)
             ->setBodyContent(Role::all())

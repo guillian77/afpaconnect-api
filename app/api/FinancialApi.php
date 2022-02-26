@@ -7,6 +7,13 @@ use App\Model\FinancialRepository;
 use App\Utility\Response;
 use App\Utility\StatusCode;
 
+/**
+ * API for financials.
+ * @FinancialApi
+ * @package API
+ * @author Aufrère Guillian
+ * @version 1.0.0
+ */
 class FinancialApi
 {
     private Response $response;
@@ -18,7 +25,7 @@ class FinancialApi
         $this->financialRepository = $financialRepository;
     }
 
-    public function index()
+    public function financials()
     {
         $financials = Financial::all();
         $this->response

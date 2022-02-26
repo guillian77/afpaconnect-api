@@ -11,8 +11,12 @@ use App\Utility\StatusCode;
 use Exception;
 
 /**
- * Class UserApi
- * @package App\Api
+ * API to get one user.
+ *
+ * @UserApi
+ * @package API\User
+ * @author Aufrère Guillian
+ * @version 1.0.0
  */
 class UserApi
 {

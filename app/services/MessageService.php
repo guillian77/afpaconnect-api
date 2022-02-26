@@ -23,13 +23,6 @@ class MessageService
     }
 
     /**
-     * $_SESSION['messages'][
-     *      ['title', 'body', 'type']
-     *      ['title', 'body', 'type']
-     * ]
-     */
-
-    /**
      * Add a new message to message storage (session).
      *
      * @param string $title Title of the message.
@@ -42,11 +35,11 @@ class MessageService
         $messages = $this->all();
 
         // Add a new one to previous messages.
-        array_push($messages, [
+        $messages[] = [
             'title' => $title,
             'body' => $body,
             'type' => $type
-        ]);
+        ];
 
         // Update messages in session.
         $this->session->set('messages', $messages);

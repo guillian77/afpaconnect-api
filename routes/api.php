@@ -18,7 +18,7 @@ use App\Core\Facade\Router;
 | AUTHENTICATE
 |--------------------------------------------------------------------------
 */
-Router::post('/api/auth', [\App\Api\Auth::class, 'auth'], 'api.auth');
+Router::post('/api/auth', [\App\Api\AuthApi::class, 'auth'], 'api.auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ Router::get('/api/login', [\App\Api\LoginApi::class, 'login'], 'api.login');
 Router::get('/api/user', [\App\Api\UserApi::class, 'getOneByUsername'], 'api.user.one');
 Router::get('/api/users', [\App\Api\UsersApi::class, 'users'], 'api.user.all');
 Router::get('/api/user/table', [\App\Api\UserTableApi::class, 'table'], 'api.user.table', 'Authenticate');
-Router::get('/api/user/teachers', [\App\Api\UserTeacherApi::class, 'getTeachers'], 'api.user.teachers', 'Authenticate');
+Router::get('/api/user/teachers', [\App\Api\UserTeacherApi::class, 'teachers'], 'api.user.teachers', 'Authenticate');
 
 Router::post('/api/user/edit', [\App\Api\UserEditApi::class, 'edit'], 'api.user.edit', 'Authenticate');
 Router::post('/api/register', [\App\Api\RegisterApi::class, 'register'], 'api.register');
@@ -42,9 +42,9 @@ Router::post('/api/enable', [\App\Api\EnableApi::class, 'enable'], 'api.enable')
 */
 Router::get('/api/centers', [\App\Api\CenterApi::class, 'index'], 'api.centers');
 Router::get('/api/formations', [\App\Api\FormationApi::class, 'index'], 'api.formations');
-Router::get('/api/financials', [\App\Api\FinancialApi::class, 'index'], 'api.financials');
+Router::get('/api/financials', [\App\Api\FinancialApi::class, 'financials'], 'api.financials');
 Router::get('/api/apps', [\App\Api\AppApi::class, 'index'], 'api.apps');
-Router::get('/api/roles', [\App\Api\RoleApi::class, 'index'], 'api.roles');
+Router::get('/api/roles', [\App\Api\RoleApi::class, 'roles'], 'api.roles');
 Router::get('/api/apps/roles', [\App\Api\AppApi::class, 'getRoles'], 'api.apps.roles');
 Router::get('/api/session', [\App\Api\SessionApi::class, 'session'], 'api.session');
 Router::get('/api/sessions', [\App\Api\SessionApi::class, 'sessions'], 'api.sessions');

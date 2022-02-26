@@ -11,9 +11,25 @@ use App\Utility\Response;
 use Exception;
 use Firebase\JWT\JWT;
 
-class Auth
+/**
+ * Authenticate external app from app name string and a public key.
+ * @package API
+ * @AuthApi
+ * @author Aufrère Guillian
+ * @version 1.0.0
+ */
+class AuthApi
 {
     /**
+     * Use external app tag and RSA public key to compare with local private key.
+     * Return a JsonWebToken to give access to the rest of the API.
+     *
+     * @param Certificate $certificate (DI) Get certificate content from local storage.
+     * @param Request $request (DI) Request object.
+     * @param Response $response (DI) Response helper object.
+     *
+     * @return Response
+     *
      * @throws Exception
      */
     public function auth(Certificate $certificate, Request $request, Response $response)

@@ -1,3 +1,8 @@
+/**
+* --------------------------------------------------------------
+* USER MANAGEMENT
+* --------------------------------------------------------------
+*/
 .field_area .single_field  {
  display:flex;
  flex-direction: column;
@@ -5,7 +10,6 @@
 }
 
 .field_area .single_field label {
-
     padding-bottom: 0.2em;
 }
 

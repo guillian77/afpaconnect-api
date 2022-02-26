@@ -11,8 +11,10 @@ use App\Utility\StatusCode;
 use Exception;
 
 /**
- * Class LoginApi
- * @package App\Api
+ * API to log a user on an external app.
+ *
+ * @LoginApi
+ * @package API\User
  * @author Aufrère Guillian
  * @version 1.0
  */
