@@ -12,6 +12,7 @@ $application->add(new \App\Command\MakeFixtureCommand());
 $application->add(new \App\Command\MakeMigrationCommand());
 $application->add(new \App\Command\MigrationsCommand());
 $application->add(new \App\Command\ServerCommand());
+$application->add(new \App\Command\TriggersCommand());
 
 // Run it
 $application->run();

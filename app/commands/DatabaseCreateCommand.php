@@ -62,6 +62,7 @@ class DatabaseCreateCommand extends Console
         } else if ($scope == 'full') {
             $this->callCommand('database:migrations:load', $output);
             $this->callCommand('database:fixtures:load', $output);
+            $this->callCommand('database:triggers:load', $output);
         }
 
         return self::SUCCESS;
